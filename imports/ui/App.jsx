@@ -1,4 +1,5 @@
-import React, { Component, PropTypes  } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 
@@ -52,7 +53,7 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>SnapCards</h1>
+          <h1><i className="large material-icons">child_care</i> snapcards</h1>
           <label className="hide-completed">
             <input
               type="checkbox"
@@ -60,7 +61,7 @@ class App extends Component {
               checked={this.state.hideCompleted}
               onClick={this.toggleHideCompleted.bind(this)}
             />
-            Hide Selected Cards
+            Hide Selected Cards ({this.props.selectedCount})
           </label>
         </header>
 
@@ -68,11 +69,11 @@ class App extends Component {
           <input
             type="text"
             ref="textInput"
-            placeholder="Type to add new card"
+            placeholder="Type to add new card and hit enter"
           />
         </form>
  
-        <ul>
+        <ul className="card-list">
           {this.renderCards()}
         </ul>
       </div>
@@ -83,10 +84,12 @@ class App extends Component {
 
 App.propTypes = {
   cards: PropTypes.array.isRequired,
+  selectedCount: PropTypes.number.isRequired,
 };
  
 export default createContainer(() => {
   return {
     cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch(),
+    selectedCount: Cards.find({ checked: true }).count(),
   };
 }, App);

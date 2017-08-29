@@ -1,7 +1,29 @@
 /* CSS declarations go here */
-body {
-	font-family: sans-serif;
+.new-card input[type="text"] {
+	padding: 10px;
+	width: calc(100% - 20px);
+	margin: 10px 0;
 }
-.container {
-	padding: 40px;
+
+.card-list li {
+	list-style: none;
+	padding: 10px 5px;
+	border: 1px solid #cfd8dc;
+	margin: 0 0 10px 0;
+}
+
+.card-list li.checked {
+	background: #eee;
+}
+
+.card-list li .delete {
+	float: right;
+}
+
+.text-with-icon {
+	margin-left: 0.5em;
+}
+
+.material-icons {
+	vertical-align: middle;
 }

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Cards } from '../api/cards.js';
  
 // Card component - represents a single todo item
@@ -24,14 +25,17 @@ export default class Card extends Component {
           &times;
         </button>
 
-        <input
-          type="checkbox"
-          readOnly
-          checked={this.props.card.checked}
-          onClick={this.toggleChecked.bind(this)}
-        />
+		<i className="material-icons">art_track</i>
+		<label>
+	        <input
+	          type="checkbox"
+	          readOnly
+	          checked={this.props.card.checked}
+	          onClick={this.toggleChecked.bind(this)}
+	        />
 
-        <span className="text">{this.props.card.title}</span>
+	        <span className="text-with-icon">{this.props.card.title}</span>
+        </label>
       </li>
     );
   }
