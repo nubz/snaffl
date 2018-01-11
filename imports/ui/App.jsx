@@ -1,95 +1,48 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import { Cards } from '../api/cards.js';
- 
-import Card from './Card.jsx';
+import {List, ListItem} from 'material-ui/List';
+import ActionInfo from 'material-ui/svg-icons/action/info';
+
+const style = {
+  marginRight: "-20px",
+  float: "right",
+};
  
 // App component - represents the whole app
-class App extends Component {
+export default class App extends Component {
 
   constructor(props) {
     super(props);
- 
-    this.state = {
-      hideCompleted: false,
-    };
   }
 
- handleSubmit(event) {
-    event.preventDefault();
- 
-    // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
- 
-    Cards.insert({
-      title: text,
-      createdAt: new Date(), // current time
-    });
- 
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  createCard() {
+    FlowRouter.go('/card/new')
   }
 
-  toggleHideCompleted() {
-    this.setState({
-      hideCompleted: !this.state.hideCompleted,
-    });
-  }
- 
-  renderCards() {
-    let filteredCards = this.props.cards;
-    if (this.state.hideCompleted) {
-      filteredCards = filteredCards.filter(card => !card.checked);
-    }
-    return filteredCards.map((card) => (
-      <Card key={card._id} card={card} />
-    ));
-  }
- 
   render() {
     return (
-      <div className="container">
-        <header>
-          <h1><i className="large material-icons">child_care</i> snapcards</h1>
-          <label className="hide-completed">
-            <input
-              type="checkbox"
-              readOnly
-              checked={this.state.hideCompleted}
-              onClick={this.toggleHideCompleted.bind(this)}
-            />
-            Hide Selected Cards ({this.props.selectedCount})
-          </label>
-        </header>
+      <div className="home">
 
-        <form className="new-card" onSubmit={this.handleSubmit.bind(this)} >
-          <input
-            type="text"
-            ref="textInput"
-            placeholder="Type to add new card and hit enter"
-          />
-        </form>
- 
-        <ul className="card-list">
-          {this.renderCards()}
-        </ul>
+          <List>
+            <ListItem primaryText="Create your content once and use in many places" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Content can be articles, locations, events, photos, artwork, videos, audio and more" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Collabarate with others to create collections of content" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Wrap existing content from elsewhere in SnapCards" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Update content in real time" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Real time tag and user streams for live monitoring and curation of content" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Publish collections of content in, or as standalone, websites, mobile apps, feeds and more" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Every piece of content has it's own API endpoint" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Every collection of content has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
+          </List>
+
+
+        <FloatingActionButton style={style} onClick={this.createCard}>
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     );
   }
 
 }
-
-App.propTypes = {
-  cards: PropTypes.array.isRequired,
-  selectedCount: PropTypes.number.isRequired,
-};
- 
-export default createContainer(() => {
-  return {
-    cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch(),
-    selectedCount: Cards.find({ checked: true }).count(),
-  };
-}, App);
