@@ -27,6 +27,7 @@ class AddCard extends Component {
       title: text,
       owner: Meteor.userId(),
       createdAt: new Date(), // current time
+      access: 'public'
     });
  
     // Clear form

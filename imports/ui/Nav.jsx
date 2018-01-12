@@ -12,6 +12,7 @@ class LoggedMenu extends Component {
     return (
       <div>
         <Divider />
+        <MenuItem onClick={this.props.handleClick} data-href="Dashboard">My Dashboard</MenuItem>
         <MenuItem onClick={this.props.handleClick} data-href="Add.Card">Add a new card</MenuItem>
         <MenuItem onClick={this.props.handleClick} data-href="List.Cards">My Cards</MenuItem>
       </div>
@@ -54,7 +55,8 @@ function MenuDecision(props) {
     return <LoggedMenu 
       handleClick={props.handleClick.bind(this)} />;
   }
-  return <NonLoggedMenu />;
+  return <NonLoggedMenu 
+      handleClick={props.handleClick.bind(this)} />;
 }
 
 export default class Nav extends Component {
