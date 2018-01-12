@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import { Cards } from '../api/cards.js';
  
-import Card from './Card.jsx';
+import SnapCard from './SnapCard.jsx';
 
 class CardList extends Component {
 
@@ -29,7 +29,7 @@ class CardList extends Component {
       filteredCards = filteredCards.filter(card => !card.checked);
     }
     return filteredCards.map((card) => (
-      <Card key={card._id} card={card} />
+      <SnapCard key={card._id} card={card} />
     ));
   }
  

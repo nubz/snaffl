@@ -75,7 +75,7 @@ export default class Nav extends Component {
     return (
       <Drawer
         docked={false}
-        width={200}
+        width={280}
         open={this.props.open}
         logged={Session.get('logged')}
         onRequestChange={this.props.onRequestChange}

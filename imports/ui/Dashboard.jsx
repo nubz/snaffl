@@ -8,6 +8,8 @@ import Badge from 'material-ui/Badge'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import IconButton from 'material-ui/IconButton'
+import ActionLockOutline from 'material-ui/svg-icons/action/lock-outline'
+import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload'
 import ActionVisibility from 'material-ui/svg-icons/action/visibility'
 import Subheader from 'material-ui/Subheader'
@@ -56,7 +58,7 @@ class Dashboard extends Component {
       <Subheader>Content by {Meteor.user().username}</Subheader>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
-            badgeContent={<IconButton tooltip="Public Cards"><UploadIcon /></IconButton>}
+            badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
             style={styles.count}
           >
             {this.props.publicCardCount}
@@ -65,7 +67,7 @@ class Dashboard extends Component {
         </Paper>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
-            badgeContent={<IconButton tooltip="Private Cards"><UploadIcon /></IconButton>}
+            badgeContent={<IconButton tooltip="Private Cards"><ActionLockOutline /></IconButton>}
             style={styles.count}
           >
             {this.props.privateCardCount}
@@ -74,7 +76,7 @@ class Dashboard extends Component {
         </Paper>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
-            badgeContent={<IconButton tooltip="Private Decks"><UploadIcon /></IconButton>}
+            badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
             style={styles.count}
           >
             2
@@ -83,7 +85,7 @@ class Dashboard extends Component {
         </Paper>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
-            badgeContent={<IconButton tooltip="Public Decks"><UploadIcon /></IconButton>}
+            badgeContent={<IconButton tooltip="Public Decks"><ActionLockOpen /></IconButton>}
             style={styles.count}
           >
             1
@@ -91,7 +93,7 @@ class Dashboard extends Component {
           </Badge>
         </Paper>
         <Divider />
-        <Subheader>Stats for  {Meteor.user().username}</Subheader>
+        <Subheader>Stats for {Meteor.user().username}</Subheader>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
             badgeContent={<IconButton tooltip="Public Views"><ActionVisibility /></IconButton>}
