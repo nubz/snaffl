@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
-import { Cards } from '../api/cards.js';
-import Paper from 'material-ui/Paper';
-import Badge from 'material-ui/Badge';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import IconButton from 'material-ui/IconButton';
-import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { createContainer } from 'meteor/react-meteor-data'
+import ReactDOM from 'react-dom'
+import { Cards } from '../api/cards.js'
+import Paper from 'material-ui/Paper'
+import Badge from 'material-ui/Badge'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import IconButton from 'material-ui/IconButton'
+import UploadIcon from 'material-ui/svg-icons/file/cloud-upload'
+import ActionVisibility from 'material-ui/svg-icons/action/visibility'
+import Subheader from 'material-ui/Subheader'
+import Divider from 'material-ui/Divider'
 
 const styles = {
   panel: {
@@ -21,6 +24,9 @@ const styles = {
   },
   count: {
     fontSize: 64
+  },
+  statsCount: {
+    fontSize: 48
   },
   panelText: {
     display: 'block',
@@ -46,6 +52,8 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
+        <Divider />
+      <Subheader>Content by {Meteor.user().username}</Subheader>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><UploadIcon /></IconButton>}
@@ -82,6 +90,27 @@ class Dashboard extends Component {
             <span style={styles.panelText}>Public Decks</span>
           </Badge>
         </Paper>
+        <Divider />
+        <Subheader>Stats for  {Meteor.user().username}</Subheader>
+        <Paper style={styles.panel} zDepth={2}>
+          <Badge
+            badgeContent={<IconButton tooltip="Public Views"><ActionVisibility /></IconButton>}
+            style={styles.statsCount}
+          >
+            312
+            <span style={styles.panelText}>Public Views</span>
+          </Badge>
+        </Paper>
+        <Paper style={styles.panel} zDepth={2}>
+          <Badge
+            badgeContent={<IconButton tooltip="Private Views"><ActionVisibility /></IconButton>}
+            style={styles.statsCount}
+          >
+            1139
+            <span style={styles.panelText}>Private Views</span>
+          </Badge>
+        </Paper>
+
         <FloatingActionButton style={styles.fab} onClick={this.createCard}>
           <ContentAdd />
         </FloatingActionButton>
