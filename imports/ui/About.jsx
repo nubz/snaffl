@@ -6,13 +6,13 @@ import {List, ListItem} from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 
 const style = {
-  position: "fixed",
+  position: "absolute",
   bottom: "1em",
   right: "1em",
 };
  
-// App component - represents the whole app
-export default class App extends Component {
+// About component - represents the whole About
+export default class About extends Component {
 
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ export default class App extends Component {
             <ListItem primaryText="Wrap existing content from elsewhere in SnapCards" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Update content in real time" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Real time tag and user streams for live monitoring and curation of content" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Publish collections of content in, or as standalone, websites, mobile apps, feeds and more" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Publish collections of content in, or as standalone, websites, mobile Abouts, feeds and more" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every piece of content has it's own API endpoint" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection of content has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection can contain other collections" rightIcon={<ActionInfo />} />

@@ -1,10 +1,18 @@
 html {
-	font-family: 'Lato', sans-serif;
-}
-h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto', sans-serif;
 }
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Lato', sans-serif;
+}
+
 .container {
 	margin: 0 auto;
-	max-width: 60%;
+	max-width: 80%;
+}
+
+@media (min-width:1030px) {
+	.container {
+		max-width: 60%;
+	}
 }

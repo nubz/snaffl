@@ -7,7 +7,7 @@ import { Cards } from '../api/cards.js';
  
 import Card from './Card.jsx';
 
-class AddCard extends Component {
+class CardList extends Component {
 
   constructor(props) {
     super(props);
@@ -15,22 +15,6 @@ class AddCard extends Component {
     this.state = {
       hideCompleted: false,
     };
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
- 
-    // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
- 
-    Cards.insert({
-      title: text,
-      owner: Meteor.userId(),
-      createdAt: new Date(), // current time
-    });
- 
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
 
   toggleHideCompleted() {
@@ -63,14 +47,6 @@ class AddCard extends Component {
             Hide Selected Cards ({this.props.selectedCount})
           </label>
         </header>
-
-        <form className="new-card" onSubmit={this.handleSubmit.bind(this)} >
-          <input
-            type="text"
-            ref="textInput"
-            placeholder="Type to add new card and hit enter"
-          />
-        </form>
  
         <ul className="card-list">
           {this.renderCards()}
@@ -81,7 +57,7 @@ class AddCard extends Component {
 
 }
 
-AddCard.propTypes = {
+CardList.propTypes = {
   cards: PropTypes.array.isRequired,
   selectedCount: PropTypes.number.isRequired,
 };
@@ -91,4 +67,4 @@ export default createContainer(() => {
     cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch(),
     selectedCount: Cards.find({ checked: true }).count(),
   };
-}, AddCard);
+}, CardList);
