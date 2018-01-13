@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
 import {List, ListItem} from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 
-const style = {
-  position: "fixed",
-  bottom: "1em",
-  right: "1em",
-};
- 
-// App component - represents the whole app
 export default class App extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  createCard() {
-    FlowRouter.go('Add.Card')
   }
 
   render() {
@@ -39,13 +25,8 @@ export default class App extends Component {
             <ListItem primaryText="Every collection of Cards has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection can contain other collections" rightIcon={<ActionInfo />} />
           </List>
-
-
-        <FloatingActionButton style={style} onClick={this.createCard}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
-    );
+    )
   }
 
 }

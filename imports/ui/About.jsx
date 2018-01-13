@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import {List, ListItem} from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
@@ -10,6 +8,10 @@ const style = {
   bottom: "1em",
   right: "1em",
 };
+
+const iconStyles = {
+  marginRight: 24,
+};
  
 // About component - represents the whole About
 export default class About extends Component {
@@ -18,13 +20,17 @@ export default class About extends Component {
     super(props);
   }
 
-  createCard() {
-    FlowRouter.go('Add.Card')
-  }
-
   render() {
     return (
       <div className="home">
+
+          <p>SnapCards is Content as a Service</p>
+          <p>This prototype has been built using Meteor, React and Material UI.</p>
+          <div>
+            <img style={iconStyles} src="images/Meteor-logo.png" />
+            <img style={iconStyles} src="images/react.png" />
+          </div>
+          <p>Only account holders can create content</p>
 
           <List>
             <ListItem primaryText="Create your content once and use in many places" rightIcon={<ActionInfo />} />
@@ -38,11 +44,6 @@ export default class About extends Component {
             <ListItem primaryText="Every collection of content has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection can contain other collections" rightIcon={<ActionInfo />} />
           </List>
-
-
-        <FloatingActionButton style={style} onClick={this.createCard}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
     );
   }

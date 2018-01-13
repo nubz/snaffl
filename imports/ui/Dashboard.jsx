@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom'
 import { Cards } from '../api/cards.js'
 import Paper from 'material-ui/Paper'
 import Badge from 'material-ui/Badge'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import IconButton from 'material-ui/IconButton'
 import ActionLockOutline from 'material-ui/svg-icons/action/lock-outline'
 import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
@@ -33,29 +31,20 @@ const styles = {
   panelText: {
     display: 'block',
     fontSize: 19
-  },
-  fab: {
-    position: "fixed",
-    bottom: "1em",
-    right: "1em",
   }
 };
 
 class Dashboard extends Component {
 
   constructor(props) {
-    super(props);
-  }
-
-  createCard() {
-    FlowRouter.go('Add.Card')
+    super(props)
   }
  
   render() {
     return (
       <div>
         <Divider />
-      <Subheader>Content by {Meteor.user().username}</Subheader>
+        <Subheader>Content by {Meteor.user().username}</Subheader>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
@@ -112,12 +101,8 @@ class Dashboard extends Component {
             <span style={styles.panelText}>Private Views</span>
           </Badge>
         </Paper>
-
-        <FloatingActionButton style={styles.fab} onClick={this.createCard}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
-    );
+    )
   }
 
 }
@@ -125,11 +110,11 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   publicCardCount: PropTypes.number.isRequired,
   privateCardCount: PropTypes.number.isRequired,
-};
+}
  
 export default createContainer(() => {
   return {
     privateCardCount: Cards.find({ owner: Meteor.userId(), access: {$ne: 'public'} }).count(),
     publicCardCount: Cards.find({ owner: Meteor.userId(), access: 'public'}).count(),
-  };
-}, Dashboard);
+  }
+}, Dashboard)

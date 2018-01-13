@@ -1,70 +1,67 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
-
-import { Cards } from '../api/cards.js';
- 
-import SnapCard from './SnapCard.jsx';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { createContainer } from 'meteor/react-meteor-data'
+import ReactDOM from 'react-dom'
+import { Cards } from '../api/cards.js'
+import SnapCard from './SnapCard.jsx'
+import Snackbar from 'material-ui/Snackbar'
 
 class CardList extends Component {
 
   constructor(props) {
-    super(props);
- 
+    super(props)
     this.state = {
-      hideCompleted: false,
+      open: false,
+      message: 'Card added successfully'
     };
   }
 
-  toggleHideCompleted() {
+  multiSnackBar = (message, s) => {
     this.setState({
-      hideCompleted: !this.state.hideCompleted,
-    });
+      open: s,
+      message: message
+    })
   }
- 
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   renderCards() {
     let filteredCards = this.props.cards;
-    if (this.state.hideCompleted) {
-      filteredCards = filteredCards.filter(card => !card.checked);
-    }
     return filteredCards.map((card) => (
-      <SnapCard key={card._id} card={card} />
-    ));
+      <SnapCard 
+        key={card._id} 
+        card={card} 
+        multiSnackBar={this.multiSnackBar.bind(this)} 
+      />
+    ))
   }
  
   render() {
     return (
-      <div className="container">
-        <header>
-          <label className="hide-completed">
-            <input
-              type="checkbox"
-              readOnly
-              checked={this.state.hideCompleted}
-              onClick={this.toggleHideCompleted.bind(this)}
-            />
-            Hide Selected Cards ({this.props.selectedCount})
-          </label>
-        </header>
- 
-        <ul className="card-list">
-          {this.renderCards()}
-        </ul>
+      <div>
+        {this.renderCards()}
+        <Snackbar
+          open={this.state.open}
+          message={this.state.message}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
-    );
+    )
   }
 
 }
 
 CardList.propTypes = {
-  cards: PropTypes.array.isRequired,
-  selectedCount: PropTypes.number.isRequired,
-};
+  cards: PropTypes.array.isRequired
+}
  
 export default createContainer(() => {
   return {
-    cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch(),
-    selectedCount: Cards.find({ checked: true }).count(),
-  };
-}, CardList);
+    cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch()
+  }
+}, CardList)

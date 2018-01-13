@@ -12,6 +12,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import { Session } from 'meteor/session'
 import Nav from './Nav';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -20,6 +22,11 @@ const styles = {
   title: {
     cursor: 'pointer',
   },
+  fab: {
+    position: "fixed",
+    bottom: "1em",
+    right: "1em",
+  }
 };
 
 function logOut() {
@@ -39,7 +46,7 @@ class Login extends Component {
   render() {
     return (
       <FlatButton {...this.props} label="Login" />
-    );
+    )
   }
 }
 
@@ -77,6 +84,10 @@ export default class MainLayout extends Component {
     FlowRouter.go('Login');
   }
 
+  createCard() {
+    FlowRouter.go('Add.Card')
+  }
+
   handleMenuToggle = () => this.setState({open: !this.state.open});
 
   handleMenuClose = () => this.setState({open: false});
@@ -105,6 +116,10 @@ export default class MainLayout extends Component {
               <p>Created by <a href="http://nubz.com">nubz</a></p>
             </footer>
           </div>
+          { Session.get('canAddCard') ?
+            <FloatingActionButton style={styles.fab} onClick={this.createCard}>
+              <ContentAdd />
+            </FloatingActionButton> : ''}
           <Nav
             open={this.state.open}
             onRequestChange={this.onRequestChange.bind(this)}
