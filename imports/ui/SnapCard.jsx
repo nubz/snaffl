@@ -7,6 +7,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import Dialog from 'material-ui/Dialog';
 
+const cardStyle = {
+  marginBottom: 10,
+  padding: 10
+}
+
 const styles = {
   card: cardStyle,
   chip: {
@@ -16,11 +21,6 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
-}
-
-const cardStyle = {
-  marginBottom: 10,
-  padding: 10
 }
  
 // Card component - represents a single todo item
@@ -33,7 +33,6 @@ export default class SnapCard extends Component {
   }
 
   deleteThisCard() {
-    console.log('props in scope', this.props)
     Cards.remove(this.props.card._id, () => {
       this.handleClose()
       this.props.multiSnackBar('Card deleted ok', true);
@@ -50,6 +49,10 @@ export default class SnapCard extends Component {
 
   handleOpen = () => {
     this.setState({open: true});
+  }
+
+  handleEditRequest = () => {
+    FlowRouter.go('/card/' + this.props.card._id + '/edit')
   }
 
   render() {
@@ -74,15 +77,16 @@ export default class SnapCard extends Component {
       <Card style={cardStyle}>
         <CardHeader
           title={this.props.card.title}
-          subtitle={'Article created ' + createdAgo}
+          subtitle={this.props.card.type + ' created ' + createdAgo}
           actAsExpander={true}
           showExpandableButton={true}
         />
         <CardActions>
           <RaisedButton label="Delete" onClick={this.handleOpen} />
-          <RaisedButton label="Edit" />
+          <RaisedButton label="Edit" onClick={this.handleEditRequest} />
         </CardActions>
         <CardText expandable={true}>
+          {this.props.card.description}<br />
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
           Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
@@ -121,5 +125,5 @@ FlatButton.propTypes = {
  
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func
+  multiSnackBar: PropTypes.func.isRequired
 };

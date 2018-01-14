@@ -11,6 +11,7 @@ const style = {
 
 const iconStyles = {
   marginRight: 24,
+  maxWidth: '100%'
 };
  
 // About component - represents the whole About

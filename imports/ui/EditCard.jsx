@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { createContainer } from 'meteor/react-meteor-data'
 import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
-import { Cards } from '../api/cards.js'
 import Divider from 'material-ui/Divider'
 import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
+import { Cards } from '../api/cards.js'
 
 const startTime = new Date()
 const styles = {
@@ -24,13 +23,7 @@ const styles = {
   }
 }
 
-const defaultInputs = {
-  cardType: 'Article',
-  title: '',
-  description: ''
-}
-
-class AddCard extends Component {
+class EditCard extends Component {
 
   constructor(props) {
     super(props);
@@ -38,7 +31,7 @@ class AddCard extends Component {
     this.state = {
       open: false,
       message: 'Card added successfully',
-      inputs: defaultInputs
+      inputs: {...this.props.card}
     }
   }
 
@@ -53,19 +46,18 @@ class AddCard extends Component {
     event.preventDefault();
 
     const inputs = this.state.inputs
- 
-    Cards.insert({
+    const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
-      owner: Meteor.userId(),
-      createdAt: new Date(),
+      owner: inputs.owner,
       access: 'public',
       cardType: inputs.cardType
-    }, () => {
+    }
+
+    Cards.update({_id: inputs._id}, {$set: data}, () => {
       this.setState({
         open: true,
-        message: 'Card added ok',
-        inputs: defaultInputs
+        message: 'Card edited ok'
       })
     })
 
@@ -82,16 +74,6 @@ class AddCard extends Component {
   }
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
- 
-  renderCards() {
-    return this.props.cards.map((card) => (
-      <SnapCard 
-        key={card._id} 
-        card={card} 
-        multiSnackBar={this.multiSnackBar.bind(this)} 
-      />
-    ))
-  }
  
   render() {
     return (
@@ -138,14 +120,9 @@ class AddCard extends Component {
             </SelectField>
           </div>
           <div className="form-group">
-            <RaisedButton type="submit" label="Add Card" primary={true} />
+            <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>
         </form>
-
-        <Divider />
-
-        <h2>Recently added Cards</h2>
-        {this.renderCards()}
 
         <Snackbar
           open={this.state.open}
@@ -159,12 +136,8 @@ class AddCard extends Component {
 
 }
 
-AddCard.propTypes = {
-  cards: PropTypes.array.isRequired,
+EditCard.propTypes = {
+  card: PropTypes.object,
 }
  
-export default createContainer(() => {
-  return {
-    cards: Cards.find({owner: Meteor.userId(), createdAt: {$gt: startTime}}, { sort: { createdAt: -1 } }).fetch(),
-  }
-}, AddCard)
+export default EditCard

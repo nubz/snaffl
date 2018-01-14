@@ -10,6 +10,7 @@ import ActionLockOutline from 'material-ui/svg-icons/action/lock-outline'
 import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload'
 import ActionVisibility from 'material-ui/svg-icons/action/visibility'
+import ActionFavorite from 'material-ui/svg-icons/action/favorite'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
 
@@ -99,6 +100,15 @@ class Dashboard extends Component {
           >
             1139
             <span style={styles.panelText}>Private Views</span>
+          </Badge>
+        </Paper>
+        <Paper style={styles.panel} zDepth={2}>
+          <Badge
+            badgeContent={<IconButton tooltip="Favorited"><ActionFavorite /></IconButton>}
+            style={styles.statsCount}
+          >
+            39
+            <span style={styles.panelText}>Your Cards Favourited</span>
           </Badge>
         </Paper>
       </div>

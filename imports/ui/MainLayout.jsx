@@ -105,9 +105,9 @@ export default class MainLayout extends Component {
             onLeftIconButtonClick={this.handleMenuToggle}
             onRightIconButtonClick={Session.get('logged') ? () => false : this.login }
           />
-          <div className="container">
+          <div className={this.props.className}>
             <header>
-              <h1>{this.props.heading}</h1>
+              { this.props.heading ? <h1>{this.props.heading}</h1> : ''}
             </header>
             <main>
               {this.props.content()}
