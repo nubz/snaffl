@@ -10,7 +10,7 @@ const style = {
 };
 
 const iconStyles = {
-  marginRight: 24,
+  display: 'block',
   maxWidth: '100%'
 };
  

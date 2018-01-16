@@ -40,13 +40,17 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
   }
+
+  handlePublicCardsClick() {
+    FlowRouter.go('List.Cards', {access: 'public'})
+  }
  
   render() {
     return (
       <div>
         <Divider />
         <Subheader>Content by {Meteor.user().username}</Subheader>
-        <Paper style={styles.panel} zDepth={2}>
+        <Paper style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
             style={styles.count}

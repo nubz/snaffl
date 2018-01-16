@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { createContainer } from 'meteor/react-meteor-data'
 import ReactDOM from 'react-dom'
-import { Cards } from '../api/cards.js'
 import SnapCard from './SnapCard.jsx'
 import Snackbar from 'material-ui/Snackbar'
 
@@ -60,8 +59,4 @@ CardList.propTypes = {
   cards: PropTypes.array.isRequired
 }
  
-export default createContainer(() => {
-  return {
-    cards: Cards.find({}, { sort: { createdAt: -1 } }).fetch()
-  }
-}, CardList)
+export default CardList

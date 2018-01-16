@@ -5,7 +5,6 @@ import { Cards } from '../api/cards.js'
 import EditCard from './EditCard'
 
 export default EditCardContainer = withTracker(props => {
-  console.log('EditCardContainer props', props)
   const card = Cards.findOne(props._id)
   return {
     card,

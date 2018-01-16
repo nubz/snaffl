@@ -77,7 +77,7 @@ export default class SnapCard extends Component {
       <Card style={cardStyle}>
         <CardHeader
           title={this.props.card.title}
-          subtitle={this.props.card.type + ' created ' + createdAgo}
+          subtitle={this.props.card.cardType + ' created ' + createdAgo}
           actAsExpander={true}
           showExpandableButton={true}
         />
@@ -87,10 +87,6 @@ export default class SnapCard extends Component {
         </CardActions>
         <CardText expandable={true}>
           {this.props.card.description}<br />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           <div style={styles.wrapper}>
             <Chip
               style={styles.chip}
