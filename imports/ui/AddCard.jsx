@@ -150,7 +150,7 @@ class AddCard extends Component {
         <Snackbar
           open={this.state.open}
           message={this.state.message}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           onRequestClose={this.handleRequestClose}
         />
       </div>

@@ -73,6 +73,7 @@ class ExposedMenu extends Component {
       <div>
         <MenuItem onClick={this.props.handleClick} data-href="Home">Home</MenuItem>
         <MenuItem onClick={this.props.handleClick} data-href="About">About</MenuItem>
+        <MenuItem onClick={this.props.handleClick} data-href="Public.Cards">Explore Public Cards</MenuItem>
       </div>
     )
   }

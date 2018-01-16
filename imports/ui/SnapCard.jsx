@@ -33,10 +33,12 @@ export default class SnapCard extends Component {
   }
 
   deleteThisCard() {
-    Cards.remove(this.props.card._id, () => {
-      this.handleClose()
-      this.props.multiSnackBar('Card deleted ok', true);
-    })
+    if (this.props.card.owner === Meteor.userId()) {
+      Cards.remove(this.props.card._id, () => {
+        this.handleClose()
+        this.props.multiSnackBar('Card deleted ok', true);
+      })
+    }
   }
 
   chipHandleRequestDelete() {
@@ -56,6 +58,7 @@ export default class SnapCard extends Component {
   }
 
   render() {
+    const owned = this.props.card.owner === Meteor.userId()
     const cardClassName = this.props.card.checked ? 'checked' : ''
     const title = this.props.card.title
     const actions = [
@@ -81,22 +84,26 @@ export default class SnapCard extends Component {
           actAsExpander={true}
           showExpandableButton={true}
         />
+        { owned ? 
+
         <CardActions>
           <RaisedButton label="Delete" onClick={this.handleOpen} />
           <RaisedButton label="Edit" onClick={this.handleEditRequest} />
         </CardActions>
+        : ''
+        }
         <CardText expandable={true}>
           {this.props.card.description}<br />
           <div style={styles.wrapper}>
             <Chip
               style={styles.chip}
-              onRequestDelete={this.chipHandleRequestDelete.bind(this)}
+              onRequestDelete={owned ? this.chipHandleRequestDelete.bind(this) : null}
             >
               Crypto
             </Chip>
             <Chip
               style={styles.chip}
-              onRequestDelete={this.chipHandleRequestDelete.bind(this)}
+              onRequestDelete={owned ? this.chipHandleRequestDelete.bind(this) : null}
             >
               Bitcoin
             </Chip>

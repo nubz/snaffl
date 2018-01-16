@@ -48,6 +48,7 @@ class CardList extends Component {
           message={this.state.message}
           autoHideDuration={3000}
           onRequestClose={this.handleRequestClose}
+          style={{'fontWeight': 700}}
         />
       </div>
     )

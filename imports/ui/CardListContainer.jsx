@@ -5,8 +5,7 @@ import { Cards } from '../api/cards.js'
 import CardList from './CardList'
 
 export default CardListContainer = withTracker(props => {
-  const search = props.access ? {access: props.access} : {}
-  const cards = Cards.find(search, { sort: { createdAt: -1 } }).fetch()
+  const cards = Cards.find({...props}, { sort: { createdAt: -1 } }).fetch()
   return {
     cards,
   }
