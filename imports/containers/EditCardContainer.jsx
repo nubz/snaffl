@@ -2,11 +2,11 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
 import { Cards } from '../api/cards.js'
-import CardList from './CardList'
+import EditCard from '../ui/EditCard'
 
-export default CardListContainer = withTracker(props => {
-  const cards = Cards.find({...props}, { sort: { createdAt: -1 } }).fetch()
+export default EditCardContainer = withTracker(props => {
+  const card = Cards.findOne(props._id)
   return {
-    cards,
+    card,
   }
-})(CardList)
+})(EditCard)

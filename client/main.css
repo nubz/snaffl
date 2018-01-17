@@ -34,3 +34,7 @@ form.accounts {
     margin-right: auto;
     min-height: 360px;
 }
+
+.dash-panel:hover {
+	background-color: #eee !important;
+}

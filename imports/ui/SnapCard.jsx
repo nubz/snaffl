@@ -20,6 +20,7 @@ const styles = {
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap',
+    marginTop: 15
   },
 }
  

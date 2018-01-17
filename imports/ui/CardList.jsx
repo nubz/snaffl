@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { createContainer } from 'meteor/react-meteor-data'
-import ReactDOM from 'react-dom'
 import SnapCard from './SnapCard.jsx'
 import Snackbar from 'material-ui/Snackbar'
 
@@ -29,8 +27,7 @@ class CardList extends Component {
   };
 
   renderCards() {
-    let filteredCards = this.props.cards;
-    return filteredCards.map((card) => (
+    return this.props.cards.map((card) => (
       <SnapCard 
         key={card._id} 
         card={card} 

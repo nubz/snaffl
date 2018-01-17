@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { createContainer } from 'meteor/react-meteor-data'
 import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
@@ -12,7 +11,6 @@ import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 
-const startTime = new Date()
 const styles = {
   formStyle: {
     marginBottom: 30
@@ -135,6 +133,7 @@ class AddCard extends Component {
               <MenuItem value={"EmbeddedMedia"} primaryText="Media object (Video, Audio)" />
               <MenuItem value={"Location"} primaryText="Location" />
               <MenuItem value={"Event"} primaryText="Event" />
+              <MenuItem value={"Entity"} primaryText="Entity" />
             </SelectField>
           </div>
           <div className="form-group">
@@ -162,9 +161,5 @@ class AddCard extends Component {
 AddCard.propTypes = {
   cards: PropTypes.array.isRequired,
 }
- 
-export default createContainer(() => {
-  return {
-    cards: Cards.find({owner: Meteor.userId(), createdAt: {$gt: startTime}}, { sort: { createdAt: -1 } }).fetch(),
-  }
-}, AddCard)
+
+export default AddCard

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { createContainer } from 'meteor/react-meteor-data'
 import ReactDOM from 'react-dom'
 import { Cards } from '../api/cards.js'
 import Paper from 'material-ui/Paper'
@@ -22,6 +21,7 @@ const styles = {
     padding: 20,
     textAlign: 'center',
     display: 'inline-block',
+    cursor: 'pointer',
   },
   count: {
     fontSize: 64
@@ -50,7 +50,7 @@ class Dashboard extends Component {
       <div>
         <Divider />
         <Subheader>Content by {Meteor.user().username}</Subheader>
-        <Paper style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
             style={styles.count}
@@ -126,9 +126,4 @@ Dashboard.propTypes = {
   privateCardCount: PropTypes.number.isRequired,
 }
  
-export default createContainer(() => {
-  return {
-    privateCardCount: Cards.find({ owner: Meteor.userId(), access: {$ne: 'public'} }).count(),
-    publicCardCount: Cards.find({ owner: Meteor.userId(), access: 'public'}).count(),
-  }
-}, Dashboard)
+export default Dashboard
