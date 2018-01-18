@@ -44,6 +44,7 @@ jquery@1.11.10
 kadira:flow-router@2.12.1
 kadira:react-layout@1.5.3
 launch-screen@1.1.1
+lepozepo:cloudinary@4.2.6
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.19

@@ -10,6 +10,8 @@ import Divider from 'material-ui/Divider'
 import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
+import Secrets from '../../secrets'
+import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 
 const styles = {
   formStyle: {
@@ -19,6 +21,13 @@ const styles = {
     color: 'black',
     fontSize: 20,
     fontWeight: 500
+  },
+  fileInput: {
+    display: 'none'
+  },
+  imagePreview: {
+    display: 'block',
+    marginBottom: 20
   }
 }
 
@@ -36,8 +45,38 @@ class AddCard extends Component {
     this.state = {
       open: false,
       message: 'Card added successfully',
-      inputs: defaultInputs
+      inputs: defaultInputs,
+      imagePreview: '',
+      publicId: '',
+      image: ''
     }
+  }
+
+  uploadFiles(event, id) {
+
+    console.log('uploading files', event.currentTarget)
+
+    Session.set('imageLoading', true);
+
+    Cloudinary.upload(
+      event.currentTarget.files,
+      {'folder': Secrets.cloudinary.folder},
+      function (res, data) {
+        console.log('uploaded!', data)
+        if (id) {
+          Meteor.call('updateCover', id, data.public_id, function () {
+            $('.modal').modal('hide');
+          });
+        } else {
+          this.setState({
+            'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
+            'image': data.url,
+            'publicId': data.public_id
+          })
+        }
+
+        Session.set('imageLoading', false);
+      }.bind(this));
   }
 
   multiSnackBar = (message, s) => {
@@ -58,12 +97,16 @@ class AddCard extends Component {
       owner: Meteor.userId(),
       createdAt: new Date(),
       access: 'public',
-      cardType: inputs.cardType
+      cardType: inputs.cardType,
+      image: this.state.image
     }, () => {
       this.setState({
         open: true,
         message: 'Card added ok',
-        inputs: defaultInputs
+        inputs: defaultInputs,
+        imagePreview: '',
+        publicId: '',
+        image: ''
       })
     })
 
@@ -119,6 +162,16 @@ class AddCard extends Component {
               onChange={this.handleInputChange}
               value={this.state.inputs.description}
             />
+          </div>
+          <div className="form-group">
+            { this.state.imagePreview !== '' ? 
+              <img style={styles.imagePreview} src={this.state.imagePreview} /> 
+              : ''}
+            <RaisedButton
+               containerElement='label' // <-- Just add me!
+               label={ this.state.imagePreview === '' ? 'Upload an image' : 'Upload a different image' }>
+               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
+            </RaisedButton>
           </div>
           <div className="form-group">
             <SelectField 

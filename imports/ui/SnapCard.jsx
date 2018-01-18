@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Cards } from '../api/cards.js';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Chip from 'material-ui/Chip';
-import Dialog from 'material-ui/Dialog';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Cards } from '../api/cards.js'
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import Chip from 'material-ui/Chip'
+import Dialog from 'material-ui/Dialog'
+import Secrets from '../../secrets'
+import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 
 const cardStyle = {
   marginBottom: 10,
@@ -22,6 +24,10 @@ const styles = {
     flexWrap: 'wrap',
     marginTop: 15
   },
+  previewImg: {
+    display: 'block',
+    marginBottom: 20
+  }
 }
  
 // Card component - represents a single todo item
@@ -31,6 +37,14 @@ export default class SnapCard extends Component {
     this.state = {
       open: false,
     }
+  }
+
+  avatar(url) {
+    return url.replace('upload/', 'upload/c_fill,g_center,h_240,w_240/')
+  }
+
+  preview(url) {
+    return url.replace('upload/', 'upload/c_scale,w_240/')
   }
 
   deleteThisCard() {
@@ -62,6 +76,7 @@ export default class SnapCard extends Component {
     const owned = this.props.card.owner === Meteor.userId()
     const cardClassName = this.props.card.checked ? 'checked' : ''
     const title = this.props.card.title
+    const cloudinaryUrl = this.props.card.image || null
     const actions = [
         <FlatButton
           label="Cancel"
@@ -78,22 +93,16 @@ export default class SnapCard extends Component {
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle} initiallyExpanded={true}>
         <CardHeader
+          avatar={ cloudinaryUrl ? this.avatar(cloudinaryUrl) : null }
           title={this.props.card.title}
           subtitle={this.props.card.cardType + ' created ' + createdAgo}
           actAsExpander={true}
           showExpandableButton={true}
         />
-        { owned ? 
-
-        <CardActions>
-          <RaisedButton label="Delete" onClick={this.handleOpen} />
-          <RaisedButton label="Edit" onClick={this.handleEditRequest} />
-        </CardActions>
-        : ''
-        }
         <CardText expandable={true}>
+          {cloudinaryUrl ? <img style={styles.previewImg} src={this.preview(cloudinaryUrl)} /> : null }
           {this.props.card.description}<br />
           <div style={styles.wrapper}>
             <Chip
@@ -110,6 +119,14 @@ export default class SnapCard extends Component {
             </Chip>
           </div>
         </CardText>
+        { owned ? 
+
+        <CardActions>
+          <RaisedButton label="Delete" onClick={this.handleOpen} />
+          <RaisedButton label="Edit" onClick={this.handleEditRequest} />
+        </CardActions>
+        : ''
+        }
         <Dialog
           title={'Delete "' + title + '"'}
           actions={actions}

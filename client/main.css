@@ -38,3 +38,7 @@ form.accounts {
 .dash-panel:hover {
 	background-color: #eee !important;
 }
+
+.form-group {
+	margin-bottom: 20px;
+}
