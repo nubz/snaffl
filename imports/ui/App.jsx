@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {List, ListItem} from 'material-ui/List'
 import ActionInfo from 'material-ui/svg-icons/action/info'
-import { lightGreen500, purpleA400, brown500 } from 'material-ui/styles/colors'
+import { lightGreen500, purpleA400, deepOrange700 } from 'material-ui/styles/colors'
 
 
 const styles = {
@@ -9,7 +9,7 @@ const styles = {
     height: 'calc(100vh - 64px)',
     paddingTop: 50,
     boxSizing: 'border-box',
-    background: brown500,
+    background: deepOrange700,
     color: 'white',
     textAlign: 'center',
     fontFamily: 'Bungee'
