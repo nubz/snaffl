@@ -81,22 +81,30 @@ class Dashboard extends Component {
             <span style={styles.panelText}>Private Cards</span>
           </Badge>
         </Paper>
-        <Paper style={styles.panel} zDepth={2}>
-          <Badge
-            badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
-            style={styles.count}
-          >
-            2
-            <span style={styles.panelText}>Private Decks</span>
-          </Badge>
-        </Paper>
-        <Paper style={styles.panel} zDepth={2}>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
           <Badge
             badgeContent={<IconButton tooltip="Public Decks"><ActionLockOpen /></IconButton>}
             style={styles.count}
           >
-            1
+            {
+              !this.props.loading ? 
+              this.props.publicDeckCount :
+              <CircularProgress size={60} thickness={7} />
+            }
             <span style={styles.panelText}>Public Decks</span>
+          </Badge>
+        </Paper>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
+          <Badge
+            badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
+            style={styles.count}
+          >
+            {
+              !this.props.decksLoading ? 
+              this.props.privateDeckCount :
+              <CircularProgress size={60} thickness={7} />
+            }
+            <span style={styles.panelText}>Private Decks</span>
           </Badge>
         </Paper>
         <Divider />
@@ -136,8 +144,11 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   loading: PropTypes.bool,
+  decksLoading: PropTypes.bool,
   publicCardCount: PropTypes.number.isRequired,
   privateCardCount: PropTypes.number.isRequired,
+  publicDeckCount: PropTypes.number.isRequired,
+  privateDeckCount: PropTypes.number.isRequired
 }
  
 export default Dashboard

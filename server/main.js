@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { Cards } from '../imports/api/cards.js'
+import { Decks } from '../imports/api/decks.js'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
@@ -64,6 +65,18 @@ Meteor.startup(() => {
 
   Meteor.publish('card', function (_id) {
     return Cards.find({_id: _id})
+  })
+
+  Meteor.publish('decks.owned', function() {
+
+    if (!this.userId) {
+      return this.ready();
+    }
+
+    return Decks.find({
+      owner: this.userId
+    })
+
   })
 
   Meteor.publish(null, function () {
