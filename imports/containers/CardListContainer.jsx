@@ -5,8 +5,11 @@ import { Cards } from '../api/cards.js'
 import CardList from '../ui/CardList'
 
 export default CardListContainer = withTracker(props => {
+  cardsHandle = Meteor.subscribe('cards.owned')
+  const loading = !cardsHandle.ready()
   const cards = Cards.find({...props}, { sort: { createdAt: -1 } }).fetch()
   return {
     cards,
+    loading
   }
 })(CardList)

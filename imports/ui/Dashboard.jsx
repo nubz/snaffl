@@ -12,6 +12,7 @@ import ActionVisibility from 'material-ui/svg-icons/action/visibility'
 import ActionFavorite from 'material-ui/svg-icons/action/favorite'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
+import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
   panel: {
@@ -42,29 +43,41 @@ class Dashboard extends Component {
   }
 
   handlePublicCardsClick() {
-    FlowRouter.go('List.Cards', {access: 'public'})
+    FlowRouter.go('My.Cards', {access: 'public'})
+  }
+
+  handlePrivateCardsClick() {
+    FlowRouter.go('My.Cards', {access: 'private'})
   }
  
   render() {
     return (
       <div>
         <Divider />
-        <Subheader>Content by {Meteor.user().username}</Subheader>
+        <Subheader>My Content</Subheader>
         <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
             style={styles.count}
           >
-            {this.props.publicCardCount}
+            {
+              !this.props.loading ? 
+              this.props.publicCardCount :
+              <CircularProgress size={60} thickness={7} />
+            }
             <span style={styles.panelText}>Public Cards</span>
           </Badge>
         </Paper>
-        <Paper style={styles.panel} zDepth={2}>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateCardsClick}>
           <Badge
             badgeContent={<IconButton tooltip="Private Cards"><ActionLockOutline /></IconButton>}
             style={styles.count}
           >
-            {this.props.privateCardCount}
+            {
+              !this.props.loading ? 
+              this.props.privateCardCount :
+              <CircularProgress size={60} thickness={7} />
+            }
             <span style={styles.panelText}>Private Cards</span>
           </Badge>
         </Paper>
@@ -87,7 +100,7 @@ class Dashboard extends Component {
           </Badge>
         </Paper>
         <Divider />
-        <Subheader>Stats for {Meteor.user().username}</Subheader>
+        <Subheader>My Stats</Subheader>
         <Paper style={styles.panel} zDepth={2}>
           <Badge
             badgeContent={<IconButton tooltip="Public Views"><ActionVisibility /></IconButton>}
@@ -122,6 +135,7 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  loading: PropTypes.bool,
   publicCardCount: PropTypes.number.isRequired,
   privateCardCount: PropTypes.number.isRequired,
 }

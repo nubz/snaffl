@@ -42,6 +42,43 @@ Meteor.startup(() => {
   */
   Cloudinary.config(Secrets.cloudinary.config)
 
+  Meteor.publish('cards.owned', function() {
+
+    if (!this.userId) {
+      return this.ready();
+    }
+
+    return Cards.find({
+      owner: this.userId
+    })
+
+  })
+
+  Meteor.publish('cards.public', function() {
+
+    return Cards.find({
+      access: 'public'
+    })
+
+  })
+
+  Meteor.publish('card', function (_id) {
+    return Cards.find({_id: _id})
+  })
+
+  Meteor.publish(null, function () {
+    return Meteor.users.find({
+      _id: this.userId
+    }, {
+      fields: {
+        services: 1,
+        verified: 1,
+        skills: 1,
+        role: 1
+      }
+    });
+  }, { is_auto: true });
+
   Meteor.methods({
 
     updateCover: function (id, public_id) {

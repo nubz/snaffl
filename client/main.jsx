@@ -10,6 +10,5 @@ Meteor.startup(() => {
   	'logged': Meteor.userId(),
   	'redirectAfterLogin': 'Dashboard'
   })
- 
-  FlowRouter.go(FlowRouter.current().route.name);
+
 });

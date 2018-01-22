@@ -10,6 +10,7 @@ import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Cards } from '../api/cards.js'
+import Toggle from 'material-ui/Toggle'
 
 const startTime = new Date()
 const styles = {
@@ -31,7 +32,8 @@ class EditCard extends Component {
     this.state = {
       open: false,
       message: 'Card added successfully',
-      inputs: {...this.props.card}
+      inputs: {...this.props.card},
+      access: this.props.card.access
     }
   }
 
@@ -50,7 +52,7 @@ class EditCard extends Component {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: inputs.owner,
-      access: 'public',
+      access: this.state.access,
       cardType: inputs.cardType
     }
 
@@ -75,10 +77,23 @@ class EditCard extends Component {
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
  
+
+  handleAccessChange = (event, access) => {
+    const selectedAccess = access ? 'public' : 'private'
+    this.setState({access: selectedAccess});
+  }
+
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+          <Toggle
+            label="Public access"
+            onToggle={this.handleAccessChange}
+            labelPosition="right"
+            style={{marginBottom: 20}}
+            defaultToggled={this.state.access === 'public'}
+          />
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}

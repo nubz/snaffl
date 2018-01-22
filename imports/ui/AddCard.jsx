@@ -12,6 +12,17 @@ import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import Secrets from '../../secrets'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
+import CircularProgress from 'material-ui/CircularProgress'
+import Toggle from 'material-ui/Toggle'
+
+const CardTypes = [
+  {value: 'Article', title: 'Article'}, 
+  {value: 'Image', title: 'Image'}, 
+  {value: 'EmbeddedMedia', title: 'Embed video (e.g. YouTube)'},
+  {value: 'Location', title: 'Location'},
+  {value: 'Event', title: 'Event'},
+  {value: 'Entity', title: 'Profile'}
+]
 
 const styles = {
   formStyle: {
@@ -27,55 +38,55 @@ const styles = {
   },
   imagePreview: {
     display: 'block',
-    marginBottom: 20
+    marginBottom: 20,
+    maxWidth: '100%'
   }
 }
 
 const defaultInputs = {
-  cardType: 'Article',
   title: '',
-  description: ''
+  description: '',
+  cardType: 'Article'
 }
 
 class AddCard extends Component {
 
   constructor(props) {
     super(props);
+
+    if (props.cardType) {
+      defaultInputs.cardType = props.cardType
+    }
  
     this.state = {
       open: false,
+      uploading: false,
       message: 'Card added successfully',
       inputs: defaultInputs,
       imagePreview: '',
       publicId: '',
-      image: ''
+      image: '',
+      access: 'private'
     }
   }
 
-  uploadFiles(event, id) {
+  uploadFiles(event) {
 
-    console.log('uploading files', event.currentTarget)
-
-    Session.set('imageLoading', true);
+    this.setState({'uploading': true})
 
     Cloudinary.upload(
       event.currentTarget.files,
       {'folder': Secrets.cloudinary.folder},
       function (res, data) {
-        console.log('uploaded!', data)
-        if (id) {
-          Meteor.call('updateCover', id, data.public_id, function () {
-            $('.modal').modal('hide');
-          });
-        } else {
-          this.setState({
-            'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
-            'image': data.url,
-            'publicId': data.public_id
-          })
-        }
+        console.log('uploaded data', data)
+        this.setState({
+          'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
+          'image': data.url,
+          'publicId': data.public_id
+        })
 
-        Session.set('imageLoading', false);
+        this.setState({'uploading': false})
+
       }.bind(this));
   }
 
@@ -96,7 +107,7 @@ class AddCard extends Component {
       description: inputs.description.trim(),
       owner: Meteor.userId(),
       createdAt: new Date(),
-      access: 'public',
+      access: this.state.access,
       cardType: inputs.cardType,
       image: this.state.image
     }, () => {
@@ -106,7 +117,8 @@ class AddCard extends Component {
         inputs: defaultInputs,
         imagePreview: '',
         publicId: '',
-        image: ''
+        image: '',
+        access: 'private'
       })
     })
 
@@ -133,11 +145,47 @@ class AddCard extends Component {
       />
     ))
   }
+
+  renderCardTypes() {
+    return CardTypes.map((cardType) => (
+      <MenuItem 
+        value={cardType.value} 
+        primaryText={cardType.title} 
+        key={cardType.value}
+      />
+    ))
+  }
+
+  handleAccessChange = (event, access) => {
+    const selectedAccess = access ? 'public' : 'private'
+    this.setState({access: selectedAccess});
+  };
  
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+          <Toggle
+            label="Public access"
+            onToggle={this.handleAccessChange}
+            labelPosition="right"
+            style={{marginBottom: 20}}
+          />
+          { this.state.uploading ? 
+            <CircularProgress size={60} thickness={7} />
+          :
+          <div className="form-group">
+            { this.state.imagePreview !== '' ? 
+              <img style={styles.imagePreview} src={this.state.imagePreview} /> 
+              : ''}
+            <RaisedButton
+               secondary={true} 
+               containerElement='label' // <-- Just add me!
+               label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
+               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
+            </RaisedButton>
+          </div>
+          }
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
@@ -152,7 +200,7 @@ class AddCard extends Component {
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Description"
+              floatingLabelText="Summary (optional)"
               hintText="A short, plain text summary"
               floatingLabelFixed={true}
               id="description"
@@ -163,16 +211,8 @@ class AddCard extends Component {
               value={this.state.inputs.description}
             />
           </div>
-          <div className="form-group">
-            { this.state.imagePreview !== '' ? 
-              <img style={styles.imagePreview} src={this.state.imagePreview} /> 
-              : ''}
-            <RaisedButton
-               containerElement='label' // <-- Just add me!
-               label={ this.state.imagePreview === '' ? 'Upload an image' : 'Upload a different image' }>
-               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-            </RaisedButton>
-          </div>
+
+          { this.props.cardType ? '' :
           <div className="form-group">
             <SelectField 
               onChange={this.handleSelectChange} 
@@ -181,16 +221,12 @@ class AddCard extends Component {
               data-field="cardType"
               value={this.state.inputs.cardType}
             >
-              <MenuItem value={"Article"} primaryText="Article" />
-              <MenuItem value={"Image"} primaryText="Image" />
-              <MenuItem value={"EmbeddedMedia"} primaryText="Media object (Video, Audio)" />
-              <MenuItem value={"Location"} primaryText="Location" />
-              <MenuItem value={"Event"} primaryText="Event" />
-              <MenuItem value={"Entity"} primaryText="Entity" />
+            {this.renderCardTypes()}
             </SelectField>
           </div>
+           }
           <div className="form-group">
-            <RaisedButton type="submit" label="Add Card" primary={true} />
+            <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true} />
           </div>
         </form>
 
@@ -213,6 +249,7 @@ class AddCard extends Component {
 
 AddCard.propTypes = {
   cards: PropTypes.array.isRequired,
+  cardType: PropTypes.string
 }
 
 export default AddCard

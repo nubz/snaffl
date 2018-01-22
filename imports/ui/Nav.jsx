@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import { lightGreen500 } from 'material-ui/styles/colors'
 import { Session } from 'meteor/session'
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const styles = {
   navHeader: {
@@ -27,8 +28,18 @@ class LoggedMenu extends Component {
       <div>
         <Divider />
         <MenuItem onClick={this.props.handleClick} data-href="Dashboard">My Dashboard</MenuItem>
-        <MenuItem onClick={this.props.handleClick} data-href="Add.Card">Add a new card</MenuItem>
-        <MenuItem onClick={this.props.handleClick} data-href="List.Cards">My Cards</MenuItem>
+        <MenuItem onClick={this.props.handleClick} data-href="My.Cards">My Cards</MenuItem>
+        <MenuItem 
+          rightIcon={<ArrowDropRight />}
+          menuItems={[
+                <MenuItem primaryText="Article" data-href="/new/Article" onClick={this.props.handleClick}  />,
+                <MenuItem primaryText="Image" data-href="/new/Image" onClick={this.props.handleClick} />,
+                <MenuItem primaryText="Embedded Video/Audio" data-href="/new/EmbeddedMedia" onClick={this.props.handleClick} />,
+                <MenuItem primaryText="Location" data-href="/new/Location" onClick={this.props.handleClick} />,
+                <MenuItem primaryText="Event" data-href="/new/Event" onClick={this.props.handleClick} />,
+                <MenuItem primaryText="Profile" data-href="/new/Entity" onClick={this.props.handleClick} />
+              ]}>Add a new card
+        </MenuItem>
       </div>
     )
   }
@@ -56,7 +67,6 @@ class NonLoggedMenu extends Component {
   render() {
     return (
       <div>
-        <Divider />
         <MenuItem onClick={this.props.handleClick} data-href="Login">Log In</MenuItem>
       </div>
     )
@@ -110,10 +120,11 @@ export default class Nav extends Component {
         onRequestChange={this.props.onRequestChange}
         >
         <NavHeader />
-        <ExposedMenu
+        <MenuDecision
           handleClick={this.handleClick.bind(this)}
           />
-        <MenuDecision
+        <Divider />
+        <ExposedMenu
           handleClick={this.handleClick.bind(this)}
           />
       </Drawer>

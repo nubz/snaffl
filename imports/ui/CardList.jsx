@@ -32,13 +32,15 @@ class CardList extends Component {
         key={card._id} 
         card={card} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
+        full={true}
+        standalone={false}
       />
     ))
   }
  
   render() {
     return (
-      <div>
+      <div style={{maxWidth:800}}>
         {this.renderCards()}
         <Snackbar
           open={this.state.open}

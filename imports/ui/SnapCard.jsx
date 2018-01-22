@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Chip from 'material-ui/Chip'
@@ -26,7 +26,8 @@ const styles = {
   },
   previewImg: {
     display: 'block',
-    marginBottom: 20
+    marginBottom: 20,
+    cursor: 'pointer'
   }
 }
  
@@ -40,11 +41,15 @@ export default class SnapCard extends Component {
   }
 
   avatar(url) {
-    return url.replace('upload/', 'upload/c_fill,g_center,h_240,w_240/')
+    return url.replace('upload/', 'upload/c_fill,g_center,h_120,w_120/')
   }
 
   preview(url) {
     return url.replace('upload/', 'upload/c_scale,w_240/')
+  }
+
+  fullFat(url) {
+    return url.replace('upload/', 'upload/c_scale,w_1200/')
   }
 
   deleteThisCard() {
@@ -72,11 +77,16 @@ export default class SnapCard extends Component {
     FlowRouter.go('/card/' + this.props.card._id + '/edit')
   }
 
+  viewFull = () => {
+    FlowRouter.go('/card/' + this.props.card._id)
+  }
+
   render() {
     const owned = this.props.card.owner === Meteor.userId()
     const cardClassName = this.props.card.checked ? 'checked' : ''
     const title = this.props.card.title
     const cloudinaryUrl = this.props.card.image || null
+    const fullImage = this.props.full && cloudinaryUrl
     const actions = [
         <FlatButton
           label="Cancel"
@@ -93,7 +103,7 @@ export default class SnapCard extends Component {
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
     return (
-      <Card style={cardStyle} initiallyExpanded={true}>
+      <Card style={cardStyle} initiallyExpanded={fullImage ? true : false}>
         <CardHeader
           avatar={ cloudinaryUrl ? this.avatar(cloudinaryUrl) : null }
           title={this.props.card.title}
@@ -101,24 +111,18 @@ export default class SnapCard extends Component {
           actAsExpander={true}
           showExpandableButton={true}
         />
-        <CardText expandable={true}>
-          {cloudinaryUrl ? <img style={styles.previewImg} src={this.preview(cloudinaryUrl)} /> : null }
-          {this.props.card.description}<br />
-          <div style={styles.wrapper}>
-            <Chip
-              style={styles.chip}
-              onRequestDelete={owned ? this.chipHandleRequestDelete.bind(this) : null}
-            >
-              Crypto
-            </Chip>
-            <Chip
-              style={styles.chip}
-              onRequestDelete={owned ? this.chipHandleRequestDelete.bind(this) : null}
-            >
-              Bitcoin
-            </Chip>
-          </div>
-        </CardText>
+        { fullImage ? 
+          <CardMedia
+            onClick={!this.props.standalone ? this.viewFull : () => false}
+            overlay={<CardTitle title={this.props.card.title} subtitle={this.props.card.description} />}>
+            <img src={this.fullFat(cloudinaryUrl)} alt={this.props.card.title} />
+          </CardMedia>
+        : 
+          <CardText expandable={true}>
+            {cloudinaryUrl ? <img style={styles.previewImg} onClick={this.viewFull} src={this.preview(cloudinaryUrl)} /> : null }
+            <p>{this.props.card.description}</p>
+          </CardText>
+        }
         { owned ? 
 
         <CardActions>
@@ -146,5 +150,7 @@ FlatButton.propTypes = {
  
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func.isRequired
-};
+  multiSnackBar: PropTypes.func.isRequired,
+  full: PropTypes.bool,
+  standalone: PropTypes.bool
+}

@@ -21,6 +21,7 @@ injectTapEventPlugin();
 const styles = {
   title: {
     cursor: 'pointer',
+    fontFamily: 'Bungee'
   },
   fab: {
     position: "fixed",
@@ -99,7 +100,7 @@ export default class MainLayout extends Component {
       <MuiThemeProvider>
         <div>
           <AppBar
-            title={<span style={styles.title}>SnapCards</span>}
+            title={<span style={styles.title}>SNAFFL</span>}
             onTitleClick={this.goHome}
             iconElementRight={Session.get('logged') ? <Logged /> : <Login />}
             onLeftIconButtonClick={this.handleMenuToggle}
@@ -117,7 +118,7 @@ export default class MainLayout extends Component {
             </footer>
           </div>
           { Session.get('canAddCard') ?
-            <FloatingActionButton style={styles.fab} onClick={this.createCard}>
+            <FloatingActionButton style={styles.fab} secondary={true} onClick={this.createCard}>
               <ContentAdd />
             </FloatingActionButton> : ''}
           <Nav
