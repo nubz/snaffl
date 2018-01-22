@@ -59,7 +59,7 @@ Meteor.startup(() => {
 
     return Cards.find({
       access: 'public'
-    })
+    }, {limit: 100})
 
   })
 
