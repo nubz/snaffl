@@ -1,20 +1,20 @@
 import { Meteor } from 'meteor/meteor'
-import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import FlatButton from 'material-ui/FlatButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import React, { Component } from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import ActionGrade from 'material-ui/svg-icons/action/grade'
+import AppBar from 'material-ui/AppBar'
+import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
+import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu'
+import FlatButton from 'material-ui/FlatButton'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import { Session } from 'meteor/session'
-import Nav from './Nav';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import NavContainer from '../containers/NavContainer'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin();
 
@@ -121,13 +121,15 @@ export default class MainLayout extends Component {
             <FloatingActionButton style={styles.fab} secondary={true} onClick={this.createCard}>
               <ContentAdd />
             </FloatingActionButton> : ''}
-          <Nav
+          <NavContainer
             open={this.state.open}
             onRequestChange={this.onRequestChange.bind(this)}
             handleMenuToggle={this.handleMenuToggle.bind(this)}
             handleMenuClose={this.handleMenuClose.bind(this)}
+            cardTypes={[]}
+            cardTypesLoading={true}
             >
-          </Nav>
+          </NavContainer>
         </div>
       </MuiThemeProvider>
     )

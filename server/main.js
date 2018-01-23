@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { Cards } from '../imports/api/cards.js'
 import { Decks } from '../imports/api/decks.js'
+import { CardTypes } from '../imports/api/cardTypes.js'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
@@ -20,6 +21,15 @@ const makeImageUrls = function (id, remote_image) {
 }
 
 Meteor.startup(() => {
+
+  if (CardTypes.find({}).count() === 0) {
+    var cardTypes = JSON.parse(Assets.getText('referenceData/cardTypes.json'))
+
+    _.each(cardTypes, function(cardType) {
+      CardTypes.insert(cardType);
+    });
+  }
+
   // code to run on server at startup
   Cards._ensureIndex({createdAt: -1})
   Cards._ensureIndex({owner: 1})
@@ -43,6 +53,10 @@ Meteor.startup(() => {
   */
   Cloudinary.config(Secrets.cloudinary.config)
 
+  Meteor.publish('card.types', function () {
+    return CardTypes.find({})
+  })
+
   Meteor.publish('cards.owned', function() {
 
     if (!this.userId) {
@@ -55,11 +69,11 @@ Meteor.startup(() => {
 
   })
 
-  Meteor.publish('cards.public', function() {
-
+  Meteor.publish('cards.public', function(skip) {
+    skip = skip || 0
     return Cards.find({
       access: 'public'
-    }, {limit: 100})
+    }, {skip: skip, limit: 100})
 
   })
 
@@ -84,9 +98,6 @@ Meteor.startup(() => {
       _id: this.userId
     }, {
       fields: {
-        services: 1,
-        verified: 1,
-        skills: 1,
         role: 1
       }
     });

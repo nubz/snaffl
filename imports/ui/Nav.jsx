@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Meteor } from 'meteor/meteor'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import { lightGreen500 } from 'material-ui/styles/colors'
 import { Session } from 'meteor/session'
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right'
+import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
   navHeader: {
@@ -23,6 +25,19 @@ class LoggedMenu extends Component {
     super(props);
   }
 
+  renderCardTypes() {
+    console.log('cardTypes', this.props.cardTypes)
+    return this.props.cardTypes.map((cardType) => (
+      <MenuItem 
+        value={cardType.value} 
+        primaryText={cardType.title} 
+        key={cardType.value}
+        data-href={'/new/' + cardType.value}
+        onClick={this.props.handleClick}
+      />
+    ))
+  }
+
   render() {
     return (
       <div>
@@ -31,14 +46,8 @@ class LoggedMenu extends Component {
         <MenuItem onClick={this.props.handleClick} data-href="My.Cards">My Cards</MenuItem>
         <MenuItem 
           rightIcon={<ArrowDropRight />}
-          menuItems={[
-                <MenuItem primaryText="Article" data-href="/new/Article" onClick={this.props.handleClick}  />,
-                <MenuItem primaryText="Image" data-href="/new/Image" onClick={this.props.handleClick} />,
-                <MenuItem primaryText="Embedded Video/Audio" data-href="/new/EmbeddedMedia" onClick={this.props.handleClick} />,
-                <MenuItem primaryText="Location" data-href="/new/Location" onClick={this.props.handleClick} />,
-                <MenuItem primaryText="Event" data-href="/new/Event" onClick={this.props.handleClick} />,
-                <MenuItem primaryText="Profile" data-href="/new/Entity" onClick={this.props.handleClick} />
-              ]}>Add a new card
+          menuItems={this.renderCardTypes()}>
+          Add a new card
         </MenuItem>
       </div>
     )
@@ -92,7 +101,9 @@ class ExposedMenu extends Component {
 function MenuDecision(props) {
   if (Session.get('logged')) {
     return <LoggedMenu 
-      handleClick={props.handleClick.bind(this)} />;
+      handleClick={props.handleClick.bind(this)} 
+      cardTypes={props.cardTypes}
+      />;
   }
   return <NonLoggedMenu 
       handleClick={props.handleClick.bind(this)} />;
@@ -111,6 +122,7 @@ export default class Nav extends Component {
   }
 
   render() {
+    console.log('props for Nav', this.props)
     return (
       <Drawer
         docked={false}
@@ -120,9 +132,17 @@ export default class Nav extends Component {
         onRequestChange={this.props.onRequestChange}
         >
         <NavHeader />
+        <div>
+        { this.props.loadingCardTypes ?
+        <CircularProgress size={60} thickness={7} />
+        :
         <MenuDecision
           handleClick={this.handleClick.bind(this)}
+          cardTypes={this.props.cardTypes}
           />
+        }
+        </div>
+
         <Divider />
         <ExposedMenu
           handleClick={this.handleClick.bind(this)}
@@ -130,4 +150,10 @@ export default class Nav extends Component {
       </Drawer>
     )
   }
+}
+
+Nav.propTypes = {
+  cardTypes: PropTypes.array,
+  loadingCardTypes: PropTypes.bool.isRequired,
+  open: PropTypes.bool.isRequired
 }

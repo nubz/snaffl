@@ -1,0 +1,8 @@
+[
+  {"value": "Article", "title": "Article", "description": "A text based article"}, 
+  {"value": "Image", "title": "Image", "description": "An image file"}, 
+  {"value": "Embed", "title": "Media embed", "description": "A media object such as a YouTube video or SoundCloud audio"},
+  {"value": "Location", "title": "Location", "description": "A place on a map"},
+  {"value": "Event", "title": "Event", "description": "A happening with a time and a place"},
+  {"value": "Entity", "title": "Profile", "description": "A person or organisation"}
+]

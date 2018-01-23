@@ -15,15 +15,6 @@ import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 
-const CardTypes = [
-  {value: 'Article', title: 'Article'}, 
-  {value: 'Image', title: 'Image'}, 
-  {value: 'EmbeddedMedia', title: 'Embed video (e.g. YouTube)'},
-  {value: 'Location', title: 'Location'},
-  {value: 'Event', title: 'Event'},
-  {value: 'Entity', title: 'Profile'}
-]
-
 const styles = {
   formStyle: {
     marginBottom: 30
@@ -147,7 +138,8 @@ class AddCard extends Component {
   }
 
   renderCardTypes() {
-    return CardTypes.map((cardType) => (
+    console.log('cardTypes', this.props.cardTypes)
+    return this.props.cardTypes.map((cardType) => (
       <MenuItem 
         value={cardType.value} 
         primaryText={cardType.title} 
@@ -249,7 +241,8 @@ class AddCard extends Component {
 
 AddCard.propTypes = {
   cards: PropTypes.array.isRequired,
-  cardType: PropTypes.string
+  cardType: PropTypes.string,
+  cardTypes: PropTypes.array
 }
 
 export default AddCard
