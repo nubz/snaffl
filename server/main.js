@@ -29,7 +29,7 @@ Meteor.startup(() => {
   // @param reset Boolean
   // when true it will clean out db 
   // and re-seed
-  referenceData(true)
+  referenceData(false)
 
   Cards._ensureIndex({createdAt: -1})
   Cards._ensureIndex({owner: 1})
