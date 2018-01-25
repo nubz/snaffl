@@ -5,9 +5,9 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
-import { Cards } from '../api/cards.js'
+import { Decks } from '../api/decks.js'
 import Divider from 'material-ui/Divider'
-import SnapCard from './SnapCard.jsx'
+import Snapdeck from './Snapdeck.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import Secrets from '../../secrets'
@@ -37,22 +37,22 @@ const styles = {
 const defaultInputs = {
   title: '',
   description: '',
-  cardType: 'Article'
+  deckType: 'MultiDeck'
 }
 
-class AddCard extends Component {
+class AddDeck extends Component {
 
   constructor(props) {
     super(props);
 
-    if (props.cardType) {
-      defaultInputs.cardType = props.cardType
+    if (props.deckType) {
+      defaultInputs.deckType = props.deckType
     }
  
     this.state = {
       open: false,
       uploading: false,
-      message: 'Card added successfully',
+      message: 'deck added successfully',
       inputs: defaultInputs,
       imagePreview: '',
       publicId: '',
@@ -69,7 +69,6 @@ class AddCard extends Component {
       event.currentTarget.files,
       {'folder': Secrets.cloudinary.folder},
       function (res, data) {
-        console.log('uploaded data', data)
         this.setState({
           'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
           'image': data.url,
@@ -93,18 +92,18 @@ class AddCard extends Component {
 
     const inputs = this.state.inputs
  
-    Cards.insert({
+    Decks.insert({
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: Meteor.userId(),
       createdAt: new Date(),
       access: this.state.access,
-      cardType: inputs.cardType,
+      deckType: inputs.deckType,
       image: this.state.image
     }, () => {
       this.setState({
         open: true,
-        message: 'Card added ok',
+        message: 'deck added ok',
         inputs: defaultInputs,
         imagePreview: '',
         publicId: '',
@@ -122,27 +121,27 @@ class AddCard extends Component {
   };
 
   handleSelectChange = (event, index, value) => {
-    return this.setState({'inputs': {...this.state.inputs, 'cardType': value} })
+    return this.setState({'inputs': {...this.state.inputs, 'deckType': value} })
   }
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
  
-  renderCards() {
-    return this.props.cards.map((card) => (
-      <SnapCard 
-        key={card._id} 
-        card={card} 
+  renderdecks() {
+    return this.props.decks.map((deck) => (
+      <Snapdeck 
+        key={deck._id} 
+        deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
       />
     ))
   }
 
-  renderCardTypes() {
-    return this.props.cardTypes.map((cardType) => (
+  renderdeckTypes() {
+    return this.props.deckTypes.map((deckType) => (
       <MenuItem 
-        value={cardType.value} 
-        primaryText={cardType.title} 
-        key={cardType.value}
+        value={deckType.value} 
+        primaryText={deckType.title} 
+        key={deckType.value}
       />
     ))
   }
@@ -203,28 +202,28 @@ class AddCard extends Component {
             />
           </div>
 
-          { this.props.cardType ? '' :
+          { this.props.deckType ? '' :
           <div className="form-group">
             <SelectField 
               onChange={this.handleSelectChange} 
-              floatingLabelText="Type of Card"
+              floatingLabelText="Type of deck"
               floatingLabelStyle={styles.floatingLabelStyle}
-              data-field="cardType"
-              value={this.state.inputs.cardType}
+              data-field="deckType"
+              value={this.state.inputs.deckType}
             >
-            {this.renderCardTypes()}
+            {this.renderdeckTypes()}
             </SelectField>
           </div>
            }
           <div className="form-group">
-            <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true} />
+            <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
           </div>
         </form>
 
         <Divider />
 
-        <h2>Recently added Cards</h2>
-        {this.renderCards()}
+        <h2>Recently added decks</h2>
+        {this.renderdecks()}
 
         <Snackbar
           open={this.state.open}
@@ -238,13 +237,13 @@ class AddCard extends Component {
 
 }
 
-AddCard.propTypes = {
-  cards: PropTypes.array.isRequired,
-  cardType: PropTypes.string,
-  cardTypes: PropTypes.array,
-  loadingCardTypes: PropTypes.bool,
-  loadingCards: PropTypes.bool,
+AddDeck.propTypes = {
+  decks: PropTypes.array.isRequired,
+  deckType: PropTypes.string,
+  deckTypes: PropTypes.array,
+  loadingdeckTypes: PropTypes.bool,
+  loadingdecks: PropTypes.bool,
   selectedType: PropTypes.object
 }
 
-export default AddCard
+export default AddDeck

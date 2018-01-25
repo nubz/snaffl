@@ -8,6 +8,8 @@ import { lightGreen500 } from 'material-ui/styles/colors'
 import { Session } from 'meteor/session'
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right'
 import CircularProgress from 'material-ui/CircularProgress'
+import AvVideoLibrary from 'material-ui/svg-icons/av/video-library'
+import TypeIcons from './TypeIcons'
 
 const styles = {
   navHeader: {
@@ -21,18 +23,37 @@ const styles = {
 }
 
 class LoggedMenu extends Component {
+
   constructor(props) {
     super(props);
   }
 
+  iconMap(i) {
+    const IconName = TypeIcons[i]
+    return <IconName />
+  }
+
   renderCardTypes() {
-    console.log('cardTypes', this.props.cardTypes)
     return this.props.cardTypes.map((cardType) => (
       <MenuItem 
+        rightIcon={this.iconMap(cardType.value)}
         value={cardType.value} 
         primaryText={cardType.title} 
         key={cardType.value}
         data-href={'/new/' + cardType.value}
+        onClick={this.props.handleClick}
+      />
+    ))
+  }
+
+  renderDeckTypes() {
+    return this.props.deckTypes.map((deckType) => (
+      <MenuItem 
+        rightIcon={this.iconMap(deckType.value)}
+        value={deckType.value} 
+        primaryText={deckType.title} 
+        key={deckType.value}
+        data-href={'/new-deck/' + deckType.value}
         onClick={this.props.handleClick}
       />
     ))
@@ -48,6 +69,11 @@ class LoggedMenu extends Component {
           rightIcon={<ArrowDropRight />}
           menuItems={this.renderCardTypes()}>
           Add a new card
+        </MenuItem>
+        <MenuItem 
+          rightIcon={<ArrowDropRight />}
+          menuItems={this.renderDeckTypes()}>
+          Add a new deck
         </MenuItem>
       </div>
     )
@@ -103,6 +129,7 @@ function MenuDecision(props) {
     return <LoggedMenu 
       handleClick={props.handleClick.bind(this)} 
       cardTypes={props.cardTypes}
+      deckTypes={props.deckTypes}
       />;
   }
   return <NonLoggedMenu 
@@ -122,7 +149,6 @@ export default class Nav extends Component {
   }
 
   render() {
-    console.log('props for Nav', this.props)
     return (
       <Drawer
         docked={false}
@@ -139,6 +165,7 @@ export default class Nav extends Component {
         <MenuDecision
           handleClick={this.handleClick.bind(this)}
           cardTypes={this.props.cardTypes}
+          deckTypes={this.props.deckTypes}
           />
         }
         </div>
@@ -155,5 +182,6 @@ export default class Nav extends Component {
 Nav.propTypes = {
   cardTypes: PropTypes.array,
   loadingCardTypes: PropTypes.bool.isRequired,
-  open: PropTypes.bool.isRequired
+  open: PropTypes.bool.isRequired,
+  deckTypes: PropTypes.array
 }
