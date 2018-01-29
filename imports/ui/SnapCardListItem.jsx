@@ -1,35 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
-import { Decks } from '../api/decks.js'
 import FlatButton from 'material-ui/FlatButton'
-import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
 import imageApi from '../api/imageApi'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import parseIcon from './TypeIcons'
 
-const deckStyle = {
-  marginBottom: 10,
-  padding: 10
-}
-
 const styles = {
-  deck: deckStyle,
-  chip: {
-    margin: 4,
-  },
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: 15
-  },
-  previewImg: {
-    display: 'block',
-    marginBottom: 20,
-    cursor: 'pointer'
-  },
   listItem: {
     width: '100%',
     padding: 10,
@@ -37,7 +16,7 @@ const styles = {
   }
 }
 
-export default class Snapdeck extends Component {
+export default class SnapCardListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,12 +24,15 @@ export default class Snapdeck extends Component {
     }
   }
 
-  deleteThisDeck() {
-    if (this.props.deck.owner === Meteor.userId()) {
-      Decks.remove(this.props.deck._id, () => {
+  deleteThisCard() {
+    if (this.props.card.owner === Meteor.userId()) {
+      Cards.remove(this.props.card._id, () => {
         this.handleClose()
-        this.props.multiSnackBar('Deck deleted ok', true);
+        this.props.multiSnackBar('Card deleted ok', true);
       })
+    } else {
+      this.handleClose()
+      this.props.multiSnackBar('You are not authorised to delete this card', true);
     }
   }
 
@@ -63,19 +45,22 @@ export default class Snapdeck extends Component {
   }
 
   handleEditRequest = () => {
-    FlowRouter.go('Edit.Deck', {_id: this.props.deck._id})
+    if (this.props.card.owner === Meteor.userId()) {
+      FlowRouter.go('Edit.Card', {_id: this.props.card._id})
+    } else {
+      this.props.multiSnackBar('You are not authorised to edit this card', true);
+    }
   }
 
   viewFull = () => {
-    FlowRouter.go('/deck/' + this.props.deck._id)
+    FlowRouter.go('/card/' + this.props.card._id)
   }
 
   render() {
-    const deck = this.props.deck
-    const owned = deck.owner === Meteor.userId()
-    const title = deck.title
-    const images = deck.images || null
-    const fullImage = this.props.full && images
+    const card = this.props.card
+    const owned = card.owner === Meteor.userId()
+    const title = card.title
+    const images = card.images || null
     const actions = [
         <FlatButton
           label="Cancel"
@@ -85,18 +70,18 @@ export default class Snapdeck extends Component {
         <FlatButton
           label="Confirm"
           primary={true}
-          onClick={this.deleteThisDeck.bind(this)}
+          onClick={this.deleteThisCard.bind(this)}
         />,
       ];
 
-    let createdAgo = moment(deck.createdAt).fromNow()
+    let createdAgo = moment(card.createdAt).fromNow()
 
     return (
       <ListItem
         innerDivStyle={{border:'1px solid #eee', marginBottom:10}}
-        leftAvatar={images ? <Avatar src={images.thumb} /> : <Avatar src={imageApi.avatar(deck.image)} />}
-        primaryText={deck.title}
-        secondaryText={deck.deckType + ' created ' + createdAgo}
+        leftAvatar={images ? <Avatar src={images.thumb} /> : null}
+        primaryText={card.title}
+        secondaryText={card.cardType + ' created ' + createdAgo}
         initiallyOpen={false}
         primaryTogglesNestedList={true}
         nestedItems={[
@@ -126,7 +111,7 @@ export default class Snapdeck extends Component {
           modal={true}
           open={this.state.open}
         >
-          Confirm you want to permanently delete this deck.
+          Confirm you want to permanently delete this card.
         </Dialog>
       </ListItem>
     );
@@ -134,12 +119,10 @@ export default class Snapdeck extends Component {
 }
 
 FlatButton.propTypes = {
-  deck: PropTypes.object
+  card: PropTypes.object
 }
  
-Snapdeck.propTypes = {
-  deck: PropTypes.object.isRequired,
+SnapCardListItem.propTypes = {
+  card: PropTypes.object.isRequired,
   multiSnackBar: PropTypes.func.isRequired,
-  full: PropTypes.bool,
-  standalone: PropTypes.bool
 }

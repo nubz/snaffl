@@ -49,6 +49,14 @@ class Dashboard extends Component {
   handlePrivateCardsClick() {
     FlowRouter.go('My.Cards', {access: 'private'})
   }
+
+  handlePublicDecksClick() {
+    FlowRouter.go('My.Decks', {access: 'public'})
+  }
+
+  handlePrivateDecksClick() {
+    FlowRouter.go('My.Decks', {access: 'private'})
+  }
  
   render() {
     return (
@@ -61,7 +69,7 @@ class Dashboard extends Component {
             style={styles.count}
           >
             {
-              !this.props.loading ? 
+              !this.props.publicLoading ? 
               this.props.publicCardCount :
               <CircularProgress size={60} thickness={7} />
             }
@@ -74,14 +82,14 @@ class Dashboard extends Component {
             style={styles.count}
           >
             {
-              !this.props.loading ? 
+              !this.props.privateLoading ? 
               this.props.privateCardCount :
               <CircularProgress size={60} thickness={7} />
             }
             <span style={styles.panelText}>Private Cards</span>
           </Badge>
         </Paper>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicDecksClick}>
           <Badge
             badgeContent={<IconButton tooltip="Public Decks"><ActionLockOpen /></IconButton>}
             style={styles.count}
@@ -94,7 +102,7 @@ class Dashboard extends Component {
             <span style={styles.panelText}>Public Decks</span>
           </Badge>
         </Paper>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
+        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateDecksClick}>
           <Badge
             badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
             style={styles.count}
@@ -143,7 +151,8 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  loading: PropTypes.bool,
+  publicLoading: PropTypes.bool,
+  privateLoading: PropTypes.bool,
   decksLoading: PropTypes.bool,
   publicCardCount: PropTypes.number.isRequired,
   privateCardCount: PropTypes.number.isRequired,

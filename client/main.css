@@ -22,7 +22,7 @@ h3, h4, h5, h6 {
 
 .container {
 	margin: 0 auto;
-	max-width: 80%;
+	max-width: 95%;
 }
 
 form.accounts {
@@ -32,7 +32,7 @@ form.accounts {
 
 @media (min-width:1030px) {
 	.container {
-		max-width: 85%;
+		max-width: 95%;
 	}
 }
 
@@ -53,4 +53,14 @@ form.accounts {
 
 .form-group {
 	margin-bottom: 20px;
+}
+
+.listItemThumb {
+	float: left;
+	max-width: 120px;
+	margin-right: 10px;
+}
+
+.listItemThumb img {
+	max-width: 100%;
 }

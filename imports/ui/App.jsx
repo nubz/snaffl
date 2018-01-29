@@ -27,7 +27,7 @@ const styles = {
   },
 }
 
-const snafflSVG = '<svg width="100%" height="100%" viewBox="0 -50 700 600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><path id="path"><animate attributeName="d" from="m0,110 h0" to="m0,110 h1100" dur="6.0s" begin="0s" repeatCount="indefinite"/></path><text font-size="36" font-family="Bungee" fill="hsla(36, 100%, 100%, 1)"><textPath xlink:href="#path">Snaffl = content solutions</textPath></text></svg>'
+const snafflSVG = '<svg width="100%" height="100%" viewBox="0 -50 700 600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><path id="path"><animate attributeName="d" from="m0,110 h0" to="m0,110 h1100" dur="6.0s" begin="0s" repeatCount="indefinite"/></path><text font-size="36" font-family="Bungee" fill="hsla(36, 100%, 100%, 1)"><textPath xlink:href="#path">Snaffl your content</textPath></text></svg>'
 
 export default class App extends Component {
 
@@ -40,8 +40,6 @@ export default class App extends Component {
       <div>
 
         <div style={styles.section1} className="Section">
-
-
           <div dangerouslySetInnerHTML={{ __html: snafflSVG }}></div>
         </div>
 

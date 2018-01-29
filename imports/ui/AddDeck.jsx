@@ -10,14 +10,16 @@ import Divider from 'material-ui/Divider'
 import Snapdeck from './Snapdeck.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
-import Secrets from '../../secrets'
-import { Cloudinary } from 'meteor/lepozepo:cloudinary'
+import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
+import parseIcon from './TypeIcons'
+import Paper from 'material-ui/Paper'
 
 const styles = {
   formStyle: {
-    marginBottom: 30
+    marginBottom: 30,
+    marginTop: 30
   },
   floatingLabelStyle: {
     color: 'black',
@@ -31,6 +33,10 @@ const styles = {
     display: 'block',
     marginBottom: 20,
     maxWidth: '100%'
+  },
+  panel: {
+    width: '100%',
+    padding: 15
   }
 }
 
@@ -57,27 +63,13 @@ class AddDeck extends Component {
       imagePreview: '',
       publicId: '',
       image: '',
-      access: 'private'
+      access: 'private',
+      images: null
     }
   }
 
   uploadFiles(event) {
-
-    this.setState({'uploading': true})
-
-    Cloudinary.upload(
-      event.currentTarget.files,
-      {'folder': Secrets.cloudinary.folder},
-      function (res, data) {
-        this.setState({
-          'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
-          'image': data.url,
-          'publicId': data.public_id
-        })
-
-        this.setState({'uploading': false})
-
-      }.bind(this));
+    imageApi.uploadFiles(event, this)
   }
 
   multiSnackBar = (message, s) => {
@@ -99,7 +91,8 @@ class AddDeck extends Component {
       createdAt: new Date(),
       access: this.state.access,
       deckType: inputs.deckType,
-      image: this.state.image
+      image: this.state.image,
+      images: this.state.images
     }, () => {
       this.setState({
         open: true,
@@ -108,7 +101,8 @@ class AddDeck extends Component {
         imagePreview: '',
         publicId: '',
         image: '',
-        access: 'private'
+        access: 'private',
+        images: null
       })
     })
 
@@ -154,72 +148,74 @@ class AddDeck extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-          <Toggle
-            label="Public access"
-            onToggle={this.handleAccessChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-          />
-          { this.state.uploading ? 
-            <CircularProgress size={60} thickness={7} />
-          :
-          <div className="form-group">
-            { this.state.imagePreview !== '' ? 
-              <img style={styles.imagePreview} src={this.state.imagePreview} /> 
+        {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value, {width:50,height:50})} {this.props.selectedType.description}</p> : ''}
+        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
+          <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+            <Toggle
+              label="Public access"
+              onToggle={this.handleAccessChange}
+              labelPosition="right"
+              style={{marginBottom: 20}}
+            />
+            { this.state.uploading ? 
+              <CircularProgress size={60} thickness={7} />
+            :
+            <div className="form-group">
+              { this.state.images ? 
+                <img style={styles.imagePreview} src={this.state.images.small} /> 
               : ''}
-            <RaisedButton
-               secondary={true} 
-               containerElement='label' // <-- Just add me!
-               label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-            </RaisedButton>
-          </div>
-          }
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Title"
-              floatingLabelFixed={true}
-              id="text-field-controlled"
-              data-field="title"
-              onChange={this.handleInputChange}
-              value={this.state.inputs.title}
-            />
-          </div>
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Summary (optional)"
-              hintText="A short, plain text summary"
-              floatingLabelFixed={true}
-              id="description"
-              data-field="description"
-              multiLine={true}
-              rows={2}
-              onChange={this.handleInputChange}
-              value={this.state.inputs.description}
-            />
-          </div>
+              <RaisedButton
+                 secondary={true} 
+                 containerElement='label' // <-- Just add me!
+                 label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
+                 <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
+              </RaisedButton>
+            </div>
+            }
+            <div className="form-group">
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Title"
+                floatingLabelFixed={true}
+                id="text-field-controlled"
+                data-field="title"
+                onChange={this.handleInputChange}
+                value={this.state.inputs.title}
+              />
+            </div>
+            <div className="form-group">
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Summary (optional)"
+                hintText="A short, plain text summary"
+                floatingLabelFixed={true}
+                id="description"
+                data-field="description"
+                multiLine={true}
+                rows={2}
+                onChange={this.handleInputChange}
+                value={this.state.inputs.description}
+              />
+            </div>
 
-          { this.props.deckType ? '' :
-          <div className="form-group">
-            <SelectField 
-              onChange={this.handleSelectChange} 
-              floatingLabelText="Type of deck"
-              floatingLabelStyle={styles.floatingLabelStyle}
-              data-field="deckType"
-              value={this.state.inputs.deckType}
-            >
-            {this.renderdeckTypes()}
-            </SelectField>
-          </div>
-           }
-          <div className="form-group">
-            <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
-          </div>
-        </form>
-
+            { this.props.deckType ? '' :
+            <div className="form-group">
+              <SelectField 
+                onChange={this.handleSelectChange} 
+                floatingLabelText="Type of deck"
+                floatingLabelStyle={styles.floatingLabelStyle}
+                data-field="deckType"
+                value={this.state.inputs.deckType}
+              >
+              {this.renderdeckTypes()}
+              </SelectField>
+            </div>
+             }
+            <div className="form-group">
+              <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
+            </div>
+          </form>
+        </Paper>
         <Divider />
 
         <h2>Recently added decks</h2>

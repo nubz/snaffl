@@ -10,14 +10,15 @@ import Divider from 'material-ui/Divider'
 import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
-import Secrets from '../../secrets'
-import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
+import parseIcon from './TypeIcons'
+import imageApi from '../api/imageApi'
 
 const styles = {
   formStyle: {
-    marginBottom: 30
+    marginBottom: 30,
+    marginTop: 30
   },
   floatingLabelStyle: {
     color: 'black',
@@ -62,23 +63,7 @@ class AddCard extends Component {
   }
 
   uploadFiles(event) {
-
-    this.setState({'uploading': true})
-
-    Cloudinary.upload(
-      event.currentTarget.files,
-      {'folder': Secrets.cloudinary.folder},
-      function (res, data) {
-        console.log('uploaded data', data)
-        this.setState({
-          'imagePreview': data.url.replace('upload/', 'upload/c_scale,h_325/'),
-          'image': data.url,
-          'publicId': data.public_id
-        })
-
-        this.setState({'uploading': false})
-
-      }.bind(this));
+    imageApi.uploadFiles(event, this)
   }
 
   multiSnackBar = (message, s) => {
@@ -100,13 +85,13 @@ class AddCard extends Component {
       createdAt: new Date(),
       access: this.state.access,
       cardType: inputs.cardType,
-      image: this.state.image
+      image: this.state.image,
+      images: this.state.images
     }, () => {
       this.setState({
         open: true,
         message: 'Card added ok',
         inputs: defaultInputs,
-        imagePreview: '',
         publicId: '',
         image: '',
         access: 'private'
@@ -155,6 +140,7 @@ class AddCard extends Component {
   render() {
     return (
       <div>
+        {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
           <Toggle
             label="Public access"
@@ -166,8 +152,8 @@ class AddCard extends Component {
             <CircularProgress size={60} thickness={7} />
           :
           <div className="form-group">
-            { this.state.imagePreview !== '' ? 
-              <img style={styles.imagePreview} src={this.state.imagePreview} /> 
+            { this.state.images ? 
+              <img style={styles.imagePreview} src={this.state.images.small} /> 
               : ''}
             <RaisedButton
                secondary={true} 

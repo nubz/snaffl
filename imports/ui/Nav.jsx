@@ -9,7 +9,7 @@ import { Session } from 'meteor/session'
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right'
 import CircularProgress from 'material-ui/CircularProgress'
 import AvVideoLibrary from 'material-ui/svg-icons/av/video-library'
-import TypeIcons from './TypeIcons'
+import parseIcon from './TypeIcons'
 
 const styles = {
   navHeader: {
@@ -28,15 +28,10 @@ class LoggedMenu extends Component {
     super(props);
   }
 
-  iconMap(i) {
-    const IconName = TypeIcons[i]
-    return <IconName />
-  }
-
   renderCardTypes() {
     return this.props.cardTypes.map((cardType) => (
       <MenuItem 
-        rightIcon={this.iconMap(cardType.value)}
+        rightIcon={parseIcon(cardType.value)}
         value={cardType.value} 
         primaryText={cardType.title} 
         key={cardType.value}
@@ -49,7 +44,7 @@ class LoggedMenu extends Component {
   renderDeckTypes() {
     return this.props.deckTypes.map((deckType) => (
       <MenuItem 
-        rightIcon={this.iconMap(deckType.value)}
+        rightIcon={parseIcon(deckType.value)}
         value={deckType.value} 
         primaryText={deckType.title} 
         key={deckType.value}
@@ -70,6 +65,7 @@ class LoggedMenu extends Component {
           menuItems={this.renderCardTypes()}>
           Add a new card
         </MenuItem>
+        <MenuItem onClick={this.props.handleClick} data-href="My.Decks">My Decks</MenuItem>
         <MenuItem 
           rightIcon={<ArrowDropRight />}
           menuItems={this.renderDeckTypes()}>

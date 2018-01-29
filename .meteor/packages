@@ -27,3 +27,4 @@ std:accounts-ui
 zetoff:accounts-material-ui
 momentjs:moment
 lepozepo:cloudinary
+ros:publish-counts

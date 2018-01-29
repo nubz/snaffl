@@ -1,3 +1,4 @@
+import React, { Component } from 'react'
 import AvVideoLibrary from 'material-ui/svg-icons/av/video-library'
 import ImagePhoto from 'material-ui/svg-icons/image/photo'
 import MapsAddLocation from 'material-ui/svg-icons/maps/add-location'
@@ -9,8 +10,11 @@ import ImageCollections from 'material-ui/svg-icons/image/collections'
 import MapsMap from 'material-ui/svg-icons/maps/map'
 import ActionDateRange from 'material-ui/svg-icons/action/date-range'
 import CommunicationContacts from 'material-ui/svg-icons/communication/contacts'
+import ActionDeleteForever from 'material-ui/svg-icons/action/delete-forever'
+import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit'
+import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 
-export default {
+const TypeIcons = {
   'Article': ActionDescription,
   'Image': ImagePhoto,
   'Embed': AvVideoLibrary,
@@ -21,5 +25,14 @@ export default {
   'Gallery': ImageCollections,
   'Map': MapsMap,
   'Schedule': ActionDateRange,
-  'Directory': CommunicationContacts
+  'Directory': CommunicationContacts,
+  'Edit': EditorModeEdit,
+  'View': AvPlayArrow,
+  'Delete': ActionDeleteForever
+}
+
+export default function parseIcon(typeName, style) {
+	const MappedIcon = TypeIcons[typeName]
+	style = style || {h:24,w:24}
+	return <MappedIcon style={style} />
 }

@@ -8,16 +8,19 @@ import Dashboard from '../ui/Dashboard'
 
 export default DashboardContainer = withTracker(props => {
   const owner = Meteor.userId()
-  const cardsHandle = Meteor.subscribe('cards.owned')
+  const publicCardsHandle = Meteor.subscribe('my.publicCards')
+  const privateCardsHandle = Meteor.subscribe('my.privateCards')
   const decksHandle = Meteor.subscribe('decks.owned')
-  let loading = !cardsHandle.ready()
   let decksLoading = !decksHandle.ready() 
+  let publicLoading = !publicCardsHandle.ready()
+  let privateLoading = !privateCardsHandle.ready()
   return {
-    loading,
-    decksHandle,
+    publicLoading,
+    privateLoading,
+    decksLoading,
     privateDeckCount: Decks.find({owner: owner, access: 'private' }).count(),
     publicDeckCount: Decks.find({owner: owner, access: 'public' }).count(),
-    privateCardCount: Cards.find({ owner: owner, access: 'private' }).count(),
-    publicCardCount: Cards.find({ owner: owner, access: 'public'}).count(),
+    privateCardCount: Counts.get('my.privateCards.count'),
+    publicCardCount: Counts.get('my.publicCards.count')
   }
 })(Dashboard)

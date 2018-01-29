@@ -30,8 +30,7 @@ const styles = {
     cursor: 'pointer'
   }
 }
- 
-// Card component - represents a single todo item
+
 export default class SnapCard extends Component {
   constructor(props) {
     super(props);
@@ -103,7 +102,7 @@ export default class SnapCard extends Component {
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
     return (
-      <Card style={cardStyle} initiallyExpanded={fullImage ? true : false}>
+      <Card style={cardStyle} initiallyExpanded={false}>
         <CardHeader
           avatar={ cloudinaryUrl ? this.avatar(cloudinaryUrl) : null }
           title={this.props.card.title}
@@ -111,18 +110,19 @@ export default class SnapCard extends Component {
           actAsExpander={true}
           showExpandableButton={true}
         />
-        { fullImage ? 
-          <CardMedia
-            onClick={!this.props.standalone ? this.viewFull : () => false}
-            overlay={<CardTitle title={this.props.card.title} subtitle={this.props.card.description} />}>
-            <img src={this.fullFat(cloudinaryUrl)} alt={this.props.card.title} />
-          </CardMedia>
-        : 
-          <CardText expandable={true}>
-            {cloudinaryUrl ? <img style={styles.previewImg} onClick={this.viewFull} src={this.preview(cloudinaryUrl)} /> : null }
-            <p>{this.props.card.description}</p>
-          </CardText>
-        }
+
+        { cloudinaryUrl ?
+ 
+        <CardMedia
+          onClick={!this.props.standalone ? this.viewFull : () => false}>
+          <img src={this.fullFat(cloudinaryUrl)} alt={this.props.card.title} />
+        </CardMedia>
+        : '' }
+
+        <CardText expandable={true}>
+          <p>{this.props.card.description}</p>
+        </CardText>
+
         { owned ? 
 
         <CardActions>

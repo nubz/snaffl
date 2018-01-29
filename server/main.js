@@ -61,15 +61,31 @@ Meteor.startup(() => {
     return DeckTypes.find({})
   })
 
+  Meteor.publish("my.publicCards",function(){
+    if (!this.userId) {
+      return this.ready();
+    }
+    Counts.publish(this,"my.publicCards.count",Cards.find({owner: this.userId, access:'public'}), {fastCount: true});
+  });
+
+  Meteor.publish("my.privateCards",function(){
+    if (!this.userId) {
+      return this.ready();
+    }
+    Counts.publish(this,"my.privateCards.count",Cards.find({owner: this.userId, access:'private'}), {fastCount: true});
+  });
+
   Meteor.publish('cards.owned', function() {
 
     if (!this.userId) {
       return this.ready();
     }
 
-    return Cards.find({
+    let cursor = Cards.find({
       owner: this.userId
     })
+
+    return cursor
 
   })
 
@@ -83,6 +99,10 @@ Meteor.startup(() => {
 
   Meteor.publish('card', function (_id) {
     return Cards.find({_id: _id})
+  })
+
+  Meteor.publish('deck', function (_id) {
+    return Decks.find({_id: _id})
   })
 
   Meteor.publish('decks.owned', function() {

@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import SnapCardListItem from './SnapCardListItem.jsx'
+import {List, ListItem} from 'material-ui/List'
+import Snapdeck from './Snapdeck.jsx'
 import Snackbar from 'material-ui/Snackbar'
 import CircularProgress from 'material-ui/CircularProgress'
 
-class CardList extends Component {
+class DeckList extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       open: false,
-      message: 'Card added successfully'
+      message: 'Deck added successfully'
     };
   }
 
@@ -27,11 +28,11 @@ class CardList extends Component {
     });
   };
 
-  renderCards() {
-    return this.props.cards.map((card) => (
-      <SnapCardListItem 
-        key={card._id} 
-        card={card} 
+  renderDecks() {
+    return this.props.decks.map((deck) => (
+      <Snapdeck 
+        key={deck._id} 
+        deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
         full={true}
         standalone={false}
@@ -42,10 +43,12 @@ class CardList extends Component {
   render() {
     return (
       <div>
-      {this.props.loading ? 
+      { this.props.loading ? 
         <CircularProgress size={60} thickness={7} />
       :
-        this.renderCards()
+        <List>
+          {this.renderDecks()}
+        </List>
       }
         <Snackbar
           open={this.state.open}
@@ -54,15 +57,16 @@ class CardList extends Component {
           onRequestClose={this.handleRequestClose}
           style={{'fontWeight': 700}}
         />
+
       </div>
     )
   }
 
 }
 
-CardList.propTypes = {
-  cards: PropTypes.array.isRequired,
+DeckList.propTypes = {
+  decks: PropTypes.array.isRequired,
   loading: PropTypes.bool
 }
  
-export default CardList
+export default DeckList
