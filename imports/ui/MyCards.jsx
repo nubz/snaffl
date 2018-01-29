@@ -10,6 +10,10 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import imageApi from '../api/imageApi'
 import Toggle from 'material-ui/Toggle'
 
+const styles = {
+  tabStyle: {textTransform: 'none', fontWeight: 700, color:'black'}
+}
+
 class MyCards extends Component {
 
   constructor(props) {
@@ -38,18 +42,19 @@ class MyCards extends Component {
   render() {
     return (
         <div>
+          <div style={{position: 'absolute', top: 85, right: 25, width: 90}}>
           <Toggle
-            label="View as a grid"
+            label="Grid"
             onToggle={this.handleModeChange}
-            labelPosition="right"
-            style={{marginBottom: 20, float:'right'}}
           />
+          </div>
         { this.props.loading ? <CircularProgress size={60} thickness={7} /> :
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
+            tabItemContainerStyle={{ backgroundColor: 'white', textColor: 'black'}}
           >
-            <Tab label="Public Cards" value="public">
+            <Tab label={<span style={styles.tabStyle}>Public Cards</span>} value="public" style={{color: 'black'}} buttonStyle={{textColor: 'black'}}>
                 { this.state.mode == 'grid' ? 
                     <GridList
                       cellHeight={180}
@@ -71,7 +76,7 @@ class MyCards extends Component {
                 : <CardList cards={this.props.publicCards} /> 
                 }
             </Tab>
-            <Tab label="Private Cards" value="private">
+            <Tab label={<span style={styles.tabStyle}>Private Cards</span>} value="private">
             { this.state.mode == 'grid'? 
                     <GridList
                       cellHeight={180}
