@@ -6,8 +6,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
-import Secrets from '../../secrets'
-import { Cloudinary } from 'meteor/lepozepo:cloudinary'
+import imageApi from '../api/imageApi'
 
 const cardStyle = {
   marginBottom: 10,
@@ -37,18 +36,6 @@ export default class SnapCard extends Component {
     this.state = {
       open: false,
     }
-  }
-
-  avatar(url) {
-    return url.replace('upload/', 'upload/c_fill,g_center,h_120,w_120/')
-  }
-
-  preview(url) {
-    return url.replace('upload/', 'upload/c_scale,w_240/')
-  }
-
-  fullFat(url) {
-    return url.replace('upload/', 'upload/c_scale,w_1200/')
   }
 
   deleteThisCard() {
@@ -84,8 +71,16 @@ export default class SnapCard extends Component {
     const owned = this.props.card.owner === Meteor.userId()
     const cardClassName = this.props.card.checked ? 'checked' : ''
     const title = this.props.card.title
-    const cloudinaryUrl = this.props.card.image || null
-    const fullImage = this.props.full && cloudinaryUrl
+    let images = this.props.card.images || false
+    /* a little dance to handle cards uploaded before images
+    ** were auto generated from secure url
+    */
+    const imageUrl = this.props.card.image || null
+    if (!images && imageUrl) {
+      let secureUrl = imageApi.returnSecureUrl(imageUrl)
+      console.log('secureUrl = ' + secureUrl)
+      images = imageApi.makeImageUrls(secureUrl)
+    }
     const actions = [
         <FlatButton
           label="Cancel"
@@ -104,20 +99,20 @@ export default class SnapCard extends Component {
     return (
       <Card style={cardStyle} initiallyExpanded={false}>
         <CardHeader
-          avatar={ cloudinaryUrl ? this.avatar(cloudinaryUrl) : null }
+          avatar={ images ? images.thumb : null }
           title={this.props.card.title}
           subtitle={this.props.card.cardType + ' created ' + createdAgo}
           actAsExpander={true}
           showExpandableButton={true}
         />
 
-        { cloudinaryUrl ?
- 
-        <CardMedia
-          onClick={!this.props.standalone ? this.viewFull : () => false}>
-          <img src={this.fullFat(cloudinaryUrl)} alt={this.props.card.title} />
+        { images ?
+
+        <CardMedia>
+          <img src={images.large} alt={this.props.card.title} />
         </CardMedia>
-        : '' }
+        : '' 
+        }
 
         <CardText expandable={true}>
           <p>{this.props.card.description}</p>
@@ -131,6 +126,7 @@ export default class SnapCard extends Component {
         </CardActions>
         : ''
         }
+
         <Dialog
           title={'Delete "' + title + '"'}
           actions={actions}
@@ -150,7 +146,5 @@ FlatButton.propTypes = {
  
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func.isRequired,
-  full: PropTypes.bool,
-  standalone: PropTypes.bool
+  multiSnackBar: PropTypes.func.isRequired
 }

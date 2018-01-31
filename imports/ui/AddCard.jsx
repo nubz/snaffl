@@ -94,7 +94,8 @@ class AddCard extends Component {
         inputs: defaultInputs,
         publicId: '',
         image: '',
-        access: 'private'
+        access: 'private',
+        images: []
       })
     })
 

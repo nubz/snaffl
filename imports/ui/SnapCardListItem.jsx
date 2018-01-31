@@ -26,7 +26,12 @@ export default class SnapCardListItem extends Component {
     const card = this.props.card
     const owned = card.owner === Meteor.userId()
     const title = card.title
-    const images = card.images || null
+    let images = card.images || null
+    const imageUrl =card.image || null
+    if (!images && imageUrl) {
+      let secureUrl = imageApi.returnSecureUrl(imageUrl)
+      images = imageApi.makeImageUrls(secureUrl)
+    }
 
     let createdAgo = moment(card.createdAt).fromNow()
 

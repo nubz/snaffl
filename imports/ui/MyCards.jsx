@@ -9,9 +9,19 @@ import Subheader from 'material-ui/Subheader'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import imageApi from '../api/imageApi'
 import Toggle from 'material-ui/Toggle'
+import IconMenu from 'material-ui/IconMenu';
+import FontIcon from 'material-ui/FontIcon';
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu'
+import RaisedButton from 'material-ui/RaisedButton'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import ActionViewList from 'material-ui/svg-icons/action/view-list'
+import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 
 const styles = {
-  tabStyle: {textTransform: 'none', fontWeight: 700, color:'black'}
+  tabStyle: {textTransform: 'none', fontWeight: 700, color:'black'},
+  tabItem: { backgroundColor: '#eee', textColor: 'black'}
 }
 
 class MyCards extends Component {
@@ -20,8 +30,19 @@ class MyCards extends Component {
     super(props);
     this.state = {
       value: this.props.access,
-      mode: 'list'
+      mode: 'list',
+      typeValue: 'All',
+      publicCards: this.props.publicCards,
+      privateCards: this.props.privateCards
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentDidMount', nextProps)
+    this.setState({
+      publicCards: nextProps.publicCards,
+      privateCards: nextProps.privateCards
+    })
   }
 
   handleChange = (value) => {
@@ -30,29 +51,62 @@ class MyCards extends Component {
     })
   }
 
+  handleTypeChange = (e, i, v) => {
+    this.setState({
+      typeValue: v,
+      publicCards: v == "All" ? this.props.publicCards : this.props.publicCards.filter(card => card.cardType == v),
+      privateCards: v == "All" ? this.props.privateCards : this.props.privateCards.filter(card => card.cardType == v)
+    })
+  }
+
   handleModeChange = (event, mode) => {
     const selectedMode = mode ? 'grid' : 'mode'
     this.setState({mode: selectedMode});
   };
+
+  setList = () => {
+    this.setState({mode: 'list'})
+  }
+
+  setGrid = () => {
+    this.setState({mode: 'grid'})
+  }
 
   viewFull(e) {
     FlowRouter.go('View.Card', {_id: this._id})
   }
 
   render() {
+    console.log('publicCards', this.state.publicCards)
     return (
         <div>
-          <div style={{position: 'absolute', top: 85, right: 25, width: 90}}>
-          <Toggle
-            label="Grid"
-            onToggle={this.handleModeChange}
-          />
-          </div>
+          <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
+            <ToolbarGroup firstChild={true}>
+              <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
+                <MenuItem value={"All"} primaryText="All types of card" />
+                <MenuItem value={"Image"} primaryText="Image cards" />
+                <MenuItem value={"Article"} primaryText="Article cards" />
+                <MenuItem value={"Location"} primaryText="Location cards" />
+                <MenuItem value={"Event"} primaryText="Event cards" />
+                <MenuItem value={"Entity"} primaryText="Profile cards" />
+                <MenuItem value={"Embed"} primaryText="Embed cards" />
+              </DropDownMenu>
+            </ToolbarGroup>
+            <ToolbarGroup>
+              <ToolbarSeparator />
+              <IconButton touch={true} onClick={this.setList}>
+                <ActionViewList />
+              </IconButton>
+              <IconButton touch={true} onClick={this.setGrid}>
+                <ActionViewModule />
+              </IconButton>
+            </ToolbarGroup>
+          </Toolbar>
         { this.props.loading ? <CircularProgress size={60} thickness={7} /> :
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            tabItemContainerStyle={{ backgroundColor: 'white', textColor: 'black'}}
+            tabItemContainerStyle={styles.tabItem}
           >
             <Tab label={<span style={styles.tabStyle}>Public Cards</span>} value="public" style={{color: 'black'}} buttonStyle={{textColor: 'black'}}>
                 { this.state.mode == 'grid' ? 
@@ -61,7 +115,7 @@ class MyCards extends Component {
                       cols={3}
                       style={{marginTop:5}}
                     >
-                      {this.props.publicCards.map((tile) => (
+                      {this.state.publicCards.map((tile) => (
                         <GridTile
                           key={tile._id}
                           title={tile.title}
@@ -73,7 +127,7 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-                : <CardList cards={this.props.publicCards} /> 
+                : <CardList cards={this.state.publicCards} /> 
                 }
             </Tab>
             <Tab label={<span style={styles.tabStyle}>Private Cards</span>} value="private">
@@ -83,7 +137,7 @@ class MyCards extends Component {
                       cols={3}
                       style={{marginTop:5}}
                     >
-                      {this.props.privateCards.map((tile) => (
+                      {this.state.privateCards.map((tile) => (
                         <GridTile
                           key={tile._id}
                           title={tile.title}
@@ -95,7 +149,7 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-             :   <CardList cards={this.props.privateCards} />
+             :   <CardList cards={this.state.privateCards} />
              }
             </Tab>
           </Tabs>

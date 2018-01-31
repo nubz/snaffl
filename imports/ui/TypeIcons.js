@@ -13,6 +13,8 @@ import CommunicationContacts from 'material-ui/svg-icons/communication/contacts'
 import ActionDeleteForever from 'material-ui/svg-icons/action/delete-forever'
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit'
 import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import ActionViewList from 'material-ui/svg-icons/action/view-list'
+import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 
 const TypeIcons = {
   'Article': ActionDescription,
@@ -28,11 +30,13 @@ const TypeIcons = {
   'Directory': CommunicationContacts,
   'Edit': EditorModeEdit,
   'View': AvPlayArrow,
-  'Delete': ActionDeleteForever
+  'Delete': ActionDeleteForever,
+  'List': ActionViewList,
+  'Grid': ActionViewModule
 }
 
-export default function parseIcon(typeName, style) {
+export default function parseIcon(typeName, style, props) {
 	const MappedIcon = TypeIcons[typeName]
 	style = style || {h:24,w:24}
-	return <MappedIcon style={style} />
+	return <MappedIcon style={style} {...props} />
 }

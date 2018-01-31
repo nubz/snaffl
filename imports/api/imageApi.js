@@ -12,13 +12,12 @@ const imageApi = {
       event.currentTarget.files,
       {'folder': Secrets.cloudinary.folder},
       function (res, data) {
-        console.log('uploaded data', data)
         ctx.setState({
           'image': data.secure_url,
           'images': imageApi.makeImageUrls(data.secure_url),
-          'publicId': data.public_id
+          'publicId': data.public_id,
+          'uploading': false
         })
-        ctx.setState({'uploading': false})
       }.bind(ctx));
   },
   makeImageUrls: url => {
@@ -28,6 +27,9 @@ const imageApi = {
       'medium': imageApi.medium(url),
       'large': imageApi.medium(url)
     }
+  },
+  returnSecureUrl: url => {
+    return url.replace('http:', 'https:')
   }
 }
 
