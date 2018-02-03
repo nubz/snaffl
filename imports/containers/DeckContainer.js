@@ -7,10 +7,8 @@ export default DeckContainer = withTracker(props => {
   const deckHandle = Meteor.subscribe('deck', props._id)
   const loading = !deckHandle.ready()
   const deck = Decks.findOne(props._id)
-  const full = true
   return {
     deck,
-    full,
     loading
   }
 })(ViewDeck)

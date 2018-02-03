@@ -9,7 +9,6 @@ import imageApi from '../api/imageApi'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import parseIcon from './TypeIcons'
-import DeckCardsContainer from '../containers/DeckCardsContainer'
 
 const deckStyle = {
   marginBottom: 10,
@@ -38,7 +37,7 @@ const styles = {
   }
 }
 
-export default class Snapdeck extends Component {
+export default class SnapdeckListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,14 +92,44 @@ export default class Snapdeck extends Component {
     let createdAgo = moment(deck.createdAt).fromNow()
 
     return (
-      <div>
-        <h2>{deck.title}</h2>
-        <p>{deck.description}</p>
-        <hr />
-        <h3>Cards:</h3>
-        <DeckCardsContainer cards={deck.cards} />
-      </div>
-    )
+      <ListItem
+        innerDivStyle={{border:'1px solid #eee', marginBottom:10}}
+        leftAvatar={images ? <Avatar src={images.thumb} /> : <Avatar src={imageApi.avatar(deck.image)} />}
+        primaryText={deck.title}
+        secondaryText={deck.deckType + ' created ' + createdAgo + ' with ' + deck.cards.length + ' cards within'}
+        initiallyOpen={false}
+        primaryTogglesNestedList={true}
+        nestedItems={[
+          <ListItem
+            key={1}
+            primaryText="Edit"
+            onClick={this.handleEditRequest}
+            leftIcon={parseIcon('Edit')}
+          />,
+          <ListItem
+            key={2}
+            primaryText="Delete"
+            onClick={this.handleOpen}
+            leftIcon={parseIcon('Delete')}
+          />,
+          <ListItem
+            key={3}
+            primaryText="View"
+            onClick={this.viewFull}
+            leftIcon={parseIcon('View')}
+          />,
+        ]}
+      >
+        <Dialog
+          title={'Delete "' + title + '"'}
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Confirm you want to permanently delete this deck.
+        </Dialog>
+      </ListItem>
+    );
   }
 }
 
@@ -108,9 +137,7 @@ FlatButton.propTypes = {
   deck: PropTypes.object
 }
  
-Snapdeck.propTypes = {
+SnapdeckListItem.propTypes = {
   deck: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func.isRequired,
-  full: PropTypes.bool,
-  standalone: PropTypes.bool
+  multiSnackBar: PropTypes.func.isRequired
 }

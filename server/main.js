@@ -89,6 +89,10 @@ Meteor.startup(() => {
 
   })
 
+  Meteor.publish('deck.cards', function (ids) {
+    return Cards.find({ _id : { $in : ids } })
+  })
+
   Meteor.publish('cards.public', function(skip) {
     skip = skip || 0
     return Cards.find({

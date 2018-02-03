@@ -17,6 +17,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
+import parseIcon from './TypeIcons'
 
 class PublicCards extends Component {
 
@@ -30,7 +31,6 @@ class PublicCards extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentDidMount', nextProps)
     this.setState({
       publicCards: nextProps.cards
     })
@@ -42,11 +42,6 @@ class PublicCards extends Component {
       publicCards: v == "All" ? this.props.cards : this.props.cards.filter(card => card.cardType == v),
     })
   }
-
-  handleModeChange = (event, mode) => {
-    const selectedMode = mode ? 'grid' : 'mode'
-    this.setState({mode: selectedMode});
-  };
 
   setList = () => {
     this.setState({mode: 'list'})
@@ -60,28 +55,34 @@ class PublicCards extends Component {
     FlowRouter.go('View.Card', {_id: this._id})
   }
 
+
+  renderCardTypes() {
+    return this.props.cardTypes.map((cardType) => (
+      <MenuItem 
+        rightIcon={parseIcon(cardType.value)}
+        value={cardType.value} 
+        primaryText={cardType.title} 
+        key={cardType.value}
+      />
+    ))
+  }
+
   render() {
-    console.log('publicCards', this.state.publicCards)
     return (
         <div>
           <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
                 <MenuItem value={"All"} primaryText="All types of card" />
-                <MenuItem value={"Image"} primaryText="Image cards" />
-                <MenuItem value={"Article"} primaryText="Article cards" />
-                <MenuItem value={"Location"} primaryText="Location cards" />
-                <MenuItem value={"Event"} primaryText="Event cards" />
-                <MenuItem value={"Entity"} primaryText="Profile cards" />
-                <MenuItem value={"Embed"} primaryText="Embed cards" />
+                {this.renderCardTypes()}
               </DropDownMenu>
             </ToolbarGroup>
             <ToolbarGroup>
               <ToolbarSeparator />
-              <IconButton touch={true} onClick={this.setList}>
+              <IconButton touch={true} onClick={this.setList} style={this.state.mode == 'grid' ? {opacity:1} : {opacity:0.5}}>
                 <ActionViewList />
               </IconButton>
-              <IconButton touch={true} onClick={this.setGrid}>
+              <IconButton touch={true} onClick={this.setGrid} style={this.state.mode == 'list' ? {opacity:1} : {opacity:0.5}}>
                 <ActionViewModule />
               </IconButton>
             </ToolbarGroup>
@@ -98,6 +99,7 @@ class PublicCards extends Component {
                   <GridTile
                     key={tile._id}
                     title={tile.title}
+                    style={{cursor:'pointer'}}
                     subtitle={<span>by <b>{tile.owner}</b></span>}
                     onClick={this.viewFull.bind(tile)}
                     actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
@@ -118,6 +120,7 @@ class PublicCards extends Component {
 
 PublicCards.propTypes = {
     cards: PropTypes.array,
+    cardTypes: PropTypes.array,
     loading: PropTypes.bool
 }
 

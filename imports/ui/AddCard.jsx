@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
 import { Cards } from '../api/cards.js'
 import Divider from 'material-ui/Divider'
-import SnapCard from './SnapCard.jsx'
+import SnapCardListItem from './SnapCardListItem.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -115,7 +115,7 @@ class AddCard extends Component {
  
   renderCards() {
     return this.props.cards.map((card) => (
-      <SnapCard 
+      <SnapCardListItem 
         key={card._id} 
         card={card} 
         multiSnackBar={this.multiSnackBar.bind(this)} 

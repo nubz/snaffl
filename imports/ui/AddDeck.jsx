@@ -92,7 +92,9 @@ class AddDeck extends Component {
       access: this.state.access,
       deckType: inputs.deckType,
       image: this.state.image,
-      images: this.state.images
+      images: this.state.images,
+      cards: [],
+      decks: []
     }, () => {
       this.setState({
         open: true,
@@ -102,7 +104,8 @@ class AddDeck extends Component {
         publicId: '',
         image: '',
         access: 'private',
-        images: null
+        images: null,
+        children: []
       })
     })
 

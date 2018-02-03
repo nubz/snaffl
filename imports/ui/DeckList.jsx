@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {List, ListItem} from 'material-ui/List'
-import Snapdeck from './Snapdeck.jsx'
+import SnapdeckListItem from './SnapdeckListItem.jsx'
 import Snackbar from 'material-ui/Snackbar'
 import CircularProgress from 'material-ui/CircularProgress'
 
@@ -30,12 +30,10 @@ class DeckList extends Component {
 
   renderDecks() {
     return this.props.decks.map((deck) => (
-      <Snapdeck 
+      <SnapdeckListItem 
         key={deck._id} 
         deck={deck} 
-        multiSnackBar={this.multiSnackBar.bind(this)} 
-        full={true}
-        standalone={false}
+        multiSnackBar={this.multiSnackBar.bind(this)}
       />
     ))
   }

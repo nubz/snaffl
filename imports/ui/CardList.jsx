@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SnapCardListItem from './SnapCardListItem.jsx'
-import Snackbar from 'material-ui/Snackbar'
 import CircularProgress from 'material-ui/CircularProgress'
 
 class CardList extends Component {
@@ -14,27 +13,11 @@ class CardList extends Component {
     };
   }
 
-  multiSnackBar = (message, s) => {
-    this.setState({
-      open: s,
-      message: message
-    })
-  }
-
-  handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
   renderCards() {
     return this.props.cards.map((card) => (
       <SnapCardListItem 
         key={card._id} 
         card={card} 
-        multiSnackBar={this.multiSnackBar.bind(this)} 
-        full={true}
-        standalone={false}
       />
     ))
   }
@@ -47,13 +30,6 @@ class CardList extends Component {
       :
         this.renderCards()
       }
-        <Snackbar
-          open={this.state.open}
-          message={this.state.message}
-          autoHideDuration={3000}
-          onRequestClose={this.handleRequestClose}
-          style={{'fontWeight': 700}}
-        />
       </div>
     )
   }

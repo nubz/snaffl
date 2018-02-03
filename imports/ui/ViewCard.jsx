@@ -29,8 +29,7 @@ class ViewCard extends Component {
         <SnapCard 
           key={this.props.card._id} 
           card={this.props.card} 
-          full={true}
-          standalone={true}
+          decks={this.props.decks}
           multiSnackBar={()=>false} 
           loading={this.props.loading}
         />
@@ -42,6 +41,7 @@ class ViewCard extends Component {
 
 ViewCard.propTypes = {
   card: PropTypes.object,
+  decks: PropTypes.array,
   loading: PropTypes.bool
 }
 

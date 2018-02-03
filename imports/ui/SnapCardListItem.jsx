@@ -27,7 +27,7 @@ export default class SnapCardListItem extends Component {
     const owned = card.owner === Meteor.userId()
     const title = card.title
     let images = card.images || null
-    const imageUrl =card.image || null
+    const imageUrl = card.image || null
     if (!images && imageUrl) {
       let secureUrl = imageApi.returnSecureUrl(imageUrl)
       images = imageApi.makeImageUrls(secureUrl)
@@ -50,5 +50,4 @@ export default class SnapCardListItem extends Component {
  
 SnapCardListItem.propTypes = {
   card: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func.isRequired,
 }

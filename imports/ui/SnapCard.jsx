@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
+import { Decks } from '../api/decks.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
 import imageApi from '../api/imageApi'
+import Snackbar from 'material-ui/Snackbar'
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu'
+import parseIcon from './TypeIcons'
 
 const cardStyle = {
   marginBottom: 10,
@@ -35,6 +41,9 @@ export default class SnapCard extends Component {
     super(props);
     this.state = {
       open: false,
+      snackOpen: false,
+      message: '',
+      selectedDeck: 0
     }
   }
 
@@ -42,10 +51,16 @@ export default class SnapCard extends Component {
     if (this.props.card.owner === Meteor.userId()) {
       Cards.remove(this.props.card._id, () => {
         this.handleClose()
-        this.props.multiSnackBar('Card deleted ok', true);
+        FlowRouter.go('My.Cards')
       })
     }
   }
+
+  handleRequestClose = () => {
+    this.setState({
+      snackOpen: false,
+    });
+  };
 
   chipHandleRequestDelete() {
     this.props.multiSnackBar('Not deleting tag in this demo', true);
@@ -67,6 +82,38 @@ export default class SnapCard extends Component {
     FlowRouter.go('/card/' + this.props.card._id)
   }
 
+  addToDeck() {
+    Decks.update({_id: this.state.selectedDeck}, {$push: {cards: this.props.card._id}}, () => {
+      this.setState({
+        open: true,
+        message: 'Card added to deck ok'
+      })
+    })
+  }
+
+  handleDeckSelect = (e, i, v) => {
+
+    Decks.update({_id: v}, {$push: {cards: this.props.card._id}}, () => {
+      this.setState({
+        snackOpen: true,
+        message: 'Card added to deck ok',
+        selectedDeck: v
+      })
+    })
+
+  }
+
+  renderMyDecks() {
+    return this.props.decks.map((deck) => (
+      <MenuItem 
+        rightIcon={parseIcon(deck.deckType)}
+        value={deck._id} 
+        primaryText={deck.title} 
+        key={deck._id}
+      />
+    ))
+  }
+
   render() {
     const owned = this.props.card.owner === Meteor.userId()
     const cardClassName = this.props.card.checked ? 'checked' : ''
@@ -78,7 +125,6 @@ export default class SnapCard extends Component {
     const imageUrl = this.props.card.image || null
     if (!images && imageUrl) {
       let secureUrl = imageApi.returnSecureUrl(imageUrl)
-      console.log('secureUrl = ' + secureUrl)
       images = imageApi.makeImageUrls(secureUrl)
     }
     const actions = [
@@ -115,6 +161,7 @@ export default class SnapCard extends Component {
         }
 
         <CardText expandable={true}>
+          <h2>{this.props.card.title}</h2>
           <p>{this.props.card.description}</p>
         </CardText>
 
@@ -135,6 +182,17 @@ export default class SnapCard extends Component {
         >
           Confirm you want to permanently delete this SnapCard.
         </Dialog>
+        <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.selectedDeck} onChange={this.handleDeckSelect}>
+          <MenuItem value={0} primaryText="Add to deck" />
+          {this.renderMyDecks()}
+        </DropDownMenu>
+        <Snackbar
+          open={this.state.snackOpen}
+          message={this.state.message}
+          autoHideDuration={3000}
+          onRequestClose={this.handleRequestClose}
+          style={{'fontWeight': 700}}
+        />
       </Card>
     );
   }
@@ -146,5 +204,6 @@ FlatButton.propTypes = {
  
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
+  decks: PropTypes.array,
   multiSnackBar: PropTypes.func.isRequired
 }

@@ -10,6 +10,7 @@ import SnapCard from './SnapCard.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Cards } from '../api/cards.js'
+import { Decks } from '../api/decks.js'
 import Toggle from 'material-ui/Toggle'
 import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -62,9 +63,7 @@ class EditCard extends Component {
     const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
-      owner: inputs.owner,
       access: this.state.access,
-      cardType: inputs.cardType,
       images: this.state.images
     }
 
@@ -85,14 +84,9 @@ class EditCard extends Component {
     this.setState({
       open: false,
     });
-  };
-
-  handleSelectChange = (event, index, value) => {
-    return this.setState({'inputs': {...this.state.inputs, 'cardType': value} })
   }
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
- 
 
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
@@ -154,21 +148,6 @@ class EditCard extends Component {
             />
           </div>
           <div className="form-group">
-            <SelectField 
-              onChange={this.handleSelectChange} 
-              floatingLabelText="Type of Card"
-              floatingLabelStyle={styles.floatingLabelStyle}
-              data-field="cardType"
-              value={this.state.inputs.cardType}
-            >
-              <MenuItem value={"Article"} primaryText="Article" />
-              <MenuItem value={"Image"} primaryText="Image" />
-              <MenuItem value={"EmbeddedMedia"} primaryText="Media object (Video, Audio)" />
-              <MenuItem value={"Location"} primaryText="Location" />
-              <MenuItem value={"Event"} primaryText="Event" />
-            </SelectField>
-          </div>
-          <div className="form-group">
             <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>
         </form>
@@ -188,6 +167,7 @@ class EditCard extends Component {
 
 EditCard.propTypes = {
   card: PropTypes.object,
+  decks: PropTypes.array,
   loading: PropTypes.bool
 }
  
