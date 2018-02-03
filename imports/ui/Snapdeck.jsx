@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
 import { Decks } from '../api/decks.js'
 import FlatButton from 'material-ui/FlatButton'
-import Chip from 'material-ui/Chip'
+import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
 import imageApi from '../api/imageApi'
 import { ListItem } from 'material-ui/List'
@@ -93,12 +93,22 @@ export default class Snapdeck extends Component {
     let createdAgo = moment(deck.createdAt).fromNow()
 
     return (
-      <div>
+      <div className="container">
         <h2>{deck.title}</h2>
         <p>{deck.description}</p>
+        <RaisedButton label="Delete" onClick={this.handleOpen} />
+        <RaisedButton label="Edit" onClick={this.handleEditRequest} />
         <hr />
         <h3>Cards:</h3>
         <DeckCardsContainer cards={deck.cards} />
+        <Dialog
+          title={'Delete "' + title + '"'}
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Confirm you want to permanently delete this deck.
+        </Dialog>
       </div>
     )
   }
@@ -110,7 +120,5 @@ FlatButton.propTypes = {
  
 Snapdeck.propTypes = {
   deck: PropTypes.object.isRequired,
-  multiSnackBar: PropTypes.func.isRequired,
-  full: PropTypes.bool,
-  standalone: PropTypes.bool
+  multiSnackBar: PropTypes.func.isRequired
 }

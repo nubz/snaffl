@@ -45,7 +45,8 @@ class EditCard extends Component {
       message: 'Card added successfully',
       inputs: {...this.props.card},
       access: this.props.card.access,
-      images: this.props.card.images || null
+      images: this.props.card.images || null,
+      image: this.props.card.image
     }
   }
 
@@ -58,13 +59,22 @@ class EditCard extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (!this.state.images) {
+      let secureUrl = imageApi.returnSecureUrl(this.props.card.image)
+      images = imageApi.makeImageUrls(this.props.card.image)
+      this.setState({
+          images: images,
+          image: secureUrl
+        })
+    }
 
     const inputs = this.state.inputs
     const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       access: this.state.access,
-      images: this.state.images
+      images: this.state.images,
+      image: this.state.image
     }
 
     Cards.update({_id: inputs._id}, {$set: data}, () => {
