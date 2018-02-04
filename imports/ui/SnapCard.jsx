@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
 import { Decks } from '../api/decks.js'
+import { DeckCards } from '../api/deckCards.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -13,6 +14,8 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
 import parseIcon from './TypeIcons'
+import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
+import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 
 const cardStyle = {
   marginBottom: 10,
@@ -82,18 +85,11 @@ export default class SnapCard extends Component {
     FlowRouter.go('/card/' + this.props.card._id)
   }
 
-  addToDeck() {
-    Decks.update({_id: this.state.selectedDeck}, {$push: {cards: this.props.card._id}}, () => {
-      this.setState({
-        open: true,
-        message: 'Card added to deck ok'
-      })
-    })
-  }
-
   handleDeckSelect = (e, i, v) => {
-
-    Decks.update({_id: v}, {$push: {cards: this.props.card._id}}, () => {
+    DeckCards.insert({
+        deckId: v,
+        cardId: this.props.card._id
+    }, () => {
       this.setState({
         snackOpen: true,
         message: 'Card added to deck ok',
@@ -182,6 +178,11 @@ export default class SnapCard extends Component {
         >
           Confirm you want to permanently delete this SnapCard.
         </Dialog>
+        <hr />
+        <h3>Tags</h3>
+        <TagsFromIdsContainer tags={this.props.cardTags} />
+        <h3>Contained within decks:</h3>
+        <DecksFromIdsContainer decks={this.props.cardDecks} />
         <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.selectedDeck} onChange={this.handleDeckSelect}>
           <MenuItem value={0} primaryText="Add to deck" />
           {this.renderMyDecks()}
@@ -205,5 +206,7 @@ FlatButton.propTypes = {
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
   decks: PropTypes.array,
+  cardDecks: PropTypes.array,
+  cardTags: PropTypes.array,
   multiSnackBar: PropTypes.func.isRequired
 }

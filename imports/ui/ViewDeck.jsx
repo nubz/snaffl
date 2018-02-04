@@ -4,6 +4,7 @@ import Snapdeck from './Snapdeck.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import CardList from './CardList'
 
 const styles = {
   spinner: {
@@ -29,6 +30,7 @@ class ViewDeck extends Component {
         <Snapdeck
           key={this.props.deck._id} 
           deck={this.props.deck} 
+          deckCards={this.props.deckCards}
           full={true}
           standalone={true}
           multiSnackBar={()=>false} 
@@ -42,6 +44,7 @@ class ViewDeck extends Component {
 
 ViewDeck.propTypes = {
   deck: PropTypes.object,
+  deckCards: PropTypes.array,
   loading: PropTypes.bool
 }
 

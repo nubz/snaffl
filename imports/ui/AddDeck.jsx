@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
 import { Decks } from '../api/decks.js'
 import Divider from 'material-ui/Divider'
-import Snapdeck from './Snapdeck.jsx'
+import SnapdeckListItem from './SnapdeckListItem.jsx'
 import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import imageApi from '../api/imageApi'
@@ -92,9 +92,7 @@ class AddDeck extends Component {
       access: this.state.access,
       deckType: inputs.deckType,
       image: this.state.image,
-      images: this.state.images,
-      cards: [],
-      decks: []
+      images: this.state.images
     }, () => {
       this.setState({
         open: true,
@@ -104,8 +102,7 @@ class AddDeck extends Component {
         publicId: '',
         image: '',
         access: 'private',
-        images: null,
-        children: []
+        images: null
       })
     })
 
@@ -125,7 +122,7 @@ class AddDeck extends Component {
  
   renderdecks() {
     return this.props.decks.map((deck) => (
-      <Snapdeck 
+      <SnapdeckListItem 
         key={deck._id} 
         deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
@@ -214,6 +211,29 @@ class AddDeck extends Component {
               </SelectField>
             </div>
              }
+
+            <div className="form-group">
+             <h3>Auto Population</h3>
+             <p>Subscribe to tags or users to auto populate this deck as matching content is added.</p>
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Subscribe to a tag"
+                floatingLabelFixed={true}
+                id="text-tag"
+                data-field="subscriptionTag"
+                onChange={this.handleInputChange}
+                value={this.state.inputs.subscriptionTags}
+              />
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Subscribe to a username"
+                floatingLabelFixed={true}
+                id="text-username"
+                data-field="subscriptionUsername"
+                onChange={this.handleInputChange}
+                value={this.state.inputs.subscriptionUsernames}
+              />
+            </div>
             <div className="form-group">
               <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
             </div>

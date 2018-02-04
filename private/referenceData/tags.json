@@ -1,0 +1,47 @@
+[
+  {
+    "tag": "Photo"
+  }, 
+  {
+    "tag": "Video"
+  }, 
+  {
+    "tag": "Music"
+  }, 
+  {
+    "tag": "Film"
+  },
+  {
+    "tag": "Landscape"
+  }, 
+  {
+    "tag": "Animals"
+  }, 
+  {
+    "tag": "Pets"
+  },
+  {
+    "tag": "Dogs"
+  },
+  {
+    "tag": "Cats"
+  },
+  {
+    "tag": "Food"
+  },
+  {
+    "tag": "Sport"
+  },
+  {
+    "tag": "Party"
+  },
+  {
+    "tag": "Drinks"
+  },
+  {
+    "tag": "Worthing"
+  },
+  {
+    "tag": "Venues"
+  }
+]

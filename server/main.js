@@ -1,26 +1,20 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
-import { Cards } from '../imports/api/cards.js'
-import { Decks } from '../imports/api/decks.js'
-import { CardTypes } from '../imports/api/cardTypes.js'
-import { DeckTypes } from '../imports/api/deckTypes.js'
+import { Cards } from '../imports/api/cards'
+import { Decks } from '../imports/api/decks'
+import { DeckCards } from '../imports/api/deckCards'
+import { CardTypes } from '../imports/api/cardTypes'
+import { DeckTypes } from '../imports/api/deckTypes'
+import { Tags } from '../imports/api/tags'
+import { TagCards } from '../imports/api/tagCards'
+import { TagDecks } from '../imports/api/tagDecks'
+
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
 // access codes for third party services
 import Secrets from '../secrets'
-
-const makeImageUrls = function (id, remote_image) {
-  var remote = remote_image && remote_image !== '' ? remote_image : false;
-  return {
-    large: remote || 'http://res.cloudinary.com/nubz/image/upload/c_scale,w_1200/v1439984721/' + id + '.jpg',
-    medium: remote || 'http://res.cloudinary.com/nubz/image/upload/c_scale,w_600/v1439984721/' + id + '.jpg',
-    small: remote || 'http://res.cloudinary.com/nubz/image/upload/c_scale,w_240/v1439984721/' + id + '.jpg',
-    cropped: remote || 'http://res.cloudinary.com/nubz/image/upload/c_fill,g_center,h_300,w_250/v1439984721/' + id + '.jpg',
-    thumb: remote || 'http://res.cloudinary.com/nubz/image/upload/c_fill,g_center,h_240,w_240/v1439984721/' + id + '.jpg'
-  };
-}
 
 Meteor.startup(() => {
 
@@ -35,6 +29,16 @@ Meteor.startup(() => {
   Cards._ensureIndex({owner: 1})
   Cards._ensureIndex({access: 1})
   Cards._ensureIndex({title: 1})
+  DeckCards._ensureIndex({deckId: 1})
+  DeckCards._ensureIndex({cardId: 1})
+  DeckCards._ensureIndex({deckId: 1, cardId: 1})
+  Tags._ensureIndex({tag: 1})
+  TagCards._ensureIndex({tagId: 1})
+  TagCards._ensureIndex({cardId: 1})
+  TagCards._ensureIndex({tagId: 1, cardId: 1})
+  TagDecks._ensureIndex({tagId: 1})
+  TagDecks._ensureIndex({deckId: 1})
+  TagDecks._ensureIndex({tagId: 1, deckId: 1})
 
   /*
   ** here we are using Secrets.cloudinary.config
@@ -55,6 +59,26 @@ Meteor.startup(() => {
 
   Meteor.publish('card.types', function () {
     return CardTypes.find({})
+  })
+
+  Meteor.publish('card.tags', function (cardId) {
+    return TagCards.find({cardId: cardId})
+  })
+
+  Meteor.publish('deck.tags', function (deckId) {
+    return TagDecks.find({deckId: deckId})
+  })
+
+  Meteor.publish('tags.fromIds', function (ids) {
+    return Tags.find({ _id : { $in : ids } })
+  })
+
+  Meteor.publish('tag.cards', function (tagId) {
+    return TagCards.find({tagId: tagId})
+  })
+
+  Meteor.publish('tag.decks', function (tagId) {
+    return TagDecks.find({tagId: tagId})
   })
 
   Meteor.publish('deck.types', function () {
@@ -89,8 +113,20 @@ Meteor.startup(() => {
 
   })
 
-  Meteor.publish('deck.cards', function (ids) {
+  Meteor.publish('cards.fromIds', function (ids) {
     return Cards.find({ _id : { $in : ids } })
+  })
+
+  Meteor.publish('decks.fromIds', function (ids) {
+    return Decks.find({ _id: { $in : ids } })
+  })
+
+  Meteor.publish('deck.cards', function (id) {
+    return DeckCards.find({ deckId: id })
+  })
+
+  Meteor.publish('card.decks', function (id) {
+    return DeckCards.find({ cardId: id })
   })
 
   Meteor.publish('cards.public', function(skip) {
@@ -140,15 +176,16 @@ Meteor.startup(() => {
   }, { is_auto: true });
 
   Meteor.methods({
+    touchTag: function (string) {
+      console.log('touchTag(' + string + ')')
 
-    updateCover: function (id, public_id) {
-      var images = makeImageUrls(public_id, false);
-      // determine which type of tile
-      if (Cards.findOne(id)) {
-        Cards.update({_id: id}, {$set: {'publicId': public_id, 'images': images}});
-      } else {
-        Decks.update({_id: id}, {$set: {'publicId': public_id, 'images': images}});
+      const exists = Tags.findOne({tag: string.trim()})
+
+      if (exists) {
+        return Tags.findOne({tag: string.trim()})
       }
+
+     return Tags.insert({tag: string.trim()})
     },
   })
 })

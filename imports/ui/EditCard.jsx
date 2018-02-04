@@ -14,6 +14,8 @@ import { Decks } from '../api/decks.js'
 import Toggle from 'material-ui/Toggle'
 import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
+import { TagCards } from '../api/tagCards'
+import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 
 const startTime = new Date()
 const styles = {
@@ -46,7 +48,8 @@ class EditCard extends Component {
       inputs: {...this.props.card},
       access: this.props.card.access,
       images: this.props.card.images || null,
-      image: this.props.card.image
+      image: this.props.card.image,
+      tags: this.props.cardTags
     }
   }
 
@@ -84,6 +87,17 @@ class EditCard extends Component {
       })
     })
 
+  }
+
+  handleTagChange(event, value) {
+    Meteor.call('touchTag', event.currentTarget.value, (error, result) => {
+      if (!error) {
+        TagCards.insert({
+          cardId: this.props.card._id,
+          tagId: result
+        })
+      }
+    })
   }
 
   uploadFiles(event) {
@@ -157,6 +171,16 @@ class EditCard extends Component {
               value={this.state.inputs.description}
             />
           </div>
+          <TextField
+              floatingLabelStyle={styles.floatingLabelStyle}
+              floatingLabelText="Add a tag"
+              hintText="Add one tag at a time"
+              floatingLabelFixed={true}
+              id="addTag"
+              data-field="tag"
+              onBlur={this.handleTagChange.bind(this)}
+            />
+          <TagsFromIdsContainer tags={this.props.cardTags} />
           <div className="form-group">
             <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>
@@ -178,6 +202,7 @@ class EditCard extends Component {
 EditCard.propTypes = {
   card: PropTypes.object,
   decks: PropTypes.array,
+  cardTags: PropTypes.array,
   loading: PropTypes.bool
 }
  
