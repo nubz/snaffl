@@ -200,5 +200,18 @@ Meteor.startup(() => {
     removeTagFromDeck: function (tagId, deckId) {
       TagDecks.remove({deckId: deckId, tagId: tagId})
     },
+    removeFromAllDecks: function (cardId) {
+      CardDecks.remove({cardId: cardId});
+      TagCards.remove({cardId: cardId});
+    }
   })
+
+  // Global API configuration
+  var Api = new Restivus({
+    useDefaultAuth: true,
+    prettyJson: true
+  });
+
+  Api.addCollection(Cards);
+
 })

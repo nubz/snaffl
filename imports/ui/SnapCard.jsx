@@ -168,7 +168,7 @@ export default class SnapCard extends Component {
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
     return (
-      <Card style={cardStyle} initiallyExpanded={false}>
+      <Card style={cardStyle} initiallyExpanded={true}>
         <CardHeader
           avatar={ images ? images.thumb : null }
           title={this.props.card.title}
@@ -234,6 +234,13 @@ export default class SnapCard extends Component {
         </DropDownMenu>
         : '' }
         <DecksFromIdsContainer decks={this.props.cardDecks} />
+        <hr />
+        <h3>API</h3>
+        <pre style={{backgroundColor: '#eee', padding: 10, fontSize: 15}}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
+        <hr />
+        <h3>Geo Position</h3>
+        <p>Latitude: {this.props.card.lat} Longitude: {this.props.card.lng}</p>
+
         <Snackbar
           open={this.state.snackOpen}
           message={this.state.message}

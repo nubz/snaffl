@@ -37,6 +37,10 @@ export default class Snapdeck extends Component {
     this.setState({open: true});
   }
 
+  viewMap = () => {
+    FlowRouter.go('View.Map', {_id: this.props.deck._id})
+  }
+
   handleEditRequest = () => {
     FlowRouter.go('Edit.Deck', {_id: this.props.deck._id})
   }
@@ -64,6 +68,7 @@ export default class Snapdeck extends Component {
       <div className="container">
         <h2>{deck.title}</h2>
         <p>{deck.description}</p>
+        { deck.deckType == 'Map' ? <RaisedButton label="View Map" onClick={this.viewMap} /> : ''}
         { owned ? 
         <div>
           <RaisedButton label="Delete" onClick={this.handleOpen} />

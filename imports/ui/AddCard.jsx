@@ -77,7 +77,8 @@ class AddCard extends Component {
     event.preventDefault();
 
     const inputs = this.state.inputs
- 
+    const location = AllGeo.getLocation()
+    console.log(location)
     Cards.insert({
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -86,7 +87,9 @@ class AddCard extends Component {
       access: this.state.access,
       cardType: inputs.cardType,
       image: this.state.image,
-      images: this.state.images
+      images: this.state.images,
+      lat: location.lat,
+      lng: location.lng
     }, () => {
       this.setState({
         open: true,
@@ -139,6 +142,7 @@ class AddCard extends Component {
   };
  
   render() {
+    AllGeo.init()
     return (
       <div>
         {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}

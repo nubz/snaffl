@@ -29,3 +29,6 @@ momentjs:moment
 lepozepo:cloudinary
 ros:publish-counts
 cultofcoders:grapher
+nimble:restivus
+dburles:google-maps
+nekolski:all-geolocation
