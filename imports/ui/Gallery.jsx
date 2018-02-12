@@ -4,6 +4,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
+import ActionBookmarkBorder from 'material-ui/svg-icons/action/bookmark-border'
 
 class Gallery extends Component {
 
@@ -31,7 +32,7 @@ class Gallery extends Component {
                   subtitle={<span>by <b>{tile.owner}</b></span>}
                   style={{cursor:'pointer'}}
                   onClick={this.viewFull.bind(tile)}
-                  actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                  actionIcon={<IconButton>{this.props.tagged ? <ActionBookmarkBorder color="white" /> : <StarBorder color="white" />}</IconButton>}
                 >
                   {tile.images ? <img src={tile.images.small} /> : ''}
                 </GridTile>
@@ -46,6 +47,7 @@ class Gallery extends Component {
 
 Gallery.propTypes = {
     cards: PropTypes.array,
+    tagged: PropTypes.bool,
     loading: PropTypes.bool
 }
 

@@ -31,6 +31,7 @@ class ViewDeck extends Component {
           key={this.props.deck._id} 
           deck={this.props.deck} 
           deckCards={this.props.deckCards}
+          tagSubscription={this.props.tagSubscription}
           full={true}
           standalone={true}
           multiSnackBar={()=>false} 
@@ -45,6 +46,7 @@ class ViewDeck extends Component {
 ViewDeck.propTypes = {
   deck: PropTypes.object,
   deckCards: PropTypes.array,
+  tagSubscription: PropTypes.object,
   loading: PropTypes.bool
 }
 

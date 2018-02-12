@@ -15,6 +15,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
 import Paper from 'material-ui/Paper'
+import { TagSubscriptions } from '../api/tagSubscriptions'
 
 const styles = {
   formStyle: {
@@ -43,7 +44,8 @@ const styles = {
 const defaultInputs = {
   title: '',
   description: '',
-  deckType: 'MultiDeck'
+  deckType: 'MultiDeck',
+  subscriptionTag: ''
 }
 
 class AddDeck extends Component {
@@ -92,18 +94,38 @@ class AddDeck extends Component {
       access: this.state.access,
       deckType: inputs.deckType,
       image: this.state.image,
-      images: this.state.images
-    }, () => {
-      this.setState({
-        open: true,
-        message: 'deck added ok',
-        inputs: defaultInputs,
-        imagePreview: '',
-        publicId: '',
-        image: '',
-        access: 'private',
-        images: null
-      })
+      images: this.state.images,
+      subscriptionTag: inputs.subscriptionTag.trim()
+    }, (error, result) => {
+      if (inputs.subscriptionTag.trim().length) {
+        Meteor.call('touchTag', inputs.subscriptionTag.trim(), (tagerror, tagResult) => {
+          TagSubscriptions.insert({deckId: result, tagId: tagResult}, () => {
+              this.setState({
+                open: true,
+                message: 'deck added ok',
+                inputs: defaultInputs,
+                imagePreview: '',
+                publicId: '',
+                image: '',
+                access: 'private',
+                images: null
+              })
+          })
+        })
+
+      } else {
+        this.setState({
+          open: true,
+          message: 'deck added ok',
+          inputs: defaultInputs,
+          imagePreview: '',
+          publicId: '',
+          image: '',
+          access: 'private',
+          images: null
+        })
+      }
+
     })
 
   }
@@ -222,7 +244,7 @@ class AddDeck extends Component {
                 id="text-tag"
                 data-field="subscriptionTag"
                 onChange={this.handleInputChange}
-                value={this.state.inputs.subscriptionTags}
+                value={this.state.inputs.subscriptionTag}
               />
               <TextField
                 floatingLabelStyle={styles.floatingLabelStyle}

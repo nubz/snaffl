@@ -15,11 +15,15 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
 import parseIcon from './TypeIcons'
 import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
+import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
+import TextField from 'material-ui/TextField'
 
 const cardStyle = {
   marginBottom: 10,
-  padding: 10
+  padding: 10,
+  maxWidth: 768,
+  margin: '10px auto'
 }
 
 const styles = {
@@ -46,7 +50,8 @@ export default class SnapCard extends Component {
       open: false,
       snackOpen: false,
       message: '',
-      selectedDeck: 0
+      selectedDeck: 0,
+      tagValue: ''
     }
   }
 
@@ -96,6 +101,30 @@ export default class SnapCard extends Component {
         selectedDeck: v
       })
     })
+
+  }
+
+  handleTagTyping(e) {
+    this.setState({
+      tagValue: e.currentTarget.value
+    })
+  }
+
+  handleTagChange(event, value) {
+    if (this.state.tagValue.length) {
+      Meteor.call('touchTag', this.state.tagValue, (error, result) => {
+        if (!error) {
+          TagCards.insert({
+            cardId: this.props.card._id,
+            tagId: result
+          }, () => {
+            this.setState({
+                tagValue: ''
+              })
+          })
+        }
+      })
+    }
 
   }
 
@@ -180,13 +209,31 @@ export default class SnapCard extends Component {
         </Dialog>
         <hr />
         <h3>Tags</h3>
-        <TagsFromIdsContainer tags={this.props.cardTags} />
-        <h3>Contained within decks:</h3>
-        <DecksFromIdsContainer decks={this.props.cardDecks} />
+        { owned ? 
+        <div style={{marginBottom: 20}}>
+          <TextField
+              floatingLabelStyle={styles.floatingLabelStyle}
+              floatingLabelText="Add a tag"
+              hintText="Add one tag at a time"
+              floatingLabelFixed={true}
+              id="addTag"
+              data-field="tag"
+              value={this.state.tagValue}
+              onChange={this.handleTagTyping.bind(this)}
+            />
+            <RaisedButton label="Add tag" onClick={this.handleTagChange.bind(this)} />
+        </div>
+        : '' }
+        <TagsFromIdsContainer tags={this.props.cardTags} owned={owned} cardId={this.props.card._id} deckId={""} />
+        <hr />
+        <h3>Decks</h3>
+        { owned ?
         <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.selectedDeck} onChange={this.handleDeckSelect}>
           <MenuItem value={0} primaryText="Add to deck" />
           {this.renderMyDecks()}
         </DropDownMenu>
+        : '' }
+        <DecksFromIdsContainer decks={this.props.cardDecks} />
         <Snackbar
           open={this.state.snackOpen}
           message={this.state.message}

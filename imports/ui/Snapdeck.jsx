@@ -10,6 +10,7 @@ import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import parseIcon from './TypeIcons'
 import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
+import TaggedCardsContainer from '../containers/TaggedCardsContainer'
 
 export default class Snapdeck extends Component {
   constructor(props) {
@@ -70,8 +71,10 @@ export default class Snapdeck extends Component {
         </div>
         : '' }
         <hr />
-        <h3>Cards:</h3>
         <CardsFromIdsContainer cards={this.props.deckCards} />
+        { this.props.tagSubscription ?
+          <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
+        : ''}
         <Dialog
           title={'Delete "' + deck.title + '"'}
           actions={actions}
@@ -92,5 +95,6 @@ FlatButton.propTypes = {
 Snapdeck.propTypes = {
   deck: PropTypes.object.isRequired,
   deckCards: PropTypes.array,
+  tagSubscription: PropTypes.object,
   multiSnackBar: PropTypes.func.isRequired
 }

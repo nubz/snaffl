@@ -10,8 +10,12 @@ export default TagsFromIdsContainer = withTracker(props => {
   const tagsHandle = Meteor.subscribe('tags.fromIds', tagIds)
   const loading = !tagsHandle.ready()
   const tags = Tags.find({_id: {$in : tagIds}}).fetch()
+  const cardId = props.cardId
+  const deckId = props.deckId
   return {
     tags,
+    cardId,
+    deckId,
     loading
   }
 })(TagList)

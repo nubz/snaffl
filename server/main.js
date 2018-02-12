@@ -8,6 +8,7 @@ import { DeckTypes } from '../imports/api/deckTypes'
 import { Tags } from '../imports/api/tags'
 import { TagCards } from '../imports/api/tagCards'
 import { TagDecks } from '../imports/api/tagDecks'
+import { TagSubscriptions } from '../imports/api/tagSubscriptions'
 
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
@@ -145,6 +146,10 @@ Meteor.startup(() => {
     return Decks.find({_id: _id})
   })
 
+  Meteor.publish('tag', function (_id) {
+    return Tags.findOne({_id: _id})
+  })
+
   Meteor.publish('decks.owned', function() {
 
     if (!this.userId) {
@@ -165,6 +170,10 @@ Meteor.startup(() => {
 
   })
 
+  Meteor.publish('tag.subscription', function (deckId) {
+    return TagSubscriptions.find({deckId: deckId})
+  })
+
   Meteor.publish(null, function () {
     return Meteor.users.find({
       _id: this.userId
@@ -177,15 +186,19 @@ Meteor.startup(() => {
 
   Meteor.methods({
     touchTag: function (string) {
-      console.log('touchTag(' + string + ')')
-
       const exists = Tags.findOne({tag: string.trim()})
 
       if (exists) {
-        return Tags.findOne({tag: string.trim()})
+        return exists._id
       }
 
      return Tags.insert({tag: string.trim()})
+    },
+    removeTagFromCard: function (tagId, cardId) {
+      TagCards.remove({cardId: cardId, tagId: tagId})
+    },
+    removeTagFromDeck: function (tagId, deckId) {
+      TagDecks.remove({deckId: deckId, tagId: tagId})
     },
   })
 })
