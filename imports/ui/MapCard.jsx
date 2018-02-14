@@ -4,21 +4,20 @@ import { Session } from 'meteor/session';
 import GoogleMapContainer from '../containers/GoogleMapContainer';
 import { Cards } from '../api/cards'
 
-class MapDeck extends Component {
+class MapCard extends Component {
   constructor(props) {
     super(props);
     this.handleOnReady = this.handleOnReady.bind(this);
-    var bounds = new google.maps.LatLngBounds();
+    this.handleMapOptions = this.handleMapOptions.bind(this);
     this.state = {
-      bounds: bounds,
       map: {}
     }
   }
 
   handleMapOptions() {
     return {
-      center: new google.maps.LatLng(55.953955799999996, -3.1130749),
-      zoom: 10,
+      center: new google.maps.LatLng(this.props.card.lat, this.props.card.lng),
+      zoom: 13,
     };
   }
 
@@ -41,18 +40,13 @@ class MapDeck extends Component {
     marker.addListener('click', function() {
       infowindow.open(this.state.map, marker);
     });
-
-    this.setState({
-      bounds: this.state.bounds.extend(marker.getPosition())
-    });
   }
 
   handleOnReady(name) {
       var bounds = new google.maps.LatLngBounds();
       GoogleMaps.ready(name, function (map) {
         this.setState({map: map});
-        this.props.deckCards.map(this.markerForCard);
-        map.instance.fitBounds(this.state.bounds);
+        this.markerForCard(this.props.card);
       }.bind(this));
   }
 
@@ -68,11 +62,9 @@ class MapDeck extends Component {
   }
 }
 
-MapDeck.propTypes = {
-  deck: PropTypes.object.isRequired,
-  deckCards: PropTypes.array,
-  tagSubscription: PropTypes.object,
-  multiSnackBar: PropTypes.func.isRequired
+MapCard.propTypes = {
+  card: PropTypes.object.isRequired,
+  loading: PropTypes.bool
 }
 
-export default MapDeck;
+export default MapCard;

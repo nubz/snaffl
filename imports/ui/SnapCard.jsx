@@ -18,6 +18,7 @@ import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
 import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 import TextField from 'material-ui/TextField'
+import MapCardContainer from '../containers/MapCardContainer'
 
 const cardStyle = {
   marginBottom: 10,
@@ -56,9 +57,11 @@ export default class SnapCard extends Component {
   }
 
   deleteThisCard() {
+    let cardId = this.props.card._id;
     if (this.props.card.owner === Meteor.userId()) {
-      Cards.remove(this.props.card._id, () => {
+      Cards.remove(cardId, () => {
         this.handleClose()
+        Meteor.call('removeFromAllDecks', cardId)
         FlowRouter.go('My.Cards')
       })
     }
@@ -236,10 +239,13 @@ export default class SnapCard extends Component {
         <DecksFromIdsContainer decks={this.props.cardDecks} />
         <hr />
         <h3>API</h3>
-        <pre style={{backgroundColor: '#eee', padding: 10, fontSize: 15}}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
+        <pre style={{backgroundColor: '#eee', padding: 10, fontSize: 10}}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
         <hr />
         <h3>Geo Position</h3>
-        <p>Latitude: {this.props.card.lat} Longitude: {this.props.card.lng}</p>
+        <p style={{backgroundColor: '#eee', padding: 10, fontSize: 10}}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
+        { this.props.card.lat ?
+        <MapCardContainer _id={this.props.card._id} />
+        : ''}
 
         <Snackbar
           open={this.state.snackOpen}

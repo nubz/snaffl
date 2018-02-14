@@ -140,9 +140,16 @@ class AddCard extends Component {
     const selectedAccess = access ? 'public' : 'private'
     this.setState({access: selectedAccess});
   };
+
+  componentDidMount() {
+    // we want this to run every time
+    // the page is visited or stale
+    // geo data will prevail
+    AllGeo.init()
+    console.log('all geo init', AllGeo.getLocation())
+  }
  
   render() {
-    AllGeo.init()
     return (
       <div>
         {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}
@@ -162,7 +169,7 @@ class AddCard extends Component {
               : ''}
             <RaisedButton
                secondary={true} 
-               containerElement='label' // <-- Just add me!
+               containerElement='label' 
                label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
                <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
             </RaisedButton>

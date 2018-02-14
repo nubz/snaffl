@@ -77,7 +77,9 @@ class EditCard extends Component {
       description: inputs.description.trim(),
       access: this.state.access,
       images: this.state.images,
-      image: this.state.image
+      image: this.state.image,
+      lat: inputs.lat,
+      lng: inputs.lng
     }
 
     Cards.update({_id: inputs._id}, {$set: data}, () => {
@@ -169,6 +171,32 @@ class EditCard extends Component {
               rows={2}
               onChange={this.handleInputChange}
               value={this.state.inputs.description}
+            />
+          </div>
+          <div className="form-group">
+            <TextField
+              floatingLabelStyle={styles.floatingLabelStyle}
+              floatingLabelText="Latitude"
+              floatingLabelFixed={true}
+              id="lat"
+              data-field="lat"
+              multiLine={true}
+              rows={2}
+              onChange={this.handleInputChange}
+              value={this.state.inputs.lat}
+            />
+          </div>
+          <div className="form-group">
+            <TextField
+              floatingLabelStyle={styles.floatingLabelStyle}
+              floatingLabelText="Longitude"
+              floatingLabelFixed={true}
+              id="lng"
+              data-field="lng"
+              multiLine={true}
+              rows={2}
+              onChange={this.handleInputChange}
+              value={this.state.inputs.lng}
             />
           </div>
           <TextField
