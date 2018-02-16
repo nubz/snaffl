@@ -39,7 +39,7 @@ class MapCard extends Component {
 
     marker.addListener('click', function() {
       infowindow.open(this.state.map, marker);
-    });
+    }.bind(this));
   }
 
   handleOnReady(name) {

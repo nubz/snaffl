@@ -8,9 +8,10 @@ class MapDeck extends Component {
   constructor(props) {
     super(props);
     this.handleOnReady = this.handleOnReady.bind(this);
-    var bounds = new google.maps.LatLngBounds();
+    this.markerForCard = this.markerForCard.bind(this);
+    this.handleMapOptions = this.handleMapOptions.bind(this);
     this.state = {
-      bounds: bounds,
+      bounds: {},
       map: {}
     }
   }
@@ -40,7 +41,7 @@ class MapDeck extends Component {
 
     marker.addListener('click', function() {
       infowindow.open(this.state.map, marker);
-    });
+    }.bind(this));
 
     this.setState({
       bounds: this.state.bounds.extend(marker.getPosition())
@@ -48,7 +49,9 @@ class MapDeck extends Component {
   }
 
   handleOnReady(name) {
-      var bounds = new google.maps.LatLngBounds();
+      this.setState({
+        bounds: new google.maps.LatLngBounds()
+      })
       GoogleMaps.ready(name, function (map) {
         this.setState({map: map});
         this.props.deckCards.map(this.markerForCard);
