@@ -21,10 +21,13 @@ export default class Snapdeck extends Component {
   }
 
   deleteThisDeck() {
+    const deckId = this.props.deck._id
     if (this.props.deck.owner === Meteor.userId()) {
-      Decks.remove(this.props.deck._id, () => {
+      Decks.remove(deckId, () => {
         this.handleClose()
+        Meteor.call('removeAllCardsFromDeck', deckId)
         this.props.multiSnackBar('Deck deleted ok', true);
+        FlowRouter.go('My.Decks')
       })
     }
   }

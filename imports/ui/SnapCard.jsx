@@ -52,7 +52,8 @@ export default class SnapCard extends Component {
       snackOpen: false,
       message: '',
       selectedDeck: 0,
-      tagValue: ''
+      tagValue: '',
+      render: true
     }
   }
 
@@ -60,6 +61,7 @@ export default class SnapCard extends Component {
     let cardId = this.props.card._id;
     if (this.props.card.owner === Meteor.userId()) {
       Cards.remove(cardId, () => {
+        this.setState({render: false})
         this.handleClose()
         Meteor.call('removeFromAllDecks', cardId)
         FlowRouter.go('My.Cards')
@@ -140,6 +142,10 @@ export default class SnapCard extends Component {
         key={deck._id}
       />
     ))
+  }
+
+  shouldComponentUpdate() {
+    return this.state.render
   }
 
   render() {

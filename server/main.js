@@ -201,8 +201,11 @@ Meteor.startup(() => {
       TagDecks.remove({deckId: deckId, tagId: tagId})
     },
     removeFromAllDecks: function (cardId) {
-      CardDecks.remove({cardId: cardId});
+      DeckCards.remove({cardId: cardId});
       TagCards.remove({cardId: cardId});
+    },
+    removeAllCardsFromDeck: function (deckId) {
+      DeckCards.remove({deckId: deckId});
     }
   })
 

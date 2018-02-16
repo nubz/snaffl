@@ -17,7 +17,7 @@ class MapCard extends Component {
   handleMapOptions() {
     return {
       center: new google.maps.LatLng(this.props.card.lat, this.props.card.lng),
-      zoom: 13,
+      zoom: 14,
     };
   }
 
