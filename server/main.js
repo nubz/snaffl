@@ -3,6 +3,7 @@ import { Mongo } from 'meteor/mongo'
 import { Cards } from '../imports/api/cards'
 import { Decks } from '../imports/api/decks'
 import { DeckCards } from '../imports/api/deckCards'
+import { DeckDecks } from '../imports/api/deckDecks'
 import { CardTypes } from '../imports/api/cardTypes'
 import { DeckTypes } from '../imports/api/deckTypes'
 import { Tags } from '../imports/api/tags'
@@ -33,6 +34,9 @@ Meteor.startup(() => {
   DeckCards._ensureIndex({deckId: 1})
   DeckCards._ensureIndex({cardId: 1})
   DeckCards._ensureIndex({deckId: 1, cardId: 1})
+  DeckDecks._ensureIndex({deckId: 1})
+  DeckDecks._ensureIndex({childId: 1})
+  DeckDecks._ensureIndex({deckId: 1, childId: 1})
   Tags._ensureIndex({tag: 1})
   TagCards._ensureIndex({tagId: 1})
   TagCards._ensureIndex({cardId: 1})

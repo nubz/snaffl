@@ -19,6 +19,7 @@ import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 import TextField from 'material-ui/TextField'
 import MapCardContainer from '../containers/MapCardContainer'
+import FullscreenDialog from 'material-ui-fullscreen-dialog'
 
 const cardStyle = {
   marginBottom: 10,
@@ -41,6 +42,19 @@ const styles = {
     display: 'block',
     marginBottom: 20,
     cursor: 'pointer'
+  },
+  lightboxContainer: {
+    backgroundSize: 'contain',
+    position: 'absolute',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    height: 'calc(100% - 64px)',
+    width: '100%'
+  },
+  meta: {
+    backgroundColor: '#eee', 
+    padding: 10, 
+    fontSize: 10
   }
 }
 
@@ -53,7 +67,9 @@ export default class SnapCard extends Component {
       message: '',
       selectedDeck: 0,
       tagValue: '',
-      render: true
+      render: true,
+      lightbox: false,
+      imageSize: 'large'
     }
   }
 
@@ -77,6 +93,14 @@ export default class SnapCard extends Component {
 
   chipHandleRequestDelete() {
     this.props.multiSnackBar('Not deleting tag in this demo', true);
+  }
+
+  handleLightboxClose = () => {
+    this.setState({lightbox: false})
+  }
+
+  handleLightboxOpen = () => {
+    this.setState({lightbox: true})
   }
 
   handleClose = () => {
@@ -144,8 +168,27 @@ export default class SnapCard extends Component {
     ))
   }
 
+  onImgLoad({target: img}) {
+    styles.lightboxContainer.backgroundImage = 'url(' + this.props.card.images[this.state.imageSize] + ')'
+  }
+
   shouldComponentUpdate() {
     return this.state.render
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+  }
+
+  updateWindowDimensions() {
+    this.setState({ 
+      imageSize: window.innerWidth < 600 || window.innerHeight < 600 ? 'medium' : 'large'
+    })
   }
 
   render() {
@@ -173,6 +216,13 @@ export default class SnapCard extends Component {
           onClick={this.deleteThisCard.bind(this)}
         />,
       ];
+    const lightBoxAction = [
+        <FlatButton
+          label="Cancel"
+          primary={false}
+          onClick={this.handleLightboxClose}
+        />,
+      ];
 
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
@@ -189,7 +239,12 @@ export default class SnapCard extends Component {
         { images ?
 
         <CardMedia>
-          <img src={images.large} alt={this.props.card.title} />
+          <img 
+            onLoad={this.onImgLoad.bind(this)} 
+            src={images.medium} 
+            alt={this.props.card.title} 
+            onClick={this.handleLightboxOpen} 
+          />
         </CardMedia>
         : '' 
         }
@@ -216,6 +271,15 @@ export default class SnapCard extends Component {
         >
           Confirm you want to permanently delete this SnapCard.
         </Dialog>
+        <FullscreenDialog
+          title={this.props.card.title}
+          actions={lightBoxAction}
+          onRequestClose={() => this.setState({ lightbox: false })}
+          open={this.state.lightbox}
+          style={{backgroundColor: 'rgba(0,0,0,.9)'}}
+        >
+          <div style={styles.lightboxContainer} />
+        </FullscreenDialog>
         <hr />
         <h3>Tags</h3>
         { owned ? 
@@ -245,10 +309,10 @@ export default class SnapCard extends Component {
         <DecksFromIdsContainer decks={this.props.cardDecks} />
         <hr />
         <h3>API</h3>
-        <pre style={{backgroundColor: '#eee', padding: 10, fontSize: 10}}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
+        <pre style={styles.meta}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
         <hr />
         <h3>Geo Position</h3>
-        <p style={{backgroundColor: '#eee', padding: 10, fontSize: 10}}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
+        <p style={styles.meta}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
         { this.props.card.lat ?
         <MapCardContainer _id={this.props.card._id} />
         : ''}

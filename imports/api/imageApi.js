@@ -25,7 +25,7 @@ const imageApi = {
       'thumb': imageApi.avatar(url),
       'small': imageApi.preview(url),
       'medium': imageApi.medium(url),
-      'large': imageApi.medium(url)
+      'large': imageApi.fullFat(url)
     }
   },
   returnSecureUrl: url => {
