@@ -20,6 +20,7 @@ import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 import TextField from 'material-ui/TextField'
 import MapCardContainer from '../containers/MapCardContainer'
 import FullscreenDialog from 'material-ui-fullscreen-dialog'
+import parseContent from './TypeContent'
 
 const cardStyle = {
   marginBottom: 10,
@@ -252,6 +253,9 @@ export default class SnapCard extends Component {
         <CardText expandable={true}>
           <h2>{this.props.card.title}</h2>
           <p>{this.props.card.description}</p>
+          { this.props.card.content ? 
+          parseContent(this.props.card.cardType, {content: this.props.card.content})
+          : '' }
         </CardText>
 
         { owned ? 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {EditorState, RichUtils} from 'draft-js';
-import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import {EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
+import Editor, { createWithContent } from 'draft-js-plugins-editor';
 import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
 import {
   ItalicButton,
@@ -86,7 +86,7 @@ class TextEditor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editorState: createEditorStateWithText(this.props.content)};
+    this.state = {editorState: this.props.content};
     this.onChange = (editorState) => {this.setState({editorState}); this.props.onChange(editorState)};
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
@@ -118,7 +118,7 @@ class TextEditor extends Component {
 }
 
 TextEditor.propTypes = {
-  content: PropTypes.string,
+  content: PropTypes.object,
   onChange: PropTypes.func
 }
 

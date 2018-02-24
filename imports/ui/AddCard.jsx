@@ -207,11 +207,13 @@ class AddCard extends Component {
           </div>
 
           { this.props.cardType ? 
-
           <div className="form-group">
-            {parseEditor(this.props.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: {}, isNew: true})}
+            {parseEditor(this.props.cardType, {
+              ref: function(contentFields){this.contentFields = contentFields;}.bind(this), 
+              card: {}, 
+              isNew: true
+            })}
           </div>
-
            :
           <div className="form-group">
             <SelectField 

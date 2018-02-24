@@ -11,39 +11,20 @@ import CircularProgress from 'material-ui/CircularProgress'
 import TextEditor from '../TextEditor'
 import { EditorState, Editor, convertToRaw } from 'draft-js';
 
-const startTime = new Date()
-const styles = {
-  formStyle: {
-    marginBottom: 30
-  },
-  floatingLabelStyle: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 500
-  },
-  imagePreview: {
-    display: 'block',
-    marginBottom: 20,
-    maxWidth: '100%'
-  },
-  fileInput: {
-    display: 'none'
-  },
-}
-
 class Article extends Component {
 
   constructor(props) {
     super(props);
 
     if (!this.props.card.content) {
-      this.props.card.content = {Article: 'test content'}
+      this.props.card.content = {Article: EditorState.createEmpty()}
     }
  
     this.state = {
       open: false,
       message: 'Card added successfully',
-      content: this.props.card.content.Article
+      contentState: this.props.card.content.Article,
+      content: {}
     }
   }
 
@@ -81,39 +62,17 @@ class Article extends Component {
   }
 
   onChange = (val) => {
-    let content = convertToRaw(val.getCurrentContent()).blocks[0].text
-    console.log('changing editor ', content)
     this.setState({
-      content: content
+      contentState: val,
+      content: convertToRaw(val.getCurrentContent())
     })
   }
 
   render() {
     return (
-      <div>
-        { !this.props.isNew ?
-          <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-            <div className="form-group">
-              <h3>Article Content</h3>
-              <TextEditor ref={(fieldEditor) => {this.fieldEditor = fieldEditor;}} onChange={this.onChange} content={this.state.content} _id={this.props.card._id} />
-            </div>
-
-            <div className="form-group">
-              <RaisedButton type="submit" label="Save Edits" primary={true} />
-            </div>
-            <Snackbar
-              open={this.state.open}
-              message={this.state.message}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-            />
-          </form>
-        :
-          <div className="form-group">
-            <h3>Article Content</h3>
-            <TextEditor ref={(fieldEditor) => {this.fieldEditor = fieldEditor;}} onChange={this.onChange} content={this.state.content} _id={this.props.card._id} />
-          </div>
-      }
+      <div className="form-group">
+        <h3>Article Content</h3>
+        <TextEditor onChange={this.onChange} content={this.state.contentState} _id={this.props.card._id} />
       </div>
     )
   }
@@ -121,8 +80,7 @@ class Article extends Component {
 }
 
 Article.propTypes = {
-  card: PropTypes.object,
-  isNew: PropTypes.bool
+  card: PropTypes.object
 }
  
 export default Article

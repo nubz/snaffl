@@ -10,6 +10,7 @@
     "bcrypt": "^1.0.3",
     "draft-js": "^0.10.5",
     "draft-js-buttons": "^2.0.1",
+    "draft-js-export-html": "^1.2.0",
     "draft-js-image-plugin": "^2.0.1",
     "draft-js-linkify-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.4",
