@@ -14,6 +14,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
 import imageApi from '../api/imageApi'
+import parseEditor from './TypeEditors'
 
 const styles = {
   formStyle: {
@@ -79,6 +80,9 @@ class AddCard extends Component {
     const inputs = this.state.inputs
     const location = AllGeo.getLocation()
     console.log(location)
+
+    let content = {}
+    content[inputs.cardType] = this.contentFields.state.content
     Cards.insert({
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -89,7 +93,8 @@ class AddCard extends Component {
       image: this.state.image,
       images: this.state.images,
       lat: location.lat,
-      lng: location.lng
+      lng: location.lng,
+      content: content
     }, () => {
       this.setState({
         open: true,
@@ -201,7 +206,13 @@ class AddCard extends Component {
             />
           </div>
 
-          { this.props.cardType ? '' :
+          { this.props.cardType ? 
+
+          <div className="form-group">
+            {parseEditor(this.props.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: {}, isNew: true})}
+          </div>
+
+           :
           <div className="form-group">
             <SelectField 
               onChange={this.handleSelectChange} 

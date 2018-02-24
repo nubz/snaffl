@@ -16,7 +16,7 @@ import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
-import TextEditor from './TextEditor'
+import parseEditor from './TypeEditors'
 
 const startTime = new Date()
 const styles = {
@@ -70,7 +70,12 @@ class EditCard extends Component {
         })
     }
 
+
+
     const inputs = this.state.inputs
+    let content = {}
+    content[inputs.cardType] = this.contentFields.state.content
+
     const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -78,7 +83,8 @@ class EditCard extends Component {
       images: this.state.images,
       image: this.state.image,
       lat: inputs.lat,
-      lng: inputs.lng
+      lng: inputs.lng,
+      content: content
     }
 
     Cards.update({_id: inputs._id}, {$set: data}, () => {
@@ -161,13 +167,11 @@ class EditCard extends Component {
               value={this.state.inputs.description}
             />
           </div>
-          { this.props.card.cardType == 'Article' ?
 
           <div className="form-group">
-            <h3>Article Content</h3>
-            <TextEditor />
+            {parseEditor(this.props.card.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: this.props.card, isNew: true})}
           </div>
-          : '' }
+
           <div className="form-group">
             <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>

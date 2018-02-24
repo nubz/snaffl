@@ -86,8 +86,8 @@ class TextEditor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editorState: createEditorStateWithText(text)};
-    this.onChange = (editorState) => this.setState({editorState});
+    this.state = {editorState: createEditorStateWithText(this.props.content)};
+    this.onChange = (editorState) => {this.setState({editorState}); this.props.onChange(editorState)};
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
@@ -118,7 +118,8 @@ class TextEditor extends Component {
 }
 
 TextEditor.propTypes = {
-  content: PropTypes.string
+  content: PropTypes.string,
+  onChange: PropTypes.func
 }
 
 export default TextEditor
