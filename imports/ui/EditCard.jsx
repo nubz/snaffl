@@ -16,6 +16,7 @@ import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
+import TextEditor from './TextEditor'
 
 const startTime = new Date()
 const styles = {
@@ -46,10 +47,8 @@ class EditCard extends Component {
       open: false,
       message: 'Card added successfully',
       inputs: {...this.props.card},
-      access: this.props.card.access,
       images: this.props.card.images || null,
-      image: this.props.card.image,
-      tags: this.props.cardTags
+      image: this.props.card.image
     }
   }
 
@@ -75,7 +74,7 @@ class EditCard extends Component {
     const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
-      access: this.state.access,
+      access: inputs.access,
       images: this.state.images,
       image: this.state.image,
       lat: inputs.lat,
@@ -89,17 +88,6 @@ class EditCard extends Component {
       })
     })
 
-  }
-
-  handleTagChange(event, value) {
-    Meteor.call('touchTag', event.currentTarget.value, (error, result) => {
-      if (!error) {
-        TagCards.insert({
-          cardId: this.props.card._id,
-          tagId: result
-        })
-      }
-    })
   }
 
   uploadFiles(event) {
@@ -116,7 +104,7 @@ class EditCard extends Component {
 
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
-    this.setState({access: selectedAccess});
+    this.setState({'inputs': { ...this.state.inputs, 'access':selectedAccess } });
   }
 
   render() {
@@ -131,7 +119,7 @@ class EditCard extends Component {
             onToggle={this.handleAccessChange}
             labelPosition="right"
             style={{marginBottom: 20}}
-            defaultToggled={this.state.access === 'public'}
+            defaultToggled={this.state.inputs.access === 'public'}
           />
           { this.state.uploading ? 
             <CircularProgress size={60} thickness={7} />
@@ -162,7 +150,7 @@ class EditCard extends Component {
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Description"
+              floatingLabelText="Summary"
               hintText="A short, plain text summary"
               floatingLabelFixed={true}
               id="description"
@@ -173,54 +161,24 @@ class EditCard extends Component {
               value={this.state.inputs.description}
             />
           </div>
+          { this.props.card.cardType == 'Article' ?
+
           <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Latitude"
-              floatingLabelFixed={true}
-              id="lat"
-              data-field="lat"
-              multiLine={true}
-              rows={2}
-              onChange={this.handleInputChange}
-              value={this.state.inputs.lat}
-            />
+            <h3>Article Content</h3>
+            <TextEditor />
           </div>
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Longitude"
-              floatingLabelFixed={true}
-              id="lng"
-              data-field="lng"
-              multiLine={true}
-              rows={2}
-              onChange={this.handleInputChange}
-              value={this.state.inputs.lng}
-            />
-          </div>
-          <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Add a tag"
-              hintText="Add one tag at a time"
-              floatingLabelFixed={true}
-              id="addTag"
-              data-field="tag"
-              onBlur={this.handleTagChange.bind(this)}
-            />
-          <TagsFromIdsContainer tags={this.props.cardTags} />
+          : '' }
           <div className="form-group">
             <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>
+          <Snackbar
+            open={this.state.open}
+            message={this.state.message}
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+          />
         </form>
         }
-
-        <Snackbar
-          open={this.state.open}
-          message={this.state.message}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
       </div>
     )
   }
@@ -229,8 +187,6 @@ class EditCard extends Component {
 
 EditCard.propTypes = {
   card: PropTypes.object,
-  decks: PropTypes.array,
-  cardTags: PropTypes.array,
   loading: PropTypes.bool
 }
  
