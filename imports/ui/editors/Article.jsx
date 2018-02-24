@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
-import Snackbar from 'material-ui/Snackbar'
-import Divider from 'material-ui/Divider'
-import Subheader from 'material-ui/Subheader'
-import RaisedButton from 'material-ui/RaisedButton'
 import { Cards } from '../../api/cards.js'
-import { Decks } from '../../api/decks.js'
-import CircularProgress from 'material-ui/CircularProgress'
 import TextEditor from '../TextEditor'
-import { EditorState, Editor, convertToRaw } from 'draft-js';
+import { EditorState, Editor, convertToRaw, convertFromRaw } from 'draft-js';
 
 class Article extends Component {
 
@@ -17,22 +10,15 @@ class Article extends Component {
     super(props);
 
     if (!this.props.card.content) {
-      this.props.card.content = {Article: EditorState.createEmpty()}
+      this.props.card.content = {Article: convertToRaw(EditorState.createEmpty().getCurrentContent())}
     }
+
+    const { Article } = this.props.card.content
  
     this.state = {
-      open: false,
-      message: 'Card added successfully',
-      contentState: this.props.card.content.Article,
+      contentState: EditorState.createWithContent(convertFromRaw(Article)),
       content: {}
     }
-  }
-
-  multiSnackBar = (message, s) => {
-    this.setState({
-      open: s,
-      message: message
-    })
   }
 
   handleSubmit(event) {
