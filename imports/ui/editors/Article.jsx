@@ -21,32 +21,6 @@ class Article extends Component {
     }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const data = {
-      content: {Article: this.state.content}
-    }
-
-    Cards.update({_id: this.props._id}, {$set: data}, () => {
-      this.setState({
-        open: true,
-        message: 'Card edited ok'
-      })
-    })
-
-  }
-
-  uploadFiles(event) {
-    imageApi.uploadFiles(event, this)
-  }
-
-  handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
-  }
-
   onChange = (val) => {
     this.setState({
       contentState: val,
