@@ -30,20 +30,6 @@ const cardStyle = {
 }
 
 const styles = {
-  card: cardStyle,
-  chip: {
-    margin: 4,
-  },
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: 15
-  },
-  previewImg: {
-    display: 'block',
-    marginBottom: 20,
-    cursor: 'pointer'
-  },
   lightboxContainer: {
     backgroundSize: 'contain',
     position: 'absolute',
@@ -91,10 +77,6 @@ export default class SnapCard extends Component {
       snackOpen: false,
     });
   };
-
-  chipHandleRequestDelete() {
-    this.props.multiSnackBar('Not deleting tag in this demo', true);
-  }
 
   handleLightboxClose = () => {
     this.setState({lightbox: false})
@@ -194,7 +176,6 @@ export default class SnapCard extends Component {
 
   render() {
     const owned = this.props.card.owner === Meteor.userId()
-    const cardClassName = this.props.card.checked ? 'checked' : ''
     const title = this.props.card.title
     let images = this.props.card.images || false
     /* a little dance to handle cards uploaded before images
@@ -205,6 +186,15 @@ export default class SnapCard extends Component {
       let secureUrl = imageApi.returnSecureUrl(imageUrl)
       images = imageApi.makeImageUrls(secureUrl)
     }
+      
+    const lightBoxAction = [
+        <FlatButton
+          label="Cancel"
+          primary={false}
+          onClick={this.handleLightboxClose}
+        />
+      ];
+
     const actions = [
         <FlatButton
           label="Cancel"
@@ -215,20 +205,16 @@ export default class SnapCard extends Component {
           label="Confirm"
           primary={true}
           onClick={this.deleteThisCard.bind(this)}
-        />,
-      ];
-    const lightBoxAction = [
-        <FlatButton
-          label="Cancel"
-          primary={false}
-          onClick={this.handleLightboxClose}
-        />,
+        />
       ];
 
     let createdAgo = moment(this.props.card.createdAt).fromNow()
 
     return (
-      <Card style={cardStyle} initiallyExpanded={true}>
+      <Card 
+        style={cardStyle} 
+        initiallyExpanded={true}
+      >
         <CardHeader
           avatar={ images ? images.thumb : null }
           title={this.props.card.title}
@@ -238,33 +224,32 @@ export default class SnapCard extends Component {
         />
 
         { images ?
-
-        <CardMedia>
-          <img 
-            onLoad={this.onImgLoad.bind(this)} 
-            src={images.medium} 
-            alt={this.props.card.title} 
-            onClick={this.handleLightboxOpen} 
-          />
-        </CardMedia>
-        : '' 
+          <CardMedia>
+            <img 
+              onLoad={this.onImgLoad.bind(this)} 
+              src={images.medium} 
+              alt={this.props.card.title} 
+              onClick={this.handleLightboxOpen} 
+            />
+          </CardMedia> : '' 
         }
 
         <CardText expandable={true}>
           <h2>{this.props.card.title}</h2>
           <p>{this.props.card.description}</p>
           { this.props.card.content ? 
-          parseContent(this.props.card.cardType, {content: this.props.card.content})
-          : '' }
+            parseContent(this.props.card.cardType, {content: this.props.card.content}) : '' }
         </CardText>
 
         { owned ? 
-
-        <CardActions>
-          <RaisedButton label="Delete" onClick={this.handleOpen} />
-          <RaisedButton label="Edit" onClick={this.handleEditRequest} />
-        </CardActions>
-        : ''
+          <CardActions>
+            <RaisedButton 
+              label="Delete" 
+              onClick={this.handleOpen} />
+            <RaisedButton 
+              label="Edit" 
+              onClick={this.handleEditRequest} />
+          </CardActions> : '' 
         }
 
         <Dialog
@@ -275,6 +260,7 @@ export default class SnapCard extends Component {
         >
           Confirm you want to permanently delete this SnapCard.
         </Dialog>
+
         <FullscreenDialog
           title={this.props.card.title}
           actions={lightBoxAction}
@@ -284,11 +270,14 @@ export default class SnapCard extends Component {
         >
           <div style={styles.lightboxContainer} />
         </FullscreenDialog>
+
         <hr />
+
         <h3>Tags</h3>
+
         { owned ? 
-        <div style={{marginBottom: 20}}>
-          <TextField
+          <div style={{marginBottom: 20}}>
+            <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
               floatingLabelText="Add a tag"
               hintText="Add one tag at a time"
@@ -298,28 +287,56 @@ export default class SnapCard extends Component {
               value={this.state.tagValue}
               onChange={this.handleTagTyping.bind(this)}
             />
-            <RaisedButton label="Add tag" onClick={this.handleTagChange.bind(this)} />
-        </div>
-        : '' }
-        <TagsFromIdsContainer tags={this.props.cardTags} owned={owned} cardId={this.props.card._id} deckId={""} />
+            <RaisedButton 
+              label="Add tag" 
+              onClick={this.handleTagChange.bind(this)} 
+            />
+          </div> : ''
+        }
+
+        <TagsFromIdsContainer 
+          tags={this.props.cardTags} 
+          owned={owned} 
+          cardId={this.props.card._id} 
+          deckId={""} 
+        />
+
         <hr />
+
         <h3>Decks</h3>
+
         { owned ?
-        <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.selectedDeck} onChange={this.handleDeckSelect}>
-          <MenuItem value={0} primaryText="Add to deck" />
-          {this.renderMyDecks()}
-        </DropDownMenu>
-        : '' }
+          <DropDownMenu 
+            iconStyle={{textColor:'black'}} 
+            iconButton={<NavigationExpandMoreIcon/>} 
+            value={this.state.selectedDeck} 
+            onChange={this.handleDeckSelect}
+          >
+            <MenuItem 
+              value={0} 
+              primaryText="Add to deck" 
+            />
+            {this.renderMyDecks()}
+          </DropDownMenu> : '' 
+        }
+
         <DecksFromIdsContainer decks={this.props.cardDecks} />
+
         <hr />
+
         <h3>API</h3>
+
         <pre style={styles.meta}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
+
         <hr />
+
         <h3>Geo Position</h3>
+
         <p style={styles.meta}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
+
         { this.props.card.lat ?
-        <MapCardContainer _id={this.props.card._id} />
-        : ''}
+          <MapCardContainer _id={this.props.card._id} /> : ''
+        }
 
         <Snackbar
           open={this.state.snackOpen}
@@ -329,7 +346,7 @@ export default class SnapCard extends Component {
           style={{'fontWeight': 700}}
         />
       </Card>
-    );
+    )
   }
 }
 

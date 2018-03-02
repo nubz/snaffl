@@ -1,46 +1,85 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../../api/cards.js'
-import TextEditor from '../TextEditor'
-import { EditorState, Editor, convertToRaw, convertFromRaw } from 'draft-js';
+import DraftEditor from '../DraftEditor'
 
-class Article extends Component {
+class ArticleEditor extends Component {
 
   constructor(props) {
     super(props);
 
-    if (!this.props.card.content) {
-      this.props.card.content = {Article: convertToRaw(EditorState.createEmpty().getCurrentContent())}
+    if (!props.card.content) {
+      props.card.content = {Article: {
+        "entityMap": {},
+        "blocks": [
+          {
+            "key": "ag6qs",
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          }
+        ]
+      }}
     }
 
-    const { Article } = this.props.card.content
+    const { Article } = props.card.content
  
     this.state = {
-      contentState: EditorState.createWithContent(convertFromRaw(Article)),
-      content: {}
+      content: Article
     }
   }
 
-  onChange = (val) => {
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const data = {
+      content: {Article: this.state.content}
+    }
+
+    Cards.update({_id: this.props._id}, {$set: data}, () => {
+      this.setState({
+        open: true,
+        message: 'Card edited ok'
+      })
+    })
+
+  }
+
+  uploadFiles(event) {
+    imageApi.uploadFiles(event, this)
+  }
+
+  handleRequestClose = () => {
     this.setState({
-      contentState: val,
-      content: convertToRaw(val.getCurrentContent())
+      open: false,
+    });
+  }
+
+  onChange = (val) => {
+    console.log('setting content state to', val)
+    this.setState({
+      content: val
     })
   }
 
   render() {
     return (
-      <div className="form-group">
+      <div>
         <h3>Article Content</h3>
-        <TextEditor onChange={this.onChange} content={this.state.contentState} _id={this.props.card._id} />
+        <div className="editor">
+          <DraftEditor onChange={this.onChange} content={this.state.content} _id={this.props.card._id} />
+        </div>
       </div>
     )
   }
 
 }
 
-Article.propTypes = {
+ArticleEditor.propTypes = {
   card: PropTypes.object
 }
  
-export default Article
+export default ArticleEditor

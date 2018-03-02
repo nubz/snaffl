@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
-import Editor, { createWithContent } from 'draft-js-plugins-editor';
-import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
+import { EditorState, RichUtils, getDefaultKeyBinding, KeyBindingUtil, convertFromRaw, convertToRaw } from 'draft-js'
+import Editor, { createWithContent, composeDecorators } from 'draft-js-plugins-editor';
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+import createImagePlugin from 'draft-js-image-plugin';
+import createVideoPlugin from 'draft-js-video-plugin';
 import {
   ItalicButton,
   BoldButton,
@@ -15,8 +17,34 @@ import {
   BlockquoteButton,
   CodeBlockButton,
 } from 'draft-js-buttons';
-import PropTypes from 'prop-types'
 
+import createToolbarPlugin, { Separator } from 'last-draft-js-toolbar-plugin'
+
+import {
+  AddColorButton,
+  AddEmbedButton,
+  AddEmojiButton,
+  AddGifButton,
+  AddImageButton,
+  AddLinkButton
+} from 'draft-js-buttons-plugin'
+import {
+  ColorModal,
+  EmbedModal,
+  GifModal,
+  LinkModal
+} from 'draft-js-modal-plugin'
+import PropTypes from 'prop-types'
+import createEmbedPlugin from 'draft-js-embed-plugin'
+import createLinkPlugin from 'draft-js-link-plugin'
+import createAlignmentPlugin from 'draft-js-alignment-plugin'
+import createFocusPlugin from 'draft-js-focus-plugin'
+import createResizeablePlugin from 'draft-js-resizeable-plugin'
+import createDndPlugin from 'draft-js-drag-n-drop-plugin'
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin'
+import {colorStyleMap} from 'draft-js-color-picker-plugin'
+import createSidebarPlugin from 'last-draft-js-sidebar-plugin'
+import { fromJS } from 'immutable';
 
 class HeadlinesPicker extends Component {
   componentDidMount() {
@@ -66,8 +94,11 @@ const toolbarPlugin = createToolbarPlugin({
   structure: [
     BoldButton,
     ItalicButton,
-    UnderlineButton,
     CodeButton,
+    Separator,
+    AddEmbedButton,
+    AddImageButton,
+    AddLinkButton,
     Separator,
     HeadlinesButton,
     UnorderedListButton,
@@ -78,17 +109,39 @@ const toolbarPlugin = createToolbarPlugin({
 });
 const { Toolbar } = toolbarPlugin;
 
+const videoPlugin = createVideoPlugin();
+const linkPlugin = createLinkPlugin()
+const embedPlugin = createEmbedPlugin()
+const focusPlugin = createFocusPlugin()
+const resizeablePlugin = createResizeablePlugin()
+const dndPlugin = createDndPlugin()
+const alignmentPlugin = createAlignmentPlugin()
+const mentionPlugin = createMentionPlugin();
+const { MentionSuggestions } = mentionPlugin;
+const { AlignmentTool } = alignmentPlugin
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+  dndPlugin.decorator
+)
 
-const plugins = [toolbarPlugin];
+const linkifyPlugin = createLinkifyPlugin();
+const imagePlugin = createImagePlugin({ decorator })
+
+const plugins = [ColorModal, EmbedModal, GifModal, LinkModal, toolbarPlugin, focusPlugin, resizeablePlugin, dndPlugin, alignmentPlugin, mentionPlugin, linkifyPlugin, imagePlugin, embedPlugin, linkPlugin, videoPlugin];
 const text = 'This is some test text'
 
 class TextEditor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editorState: this.props.content};
+    this.state = {editorState: this.props.content, suggestions: props.mentions || fromJS([])};
+
     this.onChange = (editorState) => {this.setState({editorState}); this.props.onChange(editorState)};
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
+    this.keyBindings = this.props.keyBindings || []
   }
 
   handleKeyCommand(command, editorState) {
@@ -100,17 +153,51 @@ class TextEditor extends Component {
     return 'not-handled';
   }
 
+  handleReturn (event) {
+    if (!event.shiftKey) { return false }
+    const newState = RichUtils.insertSoftNewline(this.props.editorState)
+    this.props.onChange(newState)
+    return true
+  }
+
+  focus = () => {
+    this.editor.focus()
+  }
+
+ onSearchChange = ({ value }) => {
+    if (this.props.mentionSearchAsync !== undefined) {
+      /* async */
+      this.props.mentionSearchAsync(value)
+      .then((data) => { this.setState({suggestions: fromJS(data.suggestions)}) })
+    } else {
+      /* static list of users */
+      this.setState({
+        suggestions: defaultSuggestionsFilter(value, this.props.mentions),
+      })
+    }
+  }
+
   render() {
     return (
-      <div className='editor'>
-        <Toolbar />
-        <Editor 
-          editorState={this.state.editorState} 
-          handleKeyCommand={this.handleKeyCommand}
-          onChange={this.onChange} 
-          plugins={plugins}
-          ref={(element) => { this.editor = element; }}
-        />
+      <div>
+        <div className='editor'>
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+            plugins={plugins}
+            customStyleMap={colorStyleMap}
+            handleKeyCommand={this.handleKeyCommand}
+            handleReturn={this.handleReturn}
+            ref={(element) => { this.editor = element }}
+          />
+          <Toolbar />
+          <AlignmentTool />
+          <MentionSuggestions
+            onSearchChange={this.onSearchChange}
+            suggestions={this.state.suggestions}
+            onClose={() => this.setState({suggestions: fromJS([])})}
+          />
+        </div>
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import React from 'react'
-import Article from './content/Article'
+import ArticleReader from './content/Article'
 
 
 const TypeContent = {
-  'Article': Article,
+  'Article': ArticleReader,
   'Image': {},
   'Embed': {},
   'Location': {},

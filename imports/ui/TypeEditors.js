@@ -1,9 +1,9 @@
 import React from 'react'
-import Article from './editors/Article'
+import ArticleEditor from './editors/Article'
 
 
 const TypeEditors = {
-  'Article': Article,
+  'Article': ArticleEditor,
   'Image': {},
   'Embed': {},
   'Location': {},

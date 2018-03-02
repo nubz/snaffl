@@ -1,31 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { convertFromRaw } from 'draft-js'
-import { stateToHTML } from 'draft-js-export-html'
+import { convertToRaw } from 'draft-js'
+import {MegadraftEditor, editorStateFromRaw} from "megadraft";
 
-class Article extends Component {
+class ArticleReader extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  createMarkUp(html) {
-    return {__html: html}
+    console.log('props for reader', props);
+    const { Article } = this.props.content
+    const editorState = editorStateFromRaw(JSON.parse(Article));
+    this.state = {editorState}
   }
 
   render() {
-    const { Article } = this.props.content
-    let html = stateToHTML(convertFromRaw(Article));
-
+    console.log('rendering Article', this.state.editorState)
     return (
-      <div dangerouslySetInnerHTML={this.createMarkUp(html)} />
+      <MegadraftEditor
+        editorState={this.state.editorState}
+        readOnly={true}/>
     )
   }
 
 }
 
-Article.propTypes = {
+ArticleReader.propTypes = {
   content: PropTypes.object
 }
  
-export default Article
+export default ArticleReader
