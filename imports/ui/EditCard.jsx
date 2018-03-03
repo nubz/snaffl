@@ -91,7 +91,10 @@ class EditCard extends Component {
       this.setState({
         open: true,
         message: 'Card edited ok'
+      }, () => {
+        FlowRouter.go('/card/' + inputs._id)
       })
+
     })
 
   }

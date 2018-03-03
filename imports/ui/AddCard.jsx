@@ -18,8 +18,9 @@ import parseEditor from './TypeEditors'
 
 const styles = {
   formStyle: {
-    marginBottom: 30,
-    marginTop: 30
+    padding: 10,
+    maxWidth: 768,
+    margin: '10px auto'
   },
   floatingLabelStyle: {
     color: 'black',
@@ -157,11 +158,11 @@ class AddCard extends Component {
  
   render() {
     return (
-      <div>
+      <div style={styles.formStyle}>
 
         {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}
 
-        <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+        <form onSubmit={this.handleSubmit.bind(this)}>
 
           <Toggle
             label="Public access"

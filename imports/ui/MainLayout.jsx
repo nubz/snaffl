@@ -53,20 +53,22 @@ class Login extends Component {
   }
 }
 
+const o = {horizontal: 'right', vertical: 'top'}
+
+function iconButtonElement() {
+  return (<IconButton><MoreVertIcon /></IconButton>)
+}
+
 const Logged = (props) => (
   <IconMenu
     {...props}
-    iconButtonElement={
-      <IconButton><MoreVertIcon /></IconButton>
-    }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+    iconButtonElement={iconButtonElement()}
+    targetOrigin={o}
+    anchorOrigin={o}
   >
-    <MenuItem primaryText="Refresh" />
-    <MenuItem primaryText="Help" />
     <MenuItem primaryText="Sign out" onClick={logOut} />
   </IconMenu>
-);
+)
 
 Logged.muiName = 'IconMenu';
 
@@ -119,10 +121,7 @@ export default class MainLayout extends Component {
               <p>Created by <a href="http://nubz.com">nubz</a></p>
             </footer>
           </div>
-          { Session.get('canAddCard') ?
-            <FloatingActionButton style={styles.fab} secondary={true} onClick={this.createCard}>
-              <ContentAdd />
-            </FloatingActionButton> : ''}
+
           <NavContainer
             open={this.state.open}
             onRequestChange={this.onRequestChange.bind(this)}
