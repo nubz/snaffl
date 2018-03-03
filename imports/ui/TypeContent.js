@@ -1,24 +1,24 @@
 import React from 'react'
 import ArticleReader from './content/Article'
+import ImageReader from './content/Image'
+import LocationReader from './content/Location'
+import EventReader from './content/Event'
+import EmbedReader from './content/Embed'
+import EntityReader from './content/Entity'
 
 
 const TypeContent = {
   'Article': ArticleReader,
-  'Image': {},
-  'Embed': {},
-  'Location': {},
-  'Event': {},
-  'Entity': {},
+  'Image': ImageReader,
+  'Embed': EmbedReader,
+  'Location': LocationReader,
+  'Event': EventReader,
+  'Entity': EntityReader,
   'MultiDeck': {},
   'Gallery': {},
   'Map': {},
   'Schedule': {},
-  'Directory': {},
-  'Edit': {},
-  'View': {},
-  'Delete': {},
-  'List': {},
-  'Grid': {}
+  'Directory': {}
 }
 
 export default function parseContent(typeName, props) {

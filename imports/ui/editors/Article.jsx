@@ -9,7 +9,7 @@ class ArticleEditor extends Component {
     super(props);
 
     if (!props.card.content) {
-      props.card.content = {Article: {
+      props.card.content = {Article: JSON.stringify({
         "entityMap": {},
         "blocks": [
           {
@@ -22,7 +22,7 @@ class ArticleEditor extends Component {
             "data": {}
           }
         ]
-      }}
+      })}
     }
 
     const { Article } = props.card.content

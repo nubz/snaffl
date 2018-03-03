@@ -13,10 +13,13 @@ import { TagSubscriptions } from '../imports/api/tagSubscriptions'
 
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
+import resetDb from './resetDb'
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
 // access codes for third party services
 import Secrets from '../secrets'
+
+const wipeDb = false
 
 Meteor.startup(() => {
 
@@ -26,6 +29,10 @@ Meteor.startup(() => {
   // when true it will clean out db 
   // and re-seed
   referenceData(false)
+
+  if (wipeDb) {
+    resetDb(true)
+  }
 
   Cards._ensureIndex({createdAt: -1})
   Cards._ensureIndex({owner: 1})

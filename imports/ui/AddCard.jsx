@@ -79,7 +79,6 @@ class AddCard extends Component {
 
     const inputs = this.state.inputs
     const location = AllGeo.getLocation()
-    console.log(location)
 
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content
@@ -153,33 +152,40 @@ class AddCard extends Component {
     AllGeo.init()
     console.log('all geo init', AllGeo.getLocation())
   }
+
+  registerContent = contentFields => this.contentFields = contentFields
  
   render() {
     return (
       <div>
+
         {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}
+
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+
           <Toggle
             label="Public access"
             onToggle={this.handleAccessChange}
             labelPosition="right"
             style={{marginBottom: 20}}
           />
+
           { this.state.uploading ? 
             <CircularProgress size={60} thickness={7} />
           :
-          <div className="form-group">
-            { this.state.images ? 
-              <img style={styles.imagePreview} src={this.state.images.small} /> 
-              : ''}
-            <RaisedButton
-               secondary={true} 
-               containerElement='label' 
-               label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-            </RaisedButton>
-          </div>
+            <div className="form-group">
+              { this.state.images ? 
+                <img style={styles.imagePreview} src={this.state.images.small} /> 
+                : ''}
+              <RaisedButton
+                 secondary={true} 
+                 containerElement='label' 
+                 label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
+                 <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
+              </RaisedButton>
+            </div>
           }
+
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
@@ -191,6 +197,7 @@ class AddCard extends Component {
               value={this.state.inputs.title}
             />
           </div>
+
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
@@ -207,29 +214,33 @@ class AddCard extends Component {
           </div>
 
           { this.props.cardType ? 
-          <div className="form-group">
-            {parseEditor(this.props.cardType, {
-              ref: function(contentFields){this.contentFields = contentFields;}.bind(this), 
-              card: {}, 
-              isNew: true
-            })}
-          </div>
+            <div className="form-group">
+              {
+                parseEditor(this.props.cardType, {
+                  ref: this.registerContent, 
+                  card: {}, 
+                  isNew: true
+                })
+              }
+            </div>
            :
-          <div className="form-group">
-            <SelectField 
-              onChange={this.handleSelectChange} 
-              floatingLabelText="Type of Card"
-              floatingLabelStyle={styles.floatingLabelStyle}
-              data-field="cardType"
-              value={this.state.inputs.cardType}
-            >
-            {this.renderCardTypes()}
-            </SelectField>
-          </div>
+            <div className="form-group">
+              <SelectField 
+                onChange={this.handleSelectChange} 
+                floatingLabelText="Type of Card"
+                floatingLabelStyle={styles.floatingLabelStyle}
+                data-field="cardType"
+                value={this.state.inputs.cardType}
+              >
+              {this.renderCardTypes()}
+              </SelectField>
+            </div>
            }
+
           <div className="form-group">
             <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true} />
           </div>
+
         </form>
 
         <Divider />
