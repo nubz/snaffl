@@ -10,6 +10,7 @@ export default MapCardContainer = withTracker(props => {
   const card = Cards.findOne(props._id)
   return {
     card,
+    locationMap: false,
     loading
   }
 })(MapCard)

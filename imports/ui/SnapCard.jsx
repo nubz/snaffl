@@ -238,7 +238,7 @@ export default class SnapCard extends Component {
           <h2>{this.props.card.title}</h2>
           <p>{this.props.card.description}</p>
           { this.props.card.content ? 
-            parseContent(this.props.card.cardType, {content: this.props.card.content}) : '' }
+            parseContent(this.props.card.cardType, {content: this.props.card.content, card: this.props.card}) : '' }
         </CardText>
 
         { owned ? 

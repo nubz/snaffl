@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import MapCard from '../MapCard'
 
 class LocationReader extends Component {
 
@@ -13,6 +14,8 @@ class LocationReader extends Component {
       <div>
         <p>Address: {Location.address}</p>
         <p>Postcode: {Location.postcode}</p>
+        <h3>Location map</h3>
+        <MapCard locationMap={true} card={this.props.card} />
       </div>
     )
   }
@@ -20,7 +23,8 @@ class LocationReader extends Component {
 }
 
 LocationReader.propTypes = {
-  content: PropTypes.object
+  content: PropTypes.object,
+  card: PropTypes.object
 }
  
 export default LocationReader

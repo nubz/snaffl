@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import MapEditor from '../MapEditor'
 
 const fields = [
   {"name": "address", "label": "Address", "default": ""},
@@ -56,12 +57,16 @@ class LocationEditor extends Component {
     ))
   }
 
+  registerMapVals = contentMap => this.contentMap = contentMap
+
   handleInputChange = (event, index, value) => this.setState({'content': { ...this.state.content, [event.target.dataset.field] : event.target.value } })
 
   handleUseCurrentLocation() {
     let location = AllGeo.getLocation()
     this.setState({'content': { ...this.state.content, 'latitude' : location.lat, 'longitude': location.lng } })
   }
+
+  onMarkerChange = () => this.setState({'content': { ...this.state.content, 'latitude' : this.contentMap.state.lat, 'longitude': this.contentMap.state.lng } })
 
   render() {
     return (
@@ -73,6 +78,11 @@ class LocationEditor extends Component {
              containerElement='label' 
              label='Use current location'
              onClick={this.handleUseCurrentLocation.bind(this)} />
+
+        { this.state.content.latitude != 0 ?
+          <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''
+        }
+
       </div>
     )
   }

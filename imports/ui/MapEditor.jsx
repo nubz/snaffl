@@ -4,54 +4,52 @@ import { Session } from 'meteor/session';
 import GoogleMapContainer from '../containers/GoogleMapContainer';
 import { Cards } from '../api/cards'
 
-class MapCard extends Component {
+class MapEditor extends Component {
   constructor(props) {
     super(props);
     this.handleOnReady = this.handleOnReady.bind(this);
     this.handleMapOptions = this.handleMapOptions.bind(this);
     this.state = {
-      map: {}
+      map: {},
+      lat: props.latitude,
+      lng: props.longitude
     }
   }
 
   handleMapOptions() {
-    let lat = this.props.locationMap ? this.props.card.content.Location.latitude : this.props.card.lat
-    let lng = this.props.locationMap ? this.props.card.content.Location.longitude : this.props.card.lng
     return {
-      center: new google.maps.LatLng(lat, lng),
+      center: new google.maps.LatLng(this.props.latitude, this.props.longitude),
       zoom: 14,
     };
   }
 
-  markerForCard(card) {
-    let infowindow, marker, lat, lng
-
-    lat = this.props.locationMap ? card.content.Location.latitude : card.lat
-    lng = this.props.locationMap ? card.content.Location.longitude : card.lng
-
-    infowindow = new google.maps.InfoWindow({
-      content: '<div><h3>' + card.title + '</h3><a href="/card/' + card._id + '"><img src="' + card.images.small + '"></a></div>'
-    });
+  markerForCard(lat, lng) {
+    let marker;
 
     marker = new google.maps.Marker({
-      draggable: false,
+      draggable: true,
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lat, lng),
       map: this.state.map.instance,
-      title: card.title,
-      id: card._id
+      title: 'location marker',
+      id: '0'
     });
 
-    marker.addListener('click', function() {
-      infowindow.open(this.state.map, marker);
+    google.maps.event.addListener(marker, 'dragend', function(event) {
+      this.setState({
+        'lat': event.latLng.lat(),
+        'lng': event.latLng.lng()
+      })
+      this.props.onChange()
     }.bind(this));
+
   }
 
   handleOnReady(name) {
       var bounds = new google.maps.LatLngBounds();
       GoogleMaps.ready(name, function (map) {
         this.setState({map: map});
-        this.markerForCard(this.props.card);
+        this.markerForCard(this.props.latitude, this.props.longitude);
       }.bind(this));
   }
 
@@ -67,10 +65,8 @@ class MapCard extends Component {
   }
 }
 
-MapCard.propTypes = {
-  card: PropTypes.object.isRequired,
-  locationMap: PropTypes.bool,
+MapEditor.propTypes = {
   loading: PropTypes.bool
 }
 
-export default MapCard;
+export default MapEditor;

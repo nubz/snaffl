@@ -24,7 +24,7 @@ class PublicCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 'list',
+      mode: 'grid',
       typeValue: 'All',
       publicCards: this.props.cards
     }
@@ -68,6 +68,7 @@ class PublicCards extends Component {
   }
 
   render() {
+    const iconStyle = {color: "white", padding:10}
     return (
         <div>
           <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
@@ -102,7 +103,7 @@ class PublicCards extends Component {
                     style={{cursor:'pointer'}}
                     subtitle={<span>by <b>{tile.owner}</b></span>}
                     onClick={this.viewFull.bind(tile)}
-                    actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                    actionIcon={parseIcon(tile.cardType, iconStyle)}
                   >
                     <img src={tile.images ? tile.images.medium : imageApi.medium(tile.image)} />
                   </GridTile>
