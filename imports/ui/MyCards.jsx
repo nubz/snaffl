@@ -31,7 +31,7 @@ class MyCards extends Component {
     super(props);
     this.state = {
       value: this.props.access,
-      mode: 'list',
+      mode: 'grid',
       typeValue: 'All',
       publicCards: this.props.publicCards,
       privateCards: this.props.privateCards
@@ -39,7 +39,6 @@ class MyCards extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentDidMount', nextProps)
     this.setState({
       publicCards: nextProps.publicCards,
       privateCards: nextProps.privateCards
@@ -61,7 +60,7 @@ class MyCards extends Component {
   }
 
   handleModeChange = (event, mode) => {
-    const selectedMode = mode ? 'grid' : 'mode'
+    const selectedMode = mode ? 'grid' : 'list'
     this.setState({mode: selectedMode});
   };
 
@@ -89,6 +88,7 @@ class MyCards extends Component {
   }
 
   render() {
+    const iconStyle = {color: "white", padding:10}
     return (
         <div>
           <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
@@ -128,7 +128,7 @@ class MyCards extends Component {
                           style={{cursor:'pointer'}}
                           subtitle={<span>by <b>{tile.owner}</b></span>}
                           onClick={this.viewFull.bind(tile)}
-                          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                          actionIcon={parseIcon(tile.cardType, iconStyle)}
                         >
                           <img src={tile.images ? tile.images.medium : imageApi.medium(tile.image)} />
                         </GridTile>
