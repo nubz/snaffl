@@ -70,8 +70,6 @@ class EditCard extends Component {
         })
     }
 
-
-
     const inputs = this.state.inputs
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content

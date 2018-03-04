@@ -7,14 +7,12 @@ class ArticleReader extends Component {
 
   constructor(props) {
     super(props);
-    console.log('props for reader', props);
     const { Article } = this.props.content
     const editorState = editorStateFromRaw(JSON.parse(Article));
     this.state = {editorState}
   }
 
   render() {
-    console.log('rendering Article', this.state.editorState)
     return (
       <MegadraftEditor
         editorState={this.state.editorState}

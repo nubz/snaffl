@@ -155,6 +155,20 @@ class AddCard extends Component {
   }
 
   registerContent = contentFields => this.contentFields = contentFields
+
+  returnTextField(name, label) {
+    return (
+      <TextField
+        floatingLabelStyle={styles.floatingLabelStyle}
+        floatingLabelText={label}
+        floatingLabelFixed={true}
+        id={name}
+        data-field={name}
+        onChange={this.handleInputChange}
+        value={this.state.inputs[name]}
+      />
+    )
+  }
  
   render() {
     return (
@@ -188,15 +202,7 @@ class AddCard extends Component {
           }
 
           <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Title"
-              floatingLabelFixed={true}
-              id="text-field-controlled"
-              data-field="title"
-              onChange={this.handleInputChange}
-              value={this.state.inputs.title}
-            />
+            {this.returnTextField("title", "Title")}
           </div>
 
           <div className="form-group">

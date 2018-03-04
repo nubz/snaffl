@@ -14,9 +14,7 @@ class DraftEditor extends Component {
 
   onChange = (editorState) => {
     this.setState({editorState});
-    let stateToSave = editorStateToJSON(this.state.editorState)
-    console.log("saving", stateToSave);
-    this.props.onChange(stateToSave)
+    this.props.onChange(editorStateToJSON(this.state.editorState))
   }
 
   render() {
