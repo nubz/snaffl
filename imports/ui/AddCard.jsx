@@ -79,7 +79,7 @@ class AddCard extends Component {
     event.preventDefault();
 
     const inputs = this.state.inputs
-    const location = AllGeo.getLocation()
+    let location = AllGeo.getLocation()
 
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content

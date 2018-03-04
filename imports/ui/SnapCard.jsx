@@ -330,7 +330,7 @@ export default class SnapCard extends Component {
 
         <hr />
 
-        <h3>Geo Position</h3>
+        <h3>Posting location</h3>
 
         <p style={styles.meta}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
 

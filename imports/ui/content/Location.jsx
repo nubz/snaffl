@@ -8,9 +8,12 @@ class LocationReader extends Component {
   }
 
   render() {
-    console.log('rendering Location')
+    const { Location } = this.props.content
     return (
-      <div></div>
+      <div>
+        <p>Address: {Location.address}</p>
+        <p>Postcode: {Location.postcode}</p>
+      </div>
     )
   }
 
