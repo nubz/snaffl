@@ -108,16 +108,16 @@ class LocationEditor extends Component {
            containerElement='label' 
            label='Use current location'
            onClick={this.handleUseCurrentLocation.bind(this)} />
+        <p>OR</p>
         { this.state.content.postcode.length ? 
           <div className="form-group">
-            OR:<br />
             <RaisedButton
                secondary={true} 
                containerElement='label' 
-               label='Use postcode above'
+               label='Use postcode entered in form'
                onClick={this.findPostcode.bind(this)} />
           </div> 
-          : ''}
+          : 'enter postcode below for auto generation'}
 
         { this.state.content.latitude != 0 ?
           <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
