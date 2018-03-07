@@ -26,6 +26,9 @@ class MapDeck extends Component {
   markerForCard(card) {
     let infowindow, marker;
 
+    lat = card.content && card.content.Location ? card.content.Location.latitude : card.lat
+    lng = card.content && card.content.Location ? card.content.Location.longitude : card.lng
+
     infowindow = new google.maps.InfoWindow({
       content: '<div><h3>' + card.title + '</h3><a href="/card/' + card._id + '"><img src="' + card.images.small + '"></a></div>'
     });
@@ -33,7 +36,7 @@ class MapDeck extends Component {
     marker = new google.maps.Marker({
       draggable: false,
       animation: google.maps.Animation.DROP,
-      position: new google.maps.LatLng(card.lat, card.lng),
+      position: new google.maps.LatLng(lat, lng),
       map: this.state.map.instance,
       title: card.title,
       id: card._id

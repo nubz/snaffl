@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import MapEditor from '../MapEditor'
+import Secrets from '../../../secrets'
+import { HTTP } from 'meteor/http'
 
 const fields = [
   {"name": "address", "label": "Address", "default": ""},
@@ -22,6 +24,26 @@ const floatingLabelStyle = {
   color: 'black',
   fontSize: 20,
   fontWeight: 500
+}
+
+function HTTPRequest(method, url, data) {
+
+  return new Promise((resolve, reject) => {
+    try {
+      HTTP.call(method, url, data || {}, (error, result) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(result);
+      });
+
+    } catch (e) {
+      console.error(e)
+      reject(e);
+    }
+  });
+
 }
 
 class LocationEditor extends Component {
@@ -68,21 +90,38 @@ class LocationEditor extends Component {
 
   onMarkerChange = () => this.setState({'content': { ...this.state.content, 'latitude' : this.contentMap.state.lat, 'longitude': this.contentMap.state.lng } })
 
+  findPostcode() {
+    let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(this.state.content.postcode) + "&key=" + Secrets.googleMaps.apiKey
+
+    HTTPRequest('GET', url).then(function(response) { 
+      let location = response.data.results[0].geometry.location;
+      this.setState({'content': { ...this.state.content, 'latitude' : location.lat, 'longitude':location.lng } })
+    }.bind(this), function(error) { });
+  }
+
   render() {
     return (
       <div>
-          {this.mapTextFields()}
-          <h3>Create a map</h3>
-          <RaisedButton
-             secondary={true} 
-             containerElement='label' 
-             label='Use current location'
-             onClick={this.handleUseCurrentLocation.bind(this)} />
+        <h3>Create a map</h3>
+        <RaisedButton
+           secondary={true} 
+           containerElement='label' 
+           label='Use current location'
+           onClick={this.handleUseCurrentLocation.bind(this)} />
+        { this.state.content.postcode.length ? 
+          <div className="form-group">
+            OR:<br />
+            <RaisedButton
+               secondary={true} 
+               containerElement='label' 
+               label='Use postcode above'
+               onClick={this.findPostcode.bind(this)} />
+          </div> 
+          : ''}
 
         { this.state.content.latitude != 0 ?
-          <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''
-        }
-
+          <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
+        {this.mapTextFields()}
       </div>
     )
   }

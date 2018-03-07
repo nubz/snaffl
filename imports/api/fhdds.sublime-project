@@ -6,6 +6,15 @@
 		},
 		{
 			"path": "/home/ali/hmrc-vpn/awrs-frontend"
+		},
+		{
+			"path": "/home/ali/hmrc-vpn/fh-registration"
+		},
+		{
+			"path": "/home/ali/hmrc-vpn/service-manager-config"
+		},
+		{
+			"path": "/home/ali/hmrc-vpn/hmrc-email-renderer"
 		}
 	]
 }
