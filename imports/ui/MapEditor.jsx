@@ -19,7 +19,7 @@ class MapEditor extends Component {
   handleMapOptions() {
     return {
       center: new google.maps.LatLng(this.props.latitude, this.props.longitude),
-      zoom: 14,
+      zoom: 17,
     };
   }
 
@@ -66,7 +66,8 @@ class MapEditor extends Component {
 }
 
 MapEditor.propTypes = {
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  onChange: PropTypes.func.isRequired
 }
 
 export default MapEditor;
