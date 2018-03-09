@@ -7,12 +7,14 @@ import Secrets from '../../../secrets'
 import { HTTP } from 'meteor/http'
 
 const fields = [
-  {"name": "address", "label": "Address", "default": ""},
-  {"name": "postcode", "label": "Postcode", "default": ""},
-  {"name": "email", "label": "Email", "default": ""},
-  {"name": "telephone", "label": "Telephone", "default": ""},
-  {"name": "longitude", "label": "Longitude", "default": 0},
-  {"name": "latitude", "label": "Latitude", "default": 0}
+  {"name": "postcode", "label": "Postcode", "default": "", "disabled": false},
+  {"name": "propertyNumber", "label": "Property number", "default": "", "disabled": false},
+  {"name": "address", "label": "Address", "default": "", "disabled": false},
+  {"name": "email", "label": "Email", "default": "", "disabled": false},
+  {"name": "telephone", "label": "Telephone", "default": "", "disabled": false},
+  {"name": "website", "label": "Website address", "default": "", "disabled": false},
+  {"name": "longitude", "label": "Longitude", "default": 0, "disabled": true},
+  {"name": "latitude", "label": "Latitude", "default": 0, "disabled": true}
 ]
 
 const defaultFields = fields.reduce((result, n) => {
@@ -63,19 +65,24 @@ class LocationEditor extends Component {
 
   }
 
-  mapTextFields() {
-    return fields.map((field) => (
+  renderTextField = field => (
       <div className="form-group" key={"field-" + field.name}>
         <TextField
-          floatingLabelStyle={floatingLabelStyle}
+          floatingLabelStyle={field.disabled ? {} : floatingLabelStyle}
           floatingLabelText={field.label}
           floatingLabelFixed={true}
           id={field.name}
           data-field={field.name}
           onChange={this.handleInputChange}
           value={this.state.content[field.name]}
+          disabled={field.disabled}
         />
       </div>
+    )
+
+  renderTextFields() {
+    return fields.map((field) => (
+      this.renderTextField(field)
     ))
   }
 
@@ -94,8 +101,17 @@ class LocationEditor extends Component {
     let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(this.state.content.postcode) + "&key=" + Secrets.googleMaps.apiKey
 
     HTTPRequest('GET', url).then(function(response) { 
-      let location = response.data.results[0].geometry.location;
-      this.setState({'content': { ...this.state.content, 'latitude' : location.lat, 'longitude':location.lng } })
+      const location = response.data.results[0].geometry.location;
+      const addressComponents = response.data.results[0].address_components;
+      const exclusions = ['postal_code', 'country', 'administrative_area_level_1', 'administrative_area_level_2'];
+      let address = addressComponents.reduce(function (parts, next) {
+        if (exclusions.indexOf(next.types[0]) == -1) {
+          parts.push(next.short_name)
+        }
+        return parts
+      }, []).join(', ')
+
+      this.setState({'content': { ...this.state.content, 'address': address, 'latitude' : location.lat, 'longitude':location.lng } })
     }.bind(this), function(error) { });
   }
 
@@ -121,7 +137,9 @@ class LocationEditor extends Component {
 
         { this.state.content.latitude != 0 ?
           <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
-        {this.mapTextFields()}
+        
+        { this.renderTextFields() }
+
       </div>
     )
   }

@@ -79,11 +79,11 @@ class AddCard extends Component {
     event.preventDefault();
 
     const inputs = this.state.inputs
-    let location = AllGeo.getLocation()
-
     let content = {}
+    let data = {}
+
     content[inputs.cardType] = this.contentFields.state.content
-    Cards.insert({
+    data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: Meteor.userId(),
@@ -92,10 +92,16 @@ class AddCard extends Component {
       cardType: inputs.cardType,
       image: this.state.image,
       images: this.state.images,
-      lat: location.lat,
-      lng: location.lng,
       content: content
-    }, () => {
+    }
+
+    if (this.state.geo) {
+      let location = AllGeo.getLocation()
+      data.lat = location.lat
+      data.lng = location.lng
+    }
+
+    Cards.insert(data, () => {
       this.setState({
         open: true,
         message: 'Card added ok',
@@ -103,7 +109,8 @@ class AddCard extends Component {
         publicId: '',
         image: '',
         access: 'private',
-        images: []
+        images: [],
+        content: {}
       })
     })
 
@@ -144,6 +151,11 @@ class AddCard extends Component {
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
     this.setState({access: selectedAccess});
+  };
+
+  handleGEOChange = (event, geo) => {
+    const selectedGeo = geo ? 'geo' : 'private'
+    this.setState({geo: selectedGeo});
   };
 
   componentDidMount() {
@@ -243,6 +255,13 @@ class AddCard extends Component {
               </SelectField>
             </div>
            }
+
+          <Toggle
+            label="Record posting location"
+            onToggle={this.handleGEOChange}
+            labelPosition="right"
+            style={{marginBottom: 20}}
+          />
 
           <div className="form-group">
             <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true} />

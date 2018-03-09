@@ -8,68 +8,6 @@
 	"buffers":
 	[
 		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/check-your-business.html",
-			"settings":
-			{
-				"buffer_size": 4006,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/iv.html",
-			"settings":
-			{
-				"buffer_size": 4725,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/org-type.html",
-			"settings":
-			{
-				"buffer_size": 5086,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-partners.html",
-			"settings":
-			{
-				"buffer_size": 12751,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary-read-only.html",
-			"settings":
-			{
-				"buffer_size": 27826,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/routes.js",
-			"settings":
-			{
-				"buffer_size": 9009,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/index.html",
-			"settings":
-			{
-				"buffer_size": 25180,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "/home/ali/Downloads/API#1324_SubscriptionCreate_update.json",
 			"settings":
 			{
@@ -79,412 +17,36 @@
 			}
 		},
 		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s.json",
+			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/govuk_wrapper.scala.html",
 			"settings":
 			{
-				"buffer_size": 279,
-				"encoding": "UTF-8",
+				"buffer_size": 4002,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/mba.txt",
+			"contents": "Searching 133 files for \"default-src\" (case sensitive)\n\n0 matches\n\nSearching 285 files for \"default-src\" (case sensitive)\n\n0 matches\n\nSearching 285 files for \"Content-Security-Policy\" (case sensitive)\n\n0 matches\n\nSearching 555 files for \"Content-Security-Policy\" (case sensitive)\n\n0 matches\n\nSearching 555 files for \"connect-src\" (case sensitive)\n\n0 matches\n\nSearching 555 files for \"contentSecurityPolicy\" (case sensitive)\n\n/home/ali/hmrc-vpn/awrs-frontend/conf/application.conf:\n   34  \n   35  play.filters {\n   36:   headers.contentSecurityPolicy = \"default-src 'self' 'unsafe-inline' localhost:9000 localhost:9032 stats.g.doubleclick.net www.google-analytics.com data:\"\n   37    csrf.header.bypassHeaders {\n   38      X-Requested-With = \"*\"\n\n1 match in 1 file\n",
 			"settings":
 			{
-				"buffer_size": 151,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "Impact of capturing main business address:"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-status.html",
-			"settings":
-			{
-				"buffer_size": 2067,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-no-actions.html",
-			"settings":
-			{
-				"buffer_size": 8370,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-read-only.html",
-			"settings":
-			{
-				"buffer_size": 9817,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s",
-			"settings":
-			{
-				"buffer_size": 78,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "https://www.rocketlawyer.co.uk/documents-and-forms"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/saved-progress.html",
-			"settings":
-			{
-				"buffer_size": 1479,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/delete.html",
-			"settings":
-			{
-				"buffer_size": 4697,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 10 files for \"print\"\n\n0 matches\n\nSearching 597 files for \"Do not reply to this email\" (case sensitive)\n\n/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/eeitt/eeittSubmissionConfirmation.scala.html:\n    9          HM Revenue and Customs<br>\n   10      <br>\n   11:     Do not reply to this email<br>\n   12  </p>\n   13  }\n\n/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/eeitt/eeittSubmissionConfirmation.scala.txt:\n   11  HM Revenue and Customs\n   12  \n   13: Do not reply to this email\n   14  \n   15  \n\n2 matches across 2 files\n\n\nSearching 646 files for \"Do not reply to this email\" (case sensitive)\n\n/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/eeitt/eeittSubmissionConfirmation.scala.html:\n    9          HM Revenue and Customs<br>\n   10      <br>\n   11:     Do not reply to this email<br>\n   12  </p>\n   13  }\n\n/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/eeitt/eeittSubmissionConfirmation.scala.txt:\n   11  HM Revenue and Customs\n   12  \n   13: Do not reply to this email\n   14  \n   15  \n\n2 matches across 2 files\n",
-			"settings":
-			{
-				"buffer_size": 1173,
+				"buffer_size": 764,
 				"line_ending": "Unix",
 				"name": "Find Results",
 				"scratch": true
 			}
 		},
 		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s1",
+			"file": "/home/ali/hmrc-vpn/awrs-frontend/conf/application.conf",
 			"settings":
 			{
-				"buffer_size": 137,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": ".hidden-print, a, footer, .beta-banner, h1, #globa"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/time-at-main-business-address.html",
-			"settings":
-			{
-				"buffer_size": 4550,
-				"encoding": "UTF-8",
+				"buffer_size": 4886,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary.html",
+			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/config/ApplicationGlobal.scala",
 			"settings":
 			{
-				"buffer_size": 28862,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/main-business-address.html",
-			"settings":
-			{
-				"buffer_size": 4998,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\"FHDDS_ALL\": [\n\n\t\"ADDRESS_LOOKUP\", \n\t\"SAVE4LATER\", \n\t\"TAX_ENROLMENTS\", \n\t\"CONTACT_FRONTEND\", \n\t\"ASSETS_FRONTEND\", \n\t\"AUTH_DEMO_FRONTEND\", \n\t\"AUTH\", \n\t\"AUTHENTICATOR\", \n\t\"AUTH_LOGIN_STUB\", \n\t\"AUTH_LOGIN_API\", \n\t\"CA_FRONTEND\", \n\t\"CITIZEN_DETAILS\", \n\t\"DATASTREAM\", \n\t\"GG\", \n\t\"GG_PROXY\", \n\t\"GG_STUBS\", \n\t\"GG_AUTHENTICATION\", \n\t\"SAVE4LATER\", \n\t\"KEYSTORE\", \n\t\"USER_DETAILS\",\n\t\"BUSINESS_MATCHING\",\n\t\"BUSINESS_CUSTOMER\",\n\t\"BUSINESS_CUSTOMER_FRONTEND\",\n\t\"BUSINESS_CUSTOMER_STUB\"],",
-			"settings":
-			{
-				"buffer_size": 471,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.html",
-			"settings":
-			{
-				"buffer_size": 1200,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/FhddsTemplates.scala",
-			"settings":
-			{
-				"buffer_size": 1336,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.txt",
-			"settings":
-			{
-				"buffer_size": 685,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/contact-person.html",
-			"settings":
-			{
-				"buffer_size": 8110,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/add-tax-1.html",
-			"settings":
-			{
-				"buffer_size": 6779,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/company-officers.html",
-			"settings":
-			{
-				"buffer_size": 18127,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/delete.html",
-			"settings":
-			{
-				"buffer_size": 4697,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/index.html",
-			"settings":
-			{
-				"buffer_size": 10941,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/routes.js",
-			"settings":
-			{
-				"buffer_size": 3099,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/saved-progress.html",
-			"settings":
-			{
-				"buffer_size": 1479,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/sign-out.html",
-			"settings":
-			{
-				"buffer_size": 4133,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/summary.html",
-			"settings":
-			{
-				"buffer_size": 29303,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/vat-registration.html",
-			"settings":
-			{
-				"buffer_size": 3045,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/withdraw-confirmation.html",
-			"settings":
-			{
-				"buffer_size": 2897,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-registration-number.html",
-			"settings":
-			{
-				"buffer_size": 2006,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/date-of-incorporation.html",
-			"settings":
-			{
-				"buffer_size": 1610,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/vat-registration.html",
-			"settings":
-			{
-				"buffer_size": 3045,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/declaration.html",
-			"settings":
-			{
-				"buffer_size": 4749,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/end.html",
-			"settings":
-			{
-				"buffer_size": 1994,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/form-sequencing.txt",
-			"settings":
-			{
-				"buffer_size": 769,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/AddressHelperParams.scala",
-			"settings":
-			{
-				"buffer_size": 842,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/awrs_additional_premises.scala.html",
-			"settings":
-			{
-				"buffer_size": 5523,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsAddressHelper.scala.html",
-			"settings":
-			{
-				"buffer_size": 3981,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsInputTypeText.scala.html",
-			"settings":
-			{
-				"buffer_size": 4746,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/awrs-frontend/public/stylesheets/custom.css",
-			"settings":
-			{
-				"buffer_size": 15317,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-customers.html",
-			"settings":
-			{
-				"buffer_size": 2444,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/company-officers.html",
-			"settings":
-			{
-				"buffer_size": 13245,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-officers.html",
-			"settings":
-			{
-				"buffer_size": 18127,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/importing-activities.html",
-			"settings":
-			{
-				"buffer_size": 4372,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/other-storage-premises.html",
-			"settings":
-			{
-				"buffer_size": 5270,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/assets/javascripts/application.js",
-			"settings":
-			{
-				"buffer_size": 6957,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/main-business-address.html",
-			"settings":
-			{
-				"buffer_size": 4244,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/includes/macros/elements.html",
-			"settings":
-			{
-				"buffer_size": 17099,
+				"buffer_size": 3575,
 				"line_ending": "Unix"
 			}
 		}
@@ -521,20 +83,66 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ali/hmrc-vpn/fh-registration",
-		"/home/ali/hmrc-vpn/fh-registration/app",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration/connectors",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration/controllers",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration/models",
-		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration/models/fhdds",
-		"/home/ali/hmrc-vpn/hmrc-email-renderer"
+		"/home/ali/hmrc-vpn/awrs-frontend",
+		"/home/ali/hmrc-vpn/awrs-frontend/app",
+		"/home/ali/hmrc-vpn/awrs-frontend/app/config",
+		"/home/ali/hmrc-vpn/awrs-frontend/conf"
 	],
 	"file_history":
 	[
+		"/home/ali/hmrc-vpn/awrs-frontend/app/config/ApplicationConfig.scala",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/includes/macros/elements.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/main-business-address.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/assets/javascripts/application.js",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/other-storage-premises.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/importing-activities.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-officers.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/company-officers.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-customers.html",
+		"/home/ali/hmrc-vpn/awrs-frontend/public/stylesheets/custom.css",
+		"/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsInputTypeText.scala.html",
+		"/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsAddressHelper.scala.html",
+		"/home/ali/hmrc-vpn/awrs-frontend/app/views/awrs_additional_premises.scala.html",
+		"/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/AddressHelperParams.scala",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/form-sequencing.txt",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/end.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/declaration.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/vat-registration.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/date-of-incorporation.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-registration-number.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/withdraw-confirmation.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/vat-registration.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/summary.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/sign-out.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/saved-progress.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/routes.js",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/index.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/delete.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/company-officers.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/add-tax-1.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/contact-person.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/index.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/check-your-business.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/iv.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/org-type.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-partners.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary-read-only.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/routes.js",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s.json",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/mba.txt",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-status.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-no-actions.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-read-only.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/saved-progress.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/delete.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s1",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/time-at-main-business-address.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary.html",
+		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/main-business-address.html",
+		"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.html",
+		"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/FhddsTemplates.scala",
+		"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.txt",
 		"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/awrs/awrsNotificationConfirmationAPI4.scala.html",
 		"/home/ali/hmrc-vpn/fh-registration/app/uk/gov/hmrc/fhregistration/connectors/EmailConnector.scala",
 		"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/lostcredentials/lostCredentialsRetrieveUseridNotificationEmail.scala.html",
@@ -542,21 +150,22 @@
 		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/importing-activities.html",
 		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status.html",
 		"/home/ali/hmrc-vpn/country-code-options.html",
-		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/end.html",
-		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/form-sequencing.txt",
 		"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/end.html",
 		"/home/ali/hmrc-vpn/Registration outstanding",
 		"/home/ali/hmrc-vpn/testmodel"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
-		"height": 99.0,
+		"height": 102.0,
 		"where_history":
 		[
+			"/home/ali/hmrc-vpn/awrs-frontend",
+			"/home/ali/hmrc-vpn/awrs-frontend/app",
+			"/home/ali/hmrc-vpn/awrs-frontend/app/views",
 			"/home/ali/hmrc-vpn/hmrc-email-renderer",
 			"/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer",
 			"/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3",
@@ -568,6 +177,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"contentSecurityPolicy",
+			"connect-src",
+			"Content-Security-Policy",
+			"default-src",
 			"Do not reply to this email",
 			"VAT",
 			"ReleaseOne-2",
@@ -641,221 +254,11 @@
 	"groups":
 	[
 		{
-			"selected": 22,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/check-your-business.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4006,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3659,
-								3659
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1368.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 36,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/iv.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4725,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3891,
-								3891
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1296.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/org-type.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5086,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3566,
-								3566
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1080.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 39,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-partners.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12751,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10693,
-								10693
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3363.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary-read-only.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 27826,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								27754,
-								27754
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 11880.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 33,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/routes.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9009,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								108,
-								108
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 25180,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4430,
-								4430
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1350.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
 					"file": "/home/ali/Downloads/API#1324_SubscriptionCreate_update.json",
 					"semi_transient": false,
 					"settings":
@@ -881,500 +284,30 @@
 						"translation.y": 2160.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 29,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s.json",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 279,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 30,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/mba.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 151,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								147,
-								147
-							]
-						],
-						"settings":
-						{
-							"auto_name": "Impact of capturing main business address:",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 31,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-status.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2067,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1750,
-								1750
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 32,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-no-actions.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8370,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5295,
-								5295
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2520.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/status-v1/status-read-only.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9817,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6326,
-								6326
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3078.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 78,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								78,
-								78
-							]
-						],
-						"settings":
-						{
-							"auto_name": "https://www.rocketlawyer.co.uk/documents-and-forms",
-							"syntax": "Packages/R/R.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 34,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/saved-progress.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1479,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1239,
-								1239
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 432.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/delete.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4697,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								713,
-								713
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 189.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 37,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1173,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										312,
-										338
-									],
-									[
-										538,
-										564
-									],
-									[
-										878,
-										904
-									],
-									[
-										1104,
-										1130
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								609,
-								609
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 3,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 396.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/s1",
+					"buffer": 1,
+					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/govuk_wrapper.scala.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 137,
+						"buffer_size": 4002,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								137,
-								137
-							]
-						],
-						"settings":
-						{
-							"auto_name": ".hidden-print, a, footer, .beta-banner, h1, #globa",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 28,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/time-at-main-business-address.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4550,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								610,
-								557
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 26,
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/summary.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 28862,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								986,
-								986
+								3435,
+								3435
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 27,
-					"type": "text"
-				},
-				{
-					"buffer": 20,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/main-business-address.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4998,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								474,
-								474
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 21,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 471,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								15,
-								15
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 22,
-					"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1200,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1197,
-								1197
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 23,
-					"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/FhddsTemplates.scala",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1336,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1132,
-								1132
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Scala/Scala.sublime-syntax",
-							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -1385,877 +318,88 @@
 					"type": "text"
 				},
 				{
-					"buffer": 24,
-					"file": "/home/ali/hmrc-vpn/hmrc-email-renderer/app/uk/gov/hmrc/hmrcemailrenderer/templates/fhdds/fhddsBetaSubmissionConfirmation.scala.txt",
+					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 685,
+						"buffer_size": 764,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										528,
+										549
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
 							[
-								611,
-								611
+								359,
+								359
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 6,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 361.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 25,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/contact-person.html",
+					"buffer": 3,
+					"file": "/home/ali/hmrc-vpn/awrs-frontend/conf/application.conf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8110,
+						"buffer_size": 4886,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3043,
-								3043
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1242.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 25,
-					"type": "text"
-				},
-				{
-					"buffer": 26,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/add-tax-1.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6779,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 24,
-					"type": "text"
-				},
-				{
-					"buffer": 27,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/company-officers.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 18127,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 23,
-					"type": "text"
-				},
-				{
-					"buffer": 28,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/delete.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4697,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 22,
-					"type": "text"
-				},
-				{
-					"buffer": 29,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10941,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 21,
-					"type": "text"
-				},
-				{
-					"buffer": 30,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/routes.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3099,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 31,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/saved-progress.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1479,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 32,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/sign-out.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4133,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 20,
-					"type": "text"
-				},
-				{
-					"buffer": 33,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/summary.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 29303,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				},
-				{
-					"buffer": 34,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/vat-registration.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3045,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 35,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-3/withdraw-confirmation.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2897,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
-					"type": "text"
-				},
-				{
-					"buffer": 36,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-registration-number.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2006,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1762,
-								1762
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 432.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 53,
-					"type": "text"
-				},
-				{
-					"buffer": 37,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/date-of-incorporation.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1610,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1398,
-								1398
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 54.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 52,
-					"type": "text"
-				},
-				{
-					"buffer": 38,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/vat-registration.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3045,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2289,
-								2289
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 47,
-					"type": "text"
-				},
-				{
-					"buffer": 39,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/declaration.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4749,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3186,
-								3186
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 972.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 46,
-					"type": "text"
-				},
-				{
-					"buffer": 40,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/end.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1994,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1731,
-								1731
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 41,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/form-sequencing.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 769,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								769,
-								769
+								1340,
+								1340
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 45,
-					"type": "text"
-				},
-				{
-					"buffer": 42,
-					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/AddressHelperParams.scala",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 842,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Scala/Scala.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 44,
-					"type": "text"
-				},
-				{
-					"buffer": 43,
-					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/awrs_additional_premises.scala.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5523,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1080.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 43,
-					"type": "text"
-				},
-				{
-					"buffer": 44,
-					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsAddressHelper.scala.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3981,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 918.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 42,
-					"type": "text"
-				},
-				{
-					"buffer": 45,
-					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/views/helpers/awrsInputTypeText.scala.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4746,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2682,
-								2667
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1404.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 41,
-					"type": "text"
-				},
-				{
-					"buffer": 46,
-					"file": "/home/ali/hmrc-vpn/awrs-frontend/public/stylesheets/custom.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15317,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1173,
-								1173
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 684.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 40,
-					"type": "text"
-				},
-				{
-					"buffer": 47,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/business-customers.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2444,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								639,
-								639
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 399.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 48,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 48,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/company-officers.html",
+					"buffer": 4,
+					"file": "/home/ali/hmrc-vpn/awrs-frontend/app/config/ApplicationGlobal.scala",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13245,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7916,
-								7820
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2592.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 51,
-					"type": "text"
-				},
-				{
-					"buffer": 49,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/company-officers.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 18127,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7331,
-								7331
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2106.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 49,
-					"type": "text"
-				},
-				{
-					"buffer": 50,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/importing-activities.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4372,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3457,
-								3457
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1134.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 51,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne-2/other-storage-premises.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5270,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								887,
-								887
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 234.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 35,
-					"type": "text"
-				},
-				{
-					"buffer": 52,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/assets/javascripts/application.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6957,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3551,
-								3551
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1512.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 50,
-					"type": "text"
-				},
-				{
-					"buffer": 53,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/fhdds/v-ReleaseOne/main-business-address.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4244,
+						"buffer_size": 3575,
 						"regions":
 						{
 						},
@@ -2268,45 +412,15 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"syntax": "Packages/Scala/Scala.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1782.0,
+						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 54,
-					"type": "text"
-				},
-				{
-					"buffer": 54,
-					"file": "/home/ali/hmrc-vpn/fhdds-prototype/app/views/includes/macros/elements.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17099,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11054,
-								11054
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4860.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 38,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -2314,7 +428,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -2351,7 +465,7 @@
 	"project": "fhdds.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":

@@ -330,12 +330,12 @@ export default class SnapCard extends Component {
 
         <hr />
 
-        <h3>Posting location</h3>
-
-        <p style={styles.meta}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
-
         { this.props.card.lat ?
-          <MapCardContainer _id={this.props.card._id} /> : ''
+          <div className="cardSection">
+            <h3>Posting location</h3>
+            <p style={styles.meta}>Latitude: {this.props.card.lat}<br />Longitude: {this.props.card.lng}</p>
+            <MapCardContainer _id={this.props.card._id} />
+          </div> : ''
         }
 
         <Snackbar
