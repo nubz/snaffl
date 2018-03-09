@@ -85,6 +85,11 @@ class EditCard extends Component {
       content: content
     }
 
+    if (this.state.removeGeo) {
+      data.lat = 0
+      data.lng = 0
+    }
+
     Cards.update({_id: inputs._id}, {$set: data}, () => {
       this.setState({
         open: true,
@@ -106,6 +111,10 @@ class EditCard extends Component {
       open: false,
     });
   }
+
+  handleGEOChange = (event, geo) => {
+    this.setState({removeGeo: geo});
+  };
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
 
@@ -173,9 +182,19 @@ class EditCard extends Component {
             {parseEditor(this.props.card.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: this.props.card, isNew: true})}
           </div>
 
+          { this.state.inputs.lat && this.state.inputs.lat !=0 ?
+          <Toggle
+            label="Remove posting location"
+            onToggle={this.handleGEOChange}
+            labelPosition="right"
+            style={{marginBottom: 20}}
+          />
+          : ''}
+
           <div className="form-group">
             <RaisedButton type="submit" label="Save Edits" primary={true} />
           </div>
+
           <Snackbar
             open={this.state.open}
             message={this.state.message}
