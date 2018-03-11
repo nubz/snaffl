@@ -38,8 +38,7 @@ form.accounts {
 
 .Section {
 	padding-left: 30px;
-    padding-right: 30px;
-    min-height: 360px;
+  padding-right: 30px;
 }
 
 .Section > * {

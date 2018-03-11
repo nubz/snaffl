@@ -6,28 +6,23 @@ import { lightGreen500, purpleA400, deepOrange700 } from 'material-ui/styles/col
 
 const styles = {
   section1: {
-    height: 'calc(100vh - 64px)',
-    paddingTop: 50,
+    padding: '50px 0',
     boxSizing: 'border-box',
     background: deepOrange700,
     color: 'white',
-    textAlign: 'center',
-    fontFamily: 'Bungee'
   },
   section2: {
-    paddingTop: 50,
+    padding: '50px 0',
     boxSizing: 'border-box',
   },
   section3: {
-    paddingTop: 50,
+    padding: '50px 0',
     boxSizing: 'border-box',
     background: purpleA400,
     color: 'white',
     textAlign: 'center'
   },
 }
-
-const snafflSVG = '<svg width="100%" height="100%" viewBox="0 -50 700 600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><path id="path"><animate attributeName="d" from="m0,110 h0" to="m0,110 h1100" dur="6.0s" begin="0s" repeatCount="indefinite"/></path><text font-size="36" fill="hsla(36, 100%, 100%, 1)"><textPath xlink:href="#path">Snaffl your content</textPath></text></svg>'
 
 export default class App extends Component {
 
@@ -38,12 +33,9 @@ export default class App extends Component {
   render() {
     return (
       <div>
-
-        <div style={styles.section1} className="Section">
-          <div dangerouslySetInnerHTML={{ __html: snafflSVG }}></div>
-        </div>
-
         <div style={styles.section2} className="Section">
+          <h2>Snaffl</h2>
+          <p>This is a prototype of snaffl - content as a service</p>
           <List>
             <ListItem primaryText="Create your content once and use in many places" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Content is stored in Cards" rightIcon={<ActionInfo />} />
@@ -56,13 +48,10 @@ export default class App extends Component {
             <ListItem primaryText="Every Card has it's own API endpoint" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection of Cards has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
             <ListItem primaryText="Every collection can contain other collections" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Only account holders can create content" rightIcon={<ActionInfo />} />
           </List>
+          <p><a href='/login'>Sign up for an account</a></p>
         </div>
-
-        <div style={styles.section3} className="Section">
-          <h2><a href="/login" style={{color: 'white'}}>Sign up for an account</a> to begin creating and taking control over your content</h2>
-        </div>
-
       </div>
     )
   }
