@@ -11,7 +11,14 @@ export default class SnapdeckListItem extends Component {
   }
 
   viewFull = () => {
-    FlowRouter.go('/deck/' + this.props.deck._id)
+    // this is temporary map handling until deck readers
+    // are ready
+    if (this.props.deck.deckType == 'Map') {
+      FlowRouter.go('View.Map', {_id: this.props.deck._id})
+    } else {
+      FlowRouter.go('/deck/' + this.props.deck._id)
+    }
+
   }
 
   render() {
