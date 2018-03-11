@@ -60,6 +60,7 @@ class MapCard extends Component {
       <GoogleMapContainer
         onReady={this.handleOnReady}
         mapOptions={this.handleMapOptions}
+        height={"500px"}
       >
         Loading!
       </GoogleMapContainer>

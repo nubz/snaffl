@@ -114,13 +114,13 @@ export default class MainLayout extends Component {
             <header>
               { this.props.heading ? <h1 style={{fontSize:'1.2em'}}>{this.props.heading}</h1> : ''}
             </header>
-            <main>
+            <main id="content-wrapper">
               {this.props.content()}
             </main>
-            <footer>
-              <p>Created by <a href="http://nubz.com">nubz</a></p>
-            </footer>
           </div>
+          <footer>
+            <div className={this.props.className}>Snaffl created by <a href="http://nubz.com">nubz</a></div>
+          </footer>
 
           <NavContainer
             open={this.state.open}

@@ -178,6 +178,9 @@ export default class SnapCard extends Component {
     const owned = this.props.card.owner === Meteor.userId()
     const title = this.props.card.title
     let images = this.props.card.images || false
+    const host = window.location.hostname
+    const protocol = window.location.protocol
+    const port = window.location.port == "80" ? '' : ':' + window.location.port
     /* a little dance to handle cards uploaded before images
     ** were auto generated from secure url
     */
@@ -271,64 +274,67 @@ export default class SnapCard extends Component {
           <div style={styles.lightboxContainer} />
         </FullscreenDialog>
 
-        <hr />
+        <div className="cardSection">
 
-        <h3>Tags</h3>
+          <h3>Tags</h3>
 
-        { owned ? 
-          <div style={{marginBottom: 20}}>
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Add a tag"
-              hintText="Add one tag at a time"
-              floatingLabelFixed={true}
-              id="addTag"
-              data-field="tag"
-              value={this.state.tagValue}
-              onChange={this.handleTagTyping.bind(this)}
-            />
-            <RaisedButton 
-              label="Add tag" 
-              onClick={this.handleTagChange.bind(this)} 
-            />
-          </div> : ''
-        }
+          { owned ? 
+            <div style={{marginBottom: 20}}>
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Add a tag"
+                hintText="Add one tag at a time"
+                floatingLabelFixed={true}
+                id="addTag"
+                data-field="tag"
+                value={this.state.tagValue}
+                onChange={this.handleTagTyping.bind(this)}
+              />
+              <RaisedButton 
+                label="Add tag" 
+                onClick={this.handleTagChange.bind(this)} 
+              />
+            </div> : ''
+          }
 
-        <TagsFromIdsContainer 
-          tags={this.props.cardTags} 
-          owned={owned} 
-          cardId={this.props.card._id} 
-          deckId={""} 
-        />
+          <TagsFromIdsContainer 
+            tags={this.props.cardTags} 
+            owned={owned} 
+            cardId={this.props.card._id} 
+            deckId={""} 
+          />
 
-        <hr />
+        </div>
 
-        <h3>Decks</h3>
+        <div className="cardSection">
 
-        { owned ?
-          <DropDownMenu 
-            iconStyle={{textColor:'black'}} 
-            iconButton={<NavigationExpandMoreIcon/>} 
-            value={this.state.selectedDeck} 
-            onChange={this.handleDeckSelect}
-          >
-            <MenuItem 
-              value={0} 
-              primaryText="Add to deck" 
-            />
-            {this.renderMyDecks()}
-          </DropDownMenu> : '' 
-        }
+          <h3>Decks</h3>
 
-        <DecksFromIdsContainer decks={this.props.cardDecks} />
+          { owned ?
+            <DropDownMenu 
+              iconStyle={{textColor:'black'}} 
+              iconButton={<NavigationExpandMoreIcon/>} 
+              value={this.state.selectedDeck} 
+              onChange={this.handleDeckSelect}
+            >
+              <MenuItem 
+                value={0} 
+                primaryText="Add to deck" 
+              />
+              {this.renderMyDecks()}
+            </DropDownMenu> : '' 
+          }
 
-        <hr />
+          <DecksFromIdsContainer decks={this.props.cardDecks} />
 
-        <h3>API</h3>
+        </div>
 
-        <pre style={styles.meta}><code>https://dev.snaffl.io/api/cards/{this.props.card._id}</code></pre>
-
-        <hr />
+        <div className="cardSection">
+          <h3>API</h3>
+          <pre style={styles.meta}>
+            <code><a href={"/api/cards/" + this.props.card._id} target="_blank">{protocol}//{host}{port}/api/cards/{this.props.card._id}</a></code>
+          </pre>
+        </div>
 
         { this.props.card.lat ?
           <div className="cardSection">

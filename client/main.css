@@ -47,6 +47,11 @@ form.accounts {
 	margin: 0 auto;
 }
 
+.cardSection {
+  border-top: 1px solid #aaa;
+  margin-top: 1em;
+}
+
 .dash-panel:hover {
 	background-color: #eee !important;
 }
@@ -98,4 +103,29 @@ form.accounts {
 .headlineButton:hover,
 .headlineButton:focus {
   background: #f3f3f3;
+}
+/**
+ * Content CSS
+ */
+#content-wrapper {
+  min-height: 100%;
+
+  /* sticky footer */
+  box-sizing: border-box;
+  margin-bottom: -100px;
+  padding-bottom: 100px;
+}
+
+/**
+ * Footer CSS
+ */
+footer {
+  box-sizing: border-box;
+  height: 100px;
+  background-color: #eee;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 35px;
+  padding-left: 1em;
+  font-size: 75%;
+  color:#666;
 }

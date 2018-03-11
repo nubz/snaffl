@@ -5,11 +5,12 @@ import Secrets from '../../secrets'
 
 const Styles = {
   width: '100%',
-  height: 500
+  height: 'calc(100vh - 64px)'
 }
 
 class GoogleMap extends Component {
-componentDidMount() {
+
+  componentDidMount() {
     const options = this.props.options || {};
     options.key = Secrets.googleMaps.apiKey;
     GoogleMaps.load(options);
@@ -41,7 +42,7 @@ componentDidMount() {
 
   render() {
     return (
-      <div style={Styles} ref={c => this.container = c}>
+      <div style={{width: '100%', height: this.props.height}} ref={c => this.container = c}>
         {this.props.children}
       </div>
     );
@@ -54,6 +55,7 @@ GoogleMap.propTypes = {
   options: PropTypes.object,
   mapOptions: PropTypes.func.isRequired,
   children: PropTypes.node,
+  height: PropTypes.string
 };
 
 export default GoogleMap;

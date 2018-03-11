@@ -5,6 +5,8 @@ import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import CardList from './CardList'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import Avatar from 'material-ui/Avatar'
 
 const styles = {
   spinner: {
@@ -12,6 +14,9 @@ const styles = {
     left: -30,
     marginTop: '50%',
     top: -30
+  },
+  avatar: {
+    margin: '0 1em'
   }
 }
 
@@ -27,14 +32,23 @@ class ViewMap extends Component {
       { this.props.loading ? 
         <CircularProgress style={styles.spinner} size={60} thickness={7} />
       : 
-        <MapDeck
-          key={this.props.deck._id} 
-          deck={this.props.deck} 
-          deckCards={this.props.deckCards}
-          tagSubscription={this.props.tagSubscription}
-          multiSnackBar={()=>false} 
-          loading={this.props.loading}
-        />
+        <div>
+          <Toolbar>
+            <ToolbarGroup firstChild={true}>
+              <Avatar style={styles.avatar} src={this.props.deck.images.thumb} />
+              <h2>{this.props.deck.title}</h2>
+            </ToolbarGroup>
+          </Toolbar>
+          
+          <MapDeck
+            key={this.props.deck._id} 
+            deck={this.props.deck} 
+            deckCards={this.props.deckCards}
+            tagSubscription={this.props.tagSubscription}
+            multiSnackBar={()=>false} 
+            loading={this.props.loading}
+          />
+        </div>
       }
       </div>
     )

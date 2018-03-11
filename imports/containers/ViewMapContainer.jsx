@@ -6,7 +6,6 @@ import ViewMap from '../ui/ViewMap'
 
 export default ViewMapContainer = withTracker(props => {
   const cardIds = _.pluck(props.deckCards, 'cardId')
-  console.log('ViewMapContainer cardIds', cardIds)
   const cardsHandle = Meteor.subscribe('cards.fromIds', cardIds)
   const loading = !cardsHandle.ready()
   const deckCards = Cards.find({_id: {$in : cardIds}}, { sort: { createdAt: -1 } }).fetch()

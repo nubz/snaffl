@@ -67,6 +67,7 @@ class MapDeck extends Component {
       <GoogleMapContainer
         onReady={this.handleOnReady}
         mapOptions={this.handleMapOptions}
+        height={"calc(100vh - 120px)"}
       >
         Loading!
       </GoogleMapContainer>
