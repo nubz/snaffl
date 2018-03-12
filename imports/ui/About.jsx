@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import {List, ListItem} from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
 
 const style = {
   position: "absolute",
@@ -34,19 +32,19 @@ export default class About extends Component {
           <p>Only account holders can create content</p>
 
           <List>
-            <ListItem primaryText="Create your content once and use in many places" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Content can be articles, locations, events, photos, artwork, videos, audio and more" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Collabarate with others to create Decks of Cards" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Wrap existing content from elsewhere in Cards" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Update content in real time" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Real time tag and user streams for live monitoring and curation of content" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Publish Decks in, or as standalone, websites, mobile apps, maps, feeds and more" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Every piece of content has it's own API endpoint" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Every collection of content has it's own API endpoint and built in menu" rightIcon={<ActionInfo />} />
-            <ListItem primaryText="Every collection can contain other collections" rightIcon={<ActionInfo />} />
+            <ListItem primaryText="Create your content once and use in many places" />
+            <ListItem primaryText="Content can be articles, locations, events, photos, artwork, videos, audio and more" />
+            <ListItem primaryText="Collabarate with others to create Decks of Cards" />
+            <ListItem primaryText="Wrap existing content from elsewhere in Cards" />
+            <ListItem primaryText="Update content in real time" />
+            <ListItem primaryText="Real time tag and user streams for live monitoring and curation of content" />
+            <ListItem primaryText="Publish Decks in, or as standalone, websites, mobile apps, maps, feeds and more" />
+            <ListItem primaryText="Every piece of content has it's own API endpoint" />
+            <ListItem primaryText="Every collection of content has it's own API endpoint and built in menu" />
+            <ListItem primaryText="Every collection can contain other collections" />
           </List>
       </div>
-    );
+    )
   }
 
 }

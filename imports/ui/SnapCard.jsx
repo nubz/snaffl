@@ -325,7 +325,7 @@ export default class SnapCard extends Component {
             </DropDownMenu> : '' 
           }
 
-          <DecksFromIdsContainer decks={this.props.cardDecks} />
+          <DecksFromIdsContainer decks={this.props.cardDecks} cardId={this.props.card._id} />
 
         </div>
 
