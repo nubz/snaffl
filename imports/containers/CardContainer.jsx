@@ -14,12 +14,12 @@ export default CardContainer = withTracker(props => {
   const loading = !cardHandle.ready() && !decksHandle.ready() && !cardTagsHandle.ready() && !cardDecksHandle.ready()
   const card = Cards.findOne(props._id)
   const decks = Decks.find({}).fetch()
-  const cardDecks = DeckCards.find({cardId: props._id}).fetch()
+  const linkedDecks = DeckCards.find({cardId: props._id}).fetch()
   const cardTags = TagCards.find({cardId: props._id}).fetch()
   return {
     card,
     decks,
-    cardDecks,
+    linkedDecks,
     cardTags,
     loading
   }

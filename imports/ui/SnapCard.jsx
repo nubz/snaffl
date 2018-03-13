@@ -325,7 +325,7 @@ export default class SnapCard extends Component {
             </DropDownMenu> : '' 
           }
 
-          <DecksFromIdsContainer decks={this.props.cardDecks} cardId={this.props.card._id} />
+          <DecksFromIdsContainer linkedDecks={this.props.linkedDecks} cardId={this.props.card._id} />
 
         </div>
 
@@ -363,7 +363,7 @@ FlatButton.propTypes = {
 SnapCard.propTypes = {
   card: PropTypes.object.isRequired,
   decks: PropTypes.array,
-  cardDecks: PropTypes.array,
+  linkedDecks: PropTypes.array,
   cardTags: PropTypes.array,
   multiSnackBar: PropTypes.func.isRequired
 }

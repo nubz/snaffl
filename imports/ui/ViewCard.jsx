@@ -30,7 +30,7 @@ class ViewCard extends Component {
           key={this.props.card._id} 
           card={this.props.card} 
           decks={this.props.decks}
-          cardDecks={this.props.cardDecks}
+          linkedDecks={this.props.linkedDecks}
           cardTags={this.props.cardTags}
           multiSnackBar={()=>false} 
           loading={this.props.loading}
@@ -44,7 +44,7 @@ class ViewCard extends Component {
 ViewCard.propTypes = {
   card: PropTypes.object,
   decks: PropTypes.array,
-  cardDecks: PropTypes.array,
+  linkedDecks: PropTypes.array,
   cardTags: PropTypes.array,
   loading: PropTypes.bool
 }

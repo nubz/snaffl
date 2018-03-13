@@ -35,6 +35,7 @@ class DeckList extends Component {
         deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)}
         cardId={this.props.cardId}
+        deckId={this.props.deckId}
       />
     ))
   }
@@ -66,11 +67,13 @@ class DeckList extends Component {
 DeckList.propTypes = {
   decks: PropTypes.array.isRequired,
   cardId: PropTypes.string,
+  deckId: PropTypes.string,
   loading: PropTypes.bool
 }
 
 DeckList.defaultProps = {
-  cardId: ""
+  cardId: "",
+  deckId: ""
 }
  
 export default DeckList

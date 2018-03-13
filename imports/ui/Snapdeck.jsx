@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
 import { Decks } from '../api/decks.js'
+import { DeckDecks } from '../api/deckDecks'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
@@ -11,6 +12,11 @@ import Avatar from 'material-ui/Avatar'
 import parseIcon from './TypeIcons'
 import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
 import TaggedCardsContainer from '../containers/TaggedCardsContainer'
+import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
+import ChildDecksFromIdsContainer from '../containers/ChildDecksFromIdsContainer'
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu'
 
 const styles = {
   meta: {
@@ -25,6 +31,7 @@ export default class Snapdeck extends Component {
     super(props);
     this.state = {
       open: false,
+      selectedDeck: 0
     }
   }
 
@@ -54,6 +61,32 @@ export default class Snapdeck extends Component {
 
   handleEditRequest = () => {
     FlowRouter.go('Edit.Deck', {_id: this.props.deck._id})
+  }
+
+  handleDeckSelect = (e, i, v) => {
+    DeckDecks.insert({
+        deckId: v,
+        childId: this.props.deck._id
+    }, () => {
+      this.setState({
+        snackOpen: true,
+        message: 'Deck added to deck ok',
+        selectedDeck: v
+      })
+    })
+
+  }
+
+
+  renderMyDecks() {
+    return this.props.decks.map((deck) => (
+      <MenuItem 
+        rightIcon={parseIcon(deck.deckType)}
+        value={deck._id} 
+        primaryText={deck.title} 
+        key={deck._id}
+      />
+    ))
   }
 
   render() {
@@ -93,10 +126,42 @@ export default class Snapdeck extends Component {
         { this.props.tagSubscription ?
           <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
         : ''}
+
+        <div className="cardSection">
+
+          <h3>Child Decks</h3>
+
+          <ChildDecksFromIdsContainer linkedDecks={this.props.deckChildren} />
+
+        </div> 
+
+        <div className="cardSection">
+
+          <h3>Parent Decks</h3>
+
+          { owned ?
+            <DropDownMenu 
+              iconStyle={{textColor:'black'}} 
+              iconButton={<NavigationExpandMoreIcon/>} 
+              value={this.state.selectedDeck} 
+              onChange={this.handleDeckSelect}
+            >
+              <MenuItem 
+                value={0} 
+                primaryText="Add to deck" 
+              />
+              {this.renderMyDecks()}
+            </DropDownMenu> : '' 
+          }
+
+          <DecksFromIdsContainer linkedDecks={this.props.deckParents} deckId={deck._id} />
+
+        </div>
+
         <div className="cardSection">
           <h3>API</h3>
           <pre style={styles.meta}>
-            <code><a href={"/api/decks/" + deck._id} target="_blank">{protocol}//{host}{port}/api/decks/{deck._id}</a></code>
+            <code><a href={"/api/menu/" + deck._id} target="_blank">{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
           </pre>
         </div>
         <Dialog
@@ -118,7 +183,10 @@ FlatButton.propTypes = {
  
 Snapdeck.propTypes = {
   deck: PropTypes.object.isRequired,
+  decks: PropTypes.array,
   deckCards: PropTypes.array,
+  deckParents: PropTypes.array,
+  deckChildren: PropTypes.array,
   tagSubscription: PropTypes.object,
   multiSnackBar: PropTypes.func.isRequired
 }

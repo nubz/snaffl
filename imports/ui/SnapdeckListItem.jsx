@@ -12,13 +12,20 @@ export default class SnapdeckListItem extends Component {
   }
 
   viewFull = () => {
+    console.log('viewfull')
     // this is temporary map handling until deck readers are ready
     const view = this.props.deck.deckType === 'Map' ? 'View.Map' : 'View.Deck'
+    console.log('with view ' + view + ' and id ' + this.props.deck._id)
     FlowRouter.go(view, {_id: this.props.deck._id})
   }
 
   removeFromDeck = () => {
-    Meteor.call('removeCardFromDeck', this.props.cardId, this.props.deck._id)
+    if (this.props.cardId !== "") {
+      Meteor.call('removeCardFromDeck', this.props.cardId, this.props.deck._id)
+    } else {
+      Meteor.call('removeDeckFromDeck', this.props.deckId, this.props.deck._id)
+    }
+
   }
 
   render() {
@@ -28,7 +35,7 @@ export default class SnapdeckListItem extends Component {
       <Avatar src={deck.images.thumb} />
     ) : undefined
 
-    const canRemove = this.props.cardId !== '' ? (
+    const canRemove = this.props.cardId !== '' || this.props.deckId ? (
       <IconButton
         touch={true}
         tooltip="remove from deck"
@@ -43,7 +50,7 @@ export default class SnapdeckListItem extends Component {
         leftAvatar={avatar}
         primaryText={deck.title}
         secondaryText={deck.deckType + ' created ' + createdAgo}
-        onClick={this.viewFull}
+        onClick={this.viewFull.bind(this)}
         rightIconButton={canRemove}
       >
       </ListItem>
@@ -53,5 +60,6 @@ export default class SnapdeckListItem extends Component {
  
 SnapdeckListItem.propTypes = {
   deck: PropTypes.object.isRequired,
-  cardId: PropTypes.string
+  cardId: PropTypes.string,
+  deckId: PropTypes.string
 }

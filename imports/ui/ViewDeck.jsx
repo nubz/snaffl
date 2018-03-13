@@ -30,12 +30,12 @@ class ViewDeck extends Component {
         <Snapdeck
           key={this.props.deck._id} 
           deck={this.props.deck} 
+          decks={this.props.decks}
           deckCards={this.props.deckCards}
+          deckParents={this.props.deckParents}
+          deckChildren={this.props.deckChildren}
           tagSubscription={this.props.tagSubscription}
-          full={true}
-          standalone={true}
           multiSnackBar={()=>false} 
-          loading={this.props.loading}
         />
       }
       </div>
@@ -45,7 +45,10 @@ class ViewDeck extends Component {
 
 ViewDeck.propTypes = {
   deck: PropTypes.object,
+  decks: PropTypes.array,
   deckCards: PropTypes.array,
+  deckParents: PropTypes.array,
+  deckChildren: PropTypes.array,
   tagSubscription: PropTypes.object,
   loading: PropTypes.bool
 }

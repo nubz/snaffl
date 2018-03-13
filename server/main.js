@@ -23,6 +23,8 @@ const wipeDb = false
 
 Meteor.startup(() => {
 
+  const HOST = Meteor.absoluteUrl()
+
   // an imported method to seed
   // reference data with
   // @param reset Boolean
@@ -141,6 +143,10 @@ Meteor.startup(() => {
     return DeckCards.find({ cardId: id })
   })
 
+  Meteor.publish('decks.linked', function (id) {
+    return DeckDecks.find({$or: [{deckId: id}, {childId: id}]})
+  })
+
   Meteor.publish('cards.public', function(skip) {
     skip = skip || 0
     return Cards.find({
@@ -220,6 +226,58 @@ Meteor.startup(() => {
     },
     removeCardFromDeck: function (cardId, deckId) {
       DeckCards.remove({deckId: deckId, cardId: cardId})
+    },
+    removeDeckFromDeck: function (childId, deckId) {
+      DeckDecks.remove({deckId: deckId, childId: childId})
+    },
+    tagged: function (tagName) {
+      const tag = Tags.findOne({tag: tagName.trim()})
+
+      if(!tag) {
+        return []
+      }
+
+      const tagCards = TagCards.find({tagId: tag._id}).fetch()
+      const cardIds = _.pluck(tagCards, 'cardId')
+      return Cards.find({ _id : { $in : cardIds } }).fetch()
+    },
+    linkedCards: function (links) {
+      const cardIds = _.pluck(links, 'cardId')
+      return Cards.find({ _id : { $in : cardIds } }).fetch()
+    },
+    linkedDecks: function (links) {
+      const deckIds = _.pluck(links, 'deckId')
+      return Decks.find({ _id : { $in : deckIds } }).fetch()
+    },
+    linkedChildDecks: function (links) {
+      const childIds = _.pluck(links, 'childId')
+      return Decks.find({ _id : { $in : childIds } }).fetch()
+    },
+    deckMenu: function (deckId, top) {
+      console.log('called deckMenu with id = ' + deckId + ', top = ' + top)
+      const deck = Decks.findOne(deckId)
+      let menu = []
+      const deckCards = DeckCards.find({deckId: deckId}).fetch()
+      const deckDecks = DeckDecks.find({deckId: deckId}).fetch()
+
+      const cards = Meteor.call('linkedCards', deckCards)
+      const decks = Meteor.call('linkedChildDecks', deckDecks)
+
+      // build deck menu first
+      decks.map(function (childDeck) {
+        let children = Meteor.call('deckMenu', childDeck._id, false);
+        menu.push({title: childDeck.title, type: 'deck', images: childDeck.images, url: HOST + 'api/menu/' + childDeck._id, menu: children})
+      })
+
+      // build card menu
+      cards.map(function (card) {
+        menu.push({title: card.title, type: 'card', images: card.images, url: HOST + 'api/cards/' + card._id})
+      })
+
+      deck.menu = menu
+
+      return top ? deck : menu
+
     }
   })
 
@@ -232,5 +290,17 @@ Meteor.startup(() => {
   Api.addCollection(Cards);
 
   Api.addCollection(Decks);
+
+  Api.addRoute('menu/:deckId', {authRequired: false}, {
+    get: function () {
+      return Meteor.call('deckMenu', this.urlParams.deckId, true)
+    }
+  })
+
+  Api.addRoute('tagged/:tag', {authRequired: false}, {
+    get: function () {
+      return Meteor.call('tagged', this.urlParams.tag);
+    }
+  });
 
 })
