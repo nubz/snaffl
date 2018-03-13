@@ -12,6 +12,14 @@ import parseIcon from './TypeIcons'
 import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
 import TaggedCardsContainer from '../containers/TaggedCardsContainer'
 
+const styles = {
+  meta: {
+    backgroundColor: '#eee', 
+    padding: 10, 
+    fontSize: 10
+  }
+}
+
 export default class Snapdeck extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +57,9 @@ export default class Snapdeck extends Component {
   }
 
   render() {
+    const host = window.location.hostname
+    const protocol = window.location.protocol
+    const port = window.location.port == "80" ? '' : ':' + window.location.port
     const deck = this.props.deck
     const owned = deck.owner === Meteor.userId()
     const images = deck.images || null
@@ -78,11 +89,16 @@ export default class Snapdeck extends Component {
           <RaisedButton label="Edit" onClick={this.handleEditRequest} />
         </div>
         : '' }
-        <hr />
         <CardsFromIdsContainer cards={this.props.deckCards} />
         { this.props.tagSubscription ?
           <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
         : ''}
+        <div className="cardSection">
+          <h3>API</h3>
+          <pre style={styles.meta}>
+            <code><a href={"/api/decks/" + deck._id} target="_blank">{protocol}//{host}{port}/api/decks/{deck._id}</a></code>
+          </pre>
+        </div>
         <Dialog
           title={'Delete "' + deck.title + '"'}
           actions={actions}

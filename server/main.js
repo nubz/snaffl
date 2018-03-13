@@ -231,4 +231,6 @@ Meteor.startup(() => {
 
   Api.addCollection(Cards);
 
+  Api.addCollection(Decks);
+
 })

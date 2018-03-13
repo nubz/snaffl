@@ -56,7 +56,16 @@
 			"file": "/home/ali/snapcards/imports/ui/App.jsx",
 			"settings":
 			{
-				"buffer_size": 2453,
+				"buffer_size": 1719,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ali/snapcards/imports/ui/About.jsx",
+			"settings":
+			{
+				"buffer_size": 1813,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -74,7 +83,16 @@
 			"file": "/home/ali/snapcards/imports/ui/SnapdeckListItem.jsx",
 			"settings":
 			{
-				"buffer_size": 1200,
+				"buffer_size": 1815,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ali/snapcards/server/main.js",
+			"settings":
+			{
+				"buffer_size": 5949,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -101,7 +119,25 @@
 			"file": "/home/ali/snapcards/imports/ui/SnapCard.jsx",
 			"settings":
 			{
-				"buffer_size": 9897,
+				"buffer_size": 9926,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ali/snapcards/imports/containers/DecksFromIdsContainer.jsx",
+			"settings":
+			{
+				"buffer_size": 567,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ali/snapcards/imports/ui/DeckList.jsx",
+			"settings":
+			{
+				"buffer_size": 1517,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -224,6 +260,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			" rightIcon={<ActionInfo />}",
 			"styles.floatingLabelStyle",
 			"readOnly",
 			"= ",
@@ -236,6 +273,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
 			"floatingLabelStyle",
 			"=",
 			"(",
@@ -250,7 +288,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -280,7 +318,7 @@
 						"translation.y": 2793.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
@@ -310,7 +348,7 @@
 						"translation.y": 912.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
@@ -340,7 +378,7 @@
 						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -370,7 +408,7 @@
 						"translation.y": 399.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -400,7 +438,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -409,15 +447,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2453,
+						"buffer_size": 1719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2381,
-								2381
+								565,
+								565
 							]
 						],
 						"settings":
@@ -427,14 +465,44 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 399.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
+					"file": "/home/ali/snapcards/imports/ui/About.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1813,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Simple JSX/JSX.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 57.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "/home/ali/snapcards/imports/ui/ViewMap.jsx",
 					"semi_transient": false,
 					"settings":
@@ -460,24 +528,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "/home/ali/snapcards/imports/ui/SnapdeckListItem.jsx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1200,
+						"buffer_size": 1815,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								434,
-								434
+								867,
+								867
 							]
 						],
 						"settings":
@@ -487,14 +555,44 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 399.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
+					"file": "/home/ali/snapcards/server/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5949,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5791,
+								5791
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3534.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
 					"file": "/home/ali/snapcards/imports/containers/GoogleMapContainer.jsx",
 					"semi_transient": false,
 					"settings":
@@ -518,11 +616,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "/home/ali/snapcards/imports/ui/GoogleMap.jsx",
 					"semi_transient": false,
 					"settings":
@@ -548,24 +646,24 @@
 						"translation.y": 285.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "/home/ali/snapcards/imports/ui/SnapCard.jsx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9897,
+						"buffer_size": 9926,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9364,
-								9364
+								8816,
+								8816
 							]
 						],
 						"settings":
@@ -574,15 +672,73 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 42.0,
-						"translation.y": 5187.0,
+						"translation.x": 0.0,
+						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 13,
+					"file": "/home/ali/snapcards/imports/containers/DecksFromIdsContainer.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 567,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								324,
+								324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Simple JSX/JSX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/home/ali/snapcards/imports/ui/DeckList.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1517,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1356,
+								1356
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Simple JSX/JSX.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 513.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
 					"file": "/home/ali/snapcards/client/main.css",
 					"semi_transient": false,
 					"settings":
@@ -608,11 +764,11 @@
 						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 16,
 					"file": "/home/ali/snapcards/imports/ui/TypeContent.js",
 					"semi_transient": false,
 					"settings":
@@ -638,7 +794,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 14,
 					"type": "text"
 				}
 			]
@@ -683,7 +839,7 @@
 	"project": "snaffl.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 73.0
 	},
 	"save_all_on_build": true,
 	"select_file":

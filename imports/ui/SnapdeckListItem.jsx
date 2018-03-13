@@ -1,20 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import imageApi from '../api/imageApi'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton';
 import Remove from 'material-ui/svg-icons/content/remove-circle-outline'
 import parseIcon from './TypeIcons'
-
-const iconButtonElement = (
-  <IconButton
-    touch={true}
-    tooltip="remove from deck"
-  >
-    <Remove />
-  </IconButton>
-);
 
 export default class SnapdeckListItem extends Component {
   constructor(props) {
@@ -22,14 +12,9 @@ export default class SnapdeckListItem extends Component {
   }
 
   viewFull = () => {
-    // this is temporary map handling until deck readers
-    // are ready
-    if (this.props.deck.deckType == 'Map') {
-      FlowRouter.go('View.Map', {_id: this.props.deck._id})
-    } else {
-      FlowRouter.go('/deck/' + this.props.deck._id)
-    }
-
+    // this is temporary map handling until deck readers are ready
+    const view = this.props.deck.deckType === 'Map' ? 'View.Map' : 'View.Deck'
+    FlowRouter.go(view, {_id: this.props.deck._id})
   }
 
   removeFromDeck = () => {
@@ -38,9 +23,12 @@ export default class SnapdeckListItem extends Component {
 
   render() {
     const deck = this.props.deck
-    const images = deck.images || null
     const createdAgo = moment(deck.createdAt).fromNow()
-    let canRemove = this.props.cardId !== '' ? (
+    const avatar = deck.images ? (
+      <Avatar src={deck.images.thumb} />
+    ) : undefined
+
+    const canRemove = this.props.cardId !== '' ? (
       <IconButton
         touch={true}
         tooltip="remove from deck"
@@ -52,7 +40,7 @@ export default class SnapdeckListItem extends Component {
     return (
       <ListItem
         innerDivStyle={{border:'1px solid #eee', marginBottom:5}}
-        leftAvatar={images ? <Avatar src={images.thumb} /> : <Avatar src={imageApi.avatar(deck.image)} />}
+        leftAvatar={avatar}
         primaryText={deck.title}
         secondaryText={deck.deckType + ' created ' + createdAgo}
         onClick={this.viewFull}
@@ -64,5 +52,6 @@ export default class SnapdeckListItem extends Component {
 }
  
 SnapdeckListItem.propTypes = {
-  deck: PropTypes.object.isRequired
+  deck: PropTypes.object.isRequired,
+  cardId: PropTypes.string
 }
