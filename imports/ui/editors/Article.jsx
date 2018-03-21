@@ -35,8 +35,10 @@ class ArticleEditor extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    const content = this.state.content
+
     const data = {
-      content: {Article: this.state.content}
+      content: {Article: content}
     }
 
     Cards.update({_id: this.props._id}, {$set: data}, () => {
@@ -59,7 +61,6 @@ class ArticleEditor extends Component {
   }
 
   onChange = (val) => {
-    console.log('setting content state to', val)
     this.setState({
       content: val
     })

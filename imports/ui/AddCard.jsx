@@ -15,6 +15,8 @@ import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
 import imageApi from '../api/imageApi'
 import parseEditor from './TypeEditors'
+import {stateToHTML} from 'draft-js-export-html'
+import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft"
 
 const styles = {
   formStyle: {
@@ -42,6 +44,8 @@ const defaultInputs = {
   description: '',
   cardType: 'Article'
 }
+
+let loc = {latitude: 0,longitude: 0};
 
 class AddCard extends Component {
 
@@ -83,6 +87,26 @@ class AddCard extends Component {
     let data = {}
 
     content[inputs.cardType] = this.contentFields.state.content
+
+    // there may be html fields in other types
+    // so TODO: transform content object for all types
+    if (inputs.cardType === 'Article') {
+      let options = {
+        blockRenderers: {
+          atomic: (block) => {
+            let data = block.getData();
+            if (data.get('type') == 'image') {
+              let src = data.get('src');
+              let dim = data.get('display')
+              let width = dim === 'medium' ? 240 : '100%';
+              return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
+            }
+          },
+        }
+      }
+      content.html = stateToHTML(editorStateFromRaw(JSON.parse(content.Article)).getCurrentContent(), options)
+    }
+
     data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -162,8 +186,20 @@ class AddCard extends Component {
     // we want this to run every time
     // the page is visited or stale
     // geo data will prevail
-    AllGeo.init()
-    console.log('all geo init', AllGeo.getLocation())
+    var navigatorLocated = false;
+    AllGeo.getLocationByNavigator(function (pos) {
+      loc = pos
+      navigatorLocated = true;
+    });
+
+    if (!navigatorLocated) {
+        AllGeo.getLocationByIp(function (pos) {
+            if (!navigatorLocated) {
+              loc = pos
+            }
+        });
+    }
+
   }
 
   registerContent = contentFields => this.contentFields = contentFields
@@ -181,7 +217,9 @@ class AddCard extends Component {
       />
     )
   }
- 
+  returnLoc() {
+    return loc;
+  }
   render() {
     return (
       <div style={styles.formStyle}>
@@ -238,7 +276,8 @@ class AddCard extends Component {
                 parseEditor(this.props.cardType, {
                   ref: this.registerContent, 
                   card: {}, 
-                  isNew: true
+                  isNew: true,
+                  geo: this.returnLoc
                 })
               }
             </div>

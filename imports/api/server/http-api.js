@@ -26,4 +26,10 @@ export default () => {
     }
   });
 
+  Api.addRoute('article/:id', {authRequired: false}, {
+    get: function () {
+      return Meteor.call('getArticle', this.urlParams.id)
+    }
+  })
+
 }

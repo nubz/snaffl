@@ -10,6 +10,11 @@ import { Tags } from '../imports/api/tags'
 import { TagCards } from '../imports/api/tagCards'
 import { TagDecks } from '../imports/api/tagDecks'
 import { TagSubscriptions } from '../imports/api/tagSubscriptions'
+import {stateToHTML} from 'draft-js-export-html'
+import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft";
+import { convertToRaw } from 'draft-js'
+
+const HOST = Meteor.absoluteUrl()
 
 export default () => {
   Meteor.methods({
@@ -74,25 +79,31 @@ export default () => {
       // the menu for each deck
       let menu = []
 
-      // build deck menu first
-      decks.map(function (childDeck) {
-        let children = Meteor.call('deckMenu', childDeck._id, false);
+      // build card menu
+      cards.map(function (card) {
+        let apiPath = 'api/cards/'
         menu.push({
-          title: childDeck.title, 
-          type: 'deck', 
-          images: childDeck.images, 
-          url: HOST + 'api/menu/' + childDeck._id, 
-          menu: children
+          id: card._id,
+          title: card.title, 
+          type: 'card', 
+          images: card.images,
+          subType: card.cardType,
+          url: HOST + apiPath + card._id,
+          content: card.content
         })
       })
 
-      // build card menu
-      cards.map(function (card) {
+      // build deck menu 
+      decks.map(function (childDeck) {
+        let children = Meteor.call('deckMenu', childDeck._id, false);
         menu.push({
-          title: card.title, 
-          type: 'card', 
-          images: card.images, 
-          url: HOST + 'api/cards/' + card._id
+          id: childDeck._id,
+          title: childDeck.title, 
+          type: 'deck', 
+          images: childDeck.images, 
+          subType: childDeck.deckType,
+          url: HOST + 'api/menu/' + childDeck._id, 
+          menu: children
         })
       })
 
@@ -106,6 +117,12 @@ export default () => {
 
       return menu
 
+    },
+    getArticle: function(id) {
+      const card = Cards.findOne({_id: id})
+      card.content.html = stateToHTML(editorStateFromRaw(JSON.parse(card.content.Article)).getCurrentContent())
+      delete card.content.Article
+      return card
     }
   })
 }

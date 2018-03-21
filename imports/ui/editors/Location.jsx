@@ -91,8 +91,9 @@ class LocationEditor extends Component {
   handleInputChange = (event, index, value) => this.setState({'content': { ...this.state.content, [event.target.dataset.field] : event.target.value } })
 
   handleUseCurrentLocation() {
-    let location = AllGeo.getLocation()
-    this.setState({'content': { ...this.state.content, 'latitude' : location.lat, 'longitude': location.lng } })
+    let loc = this.props.geo();
+    console.log('selected location', loc);
+    this.setState({'content': { ...this.state.content, 'latitude' : loc.lat, 'longitude': loc.lng, 'map': true } })
   }
 
   onMarkerChange = () => this.setState({'content': { ...this.state.content, 'latitude' : this.contentMap.state.lat, 'longitude': this.contentMap.state.lng } })
@@ -111,7 +112,7 @@ class LocationEditor extends Component {
         return parts
       }, []).join(', ')
 
-      this.setState({'content': { ...this.state.content, 'address': address, 'latitude' : location.lat, 'longitude':location.lng } })
+      this.setState({'content': { ...this.state.content, 'address': address, 'latitude' : location.lat, 'longitude':location.lng, 'map': true } })
     }.bind(this), function(error) { });
   }
 
@@ -135,7 +136,7 @@ class LocationEditor extends Component {
           </div> 
           : 'enter postcode below for auto generation'}
 
-        { this.state.content.latitude != 0 ?
+        { this.state.content.map ?
           <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
         
         { this.renderTextFields() }
@@ -147,7 +148,8 @@ class LocationEditor extends Component {
 }
 
 LocationEditor.propTypes = {
-  card: PropTypes.object
+  card: PropTypes.object,
+  geo: PropTypes.func
 }
  
 export default LocationEditor

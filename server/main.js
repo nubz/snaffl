@@ -15,8 +15,6 @@ const wipeDb = false
 
 Meteor.startup(() => {
 
-  const HOST = Meteor.absoluteUrl()
-
   // an imported method to seed
   // reference data with
   // @param reset Boolean

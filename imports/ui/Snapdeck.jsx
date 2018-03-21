@@ -164,6 +164,14 @@ export default class Snapdeck extends Component {
             <code><a href={"/api/menu/" + deck._id} target="_blank">{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
           </pre>
         </div>
+        { host === 'dev.snaffl.io' ?
+        <div className="cardSection">
+          <h3>Snaffl.it!</h3>
+          <pre style={styles.meta}>
+            <code><a href={"http://snaffl.it/?id=" + deck._id} target="_blank">http://snaffl.it/?id={deck._id}</a></code>
+          </pre>
+        </div>
+        : ''}
         <Dialog
           title={'Delete "' + deck.title + '"'}
           actions={actions}

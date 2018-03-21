@@ -17,6 +17,8 @@ import CircularProgress from 'material-ui/CircularProgress'
 import { TagCards } from '../api/tagCards'
 import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 import parseEditor from './TypeEditors'
+import {stateToHTML} from 'draft-js-export-html'
+import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft"
 
 const startTime = new Date()
 const styles = {
@@ -73,6 +75,24 @@ class EditCard extends Component {
     const inputs = this.state.inputs
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content
+
+    if (inputs.cardType === 'Article') {
+      let options = {
+        blockRenderers: {
+          atomic: (block) => {
+            let data = block.getData();
+            if (data.get('type') == 'image') {
+              let src = data.get('src');
+              let dim = data.get('display')
+              let width = dim === 'medium' ? 240 : '100%';
+              return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
+            }
+          }
+        }
+      }
+
+      content.html = stateToHTML(editorStateFromRaw(JSON.parse(content.Article)).getCurrentContent(), options)
+    }
 
     const data = {
       title: inputs.title.trim(),

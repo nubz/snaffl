@@ -26,6 +26,8 @@ class MapEditor extends Component {
   markerForCard(lat, lng) {
     let marker;
 
+    console.log('called markerForCard(' + lat + ', ' + lng + ')')
+
     marker = new google.maps.Marker({
       draggable: true,
       animation: google.maps.Animation.DROP,
@@ -58,6 +60,7 @@ class MapEditor extends Component {
       <GoogleMapContainer
         onReady={this.handleOnReady}
         mapOptions={this.handleMapOptions}
+        height="500px"
       >
         Loading!
       </GoogleMapContainer>

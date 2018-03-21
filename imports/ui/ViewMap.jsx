@@ -43,7 +43,10 @@ class ViewMap extends Component {
           <MapDeck
             key={this.props.deck._id} 
             deck={this.props.deck} 
+            decks={this.props.decks}
             deckCards={this.props.deckCards}
+            deckParents={this.props.deckParents}
+            deckChildren={this.props.deckChildren}
             tagSubscription={this.props.tagSubscription}
             multiSnackBar={()=>false} 
             loading={this.props.loading}
@@ -57,7 +60,10 @@ class ViewMap extends Component {
 
 ViewMap.propTypes = {
   deck: PropTypes.object,
+  decks: PropTypes.array,
   deckCards: PropTypes.array,
+  deckParents: PropTypes.array,
+  deckChildren: PropTypes.array,
   tagSubscription: PropTypes.object,
   loading: PropTypes.bool
 }
