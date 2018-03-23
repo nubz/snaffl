@@ -1,13 +1,4 @@
 import React, { Component } from 'react'
-import {List, ListItem} from 'material-ui/List'
-
-
-const styles = {
-  section2: {
-    padding: '50px 0',
-    boxSizing: 'border-box',
-  }
-}
 
 export default class App extends Component {
 
@@ -17,26 +8,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <div style={styles.section2} className="Section">
-          <h2>Snaffl</h2>
-          <p>This is a prototype of snaffl - content as a service</p>
-          <List>
-            <ListItem primaryText="Create your content once and use in many places" />
-            <ListItem primaryText="Content is stored in Cards" />
-            <ListItem primaryText="Cards can be articles, locations, events, photos, artwork, videos, audio and more" />
-            <ListItem primaryText="Collabarate with others to create collections of Cards" />
-            <ListItem primaryText="Wrap existing content from elsewhere in SnafflCards" />
-            <ListItem primaryText="Update content in real time" />
-            <ListItem primaryText="Real time tag and user streams for live monitoring and curation of content" />
-            <ListItem primaryText="Publish collections of Cards in, or as standalone, websites, mobile apps, feeds and more" />
-            <ListItem primaryText="Every Card has it's own API endpoint" />
-            <ListItem primaryText="Every collection of Cards has it's own API endpoint and built in menu" />
-            <ListItem primaryText="Every collection can contain other collections" />
-            <ListItem primaryText="Only account holders can create content" />
-          </List>
-          <p><a href='/login'>Sign up for an account</a></p>
-        </div>
+      <div className="container">
+        <h2 className="branding">SNAFFL</h2>
+        <p>This is a prototype of <span className="branding">SNAFFL</span> - content as a service</p>
+        <p>Use this service to create and organise content for use in many places. Each individual piece of content has its own API endpoint and each collection of content you organise here also has its own API endpoint that returns a menu structure for ease of building front end navigation.</p>
+        <p>There are distinct content types such as Article, Image, Profile, Media Embed, Event and Location that allow you to enter the relevant fields for each.</p>
+        <p>There are distinct collection types also, gather Locations into Maps, Images into Galleries and Events into Schedules for example. Using the same piece of content in multiple collections is one advantage of using <span className="branding">SNAFFL</span></p>
+        <p><a href='/login'>Sign up for an account</a></p>
       </div>
     )
   }

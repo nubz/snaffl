@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft";
+import {MegadraftEditor, editorStateFromRaw} from "megadraft";
 
 class EntityReader extends Component {
 
@@ -16,8 +16,7 @@ class EntityReader extends Component {
 
     return (
       <div>
-        <p>First name: {Entity.firstName}</p>
-        <p>Last name: {Entity.lastName}</p>
+        <p>Name: {Entity.firstName} {Entity.lastName}</p>
         <p>Bio:</p>
         <MegadraftEditor
           editorState={this.state.editorState}

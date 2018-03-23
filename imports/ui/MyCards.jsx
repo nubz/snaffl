@@ -93,6 +93,7 @@ class MyCards extends Component {
         <div>
           <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
+              <h2>My Cards</h2>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
                 <MenuItem value={"All"} primaryText="All types of card" />
                 {this.renderCardTypes()}

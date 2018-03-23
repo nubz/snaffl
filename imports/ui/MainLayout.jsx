@@ -1,21 +1,14 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import ActionGrade from 'material-ui/svg-icons/action/grade'
 import AppBar from 'material-ui/AppBar'
-import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import FlatButton from 'material-ui/FlatButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import { Session } from 'meteor/session'
 import NavContainer from '../containers/NavContainer'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin();
@@ -23,7 +16,7 @@ injectTapEventPlugin();
 const styles = {
   title: {
     cursor: 'pointer',
-    fontFamily: 'Bungee'
+    fontFamily: 'Chewy'
   },
   fab: {
     position: "fixed",
@@ -89,10 +82,6 @@ export default class MainLayout extends Component {
     FlowRouter.go('Login');
   }
 
-  createCard() {
-    FlowRouter.go('Add.Card')
-  }
-
   handleMenuToggle = () => this.setState({open: !this.state.open});
 
   handleMenuClose = () => this.setState({open: false});
@@ -119,7 +108,7 @@ export default class MainLayout extends Component {
             </main>
           </div>
           <footer>
-            <div className={this.props.className}>Snaffl created by <a href="http://nubz.com">nubz</a></div>
+            <div className={this.props.className}><span className="branding">SNAFFL</span> created by <a href="http://nubz.com">nubz</a></div>
           </footer>
 
           <NavContainer

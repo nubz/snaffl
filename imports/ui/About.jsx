@@ -23,7 +23,7 @@ export default class About extends Component {
     return (
       <div className="home">
 
-          <p>Snaffl is Content as a Service</p>
+        <p><span className="branding">SNAFFL</span> is Content as a Service</p>
           <p>This prototype has been built using Meteor, React and Material UI.</p>
           <div>
             <img style={iconStyles} src="images/Meteor-logo.png" />

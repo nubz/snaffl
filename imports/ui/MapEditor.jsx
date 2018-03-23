@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Session } from 'meteor/session';
 import GoogleMapContainer from '../containers/GoogleMapContainer';
-import { Cards } from '../api/cards'
+import CircularProgress from 'material-ui/CircularProgress'
 
 class MapEditor extends Component {
   constructor(props) {
@@ -24,11 +23,7 @@ class MapEditor extends Component {
   }
 
   markerForCard(lat, lng) {
-    let marker;
-
-    console.log('called markerForCard(' + lat + ', ' + lng + ')')
-
-    marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       draggable: true,
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lat, lng),
@@ -48,7 +43,6 @@ class MapEditor extends Component {
   }
 
   handleOnReady(name) {
-      var bounds = new google.maps.LatLngBounds();
       GoogleMaps.ready(name, function (map) {
         this.setState({map: map});
         this.markerForCard(this.props.latitude, this.props.longitude);
@@ -62,7 +56,7 @@ class MapEditor extends Component {
         mapOptions={this.handleMapOptions}
         height="500px"
       >
-        Loading!
+        { this.props.loading ? <CircularProgress size={60} thickness={7} /> : ''}
       </GoogleMapContainer>
     );
   }

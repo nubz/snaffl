@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
-import Divider from 'material-ui/Divider'
-import SnapCard from './SnapCard.jsx'
-import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Decks } from '../api/decks.js'
-import { Cards } from '../api/cards.js'
 import Toggle from 'material-ui/Toggle'
 import CircularProgress from 'material-ui/CircularProgress'
 
-const startTime = new Date()
 const styles = {
   formStyle: {
     marginBottom: 30
@@ -30,8 +22,6 @@ class EditDeck extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log('props for EditDeck', this.props)
  
     this.state = {
       open: false,
@@ -83,7 +73,6 @@ class EditDeck extends Component {
 
   render() {
     return (
-
       <div>
         { this.props.loading ? <CircularProgress size={60} thickness={7} /> :
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
