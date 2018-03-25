@@ -31,6 +31,7 @@
     "draft-js-static-toolbar-plugin": "^2.0.1",
     "draft-js-toolbar-plugin": "^1.0.5",
     "draft-js-video-plugin": "^2.0.1",
+    "fibers": "^2.0.2",
     "last-draft": "^3.3.0",
     "last-draft-js-sidebar-plugin": "^1.2.0",
     "last-draft-js-toolbar-plugin": "^1.2.0",

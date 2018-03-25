@@ -41,6 +41,20 @@ export default () => {
     return DeckTypes.find({})
   })
 
+  Meteor.publish('permitted.types', function (id, type) {
+    let typeName = '';
+    if (type === 'card') {
+      const card = Cards.findOne(id);
+      typeName = card.cardType;
+    } else {
+      const deck = Decks.findOne(id);
+      typeName = deck.deckType;
+    }
+
+    // we want only decks that accept this cardType
+    return DeckTypes.find({accepts: {$all: [typeName]}})
+  })
+
   Meteor.publish("my.publicCards",function(){
     if (!this.userId) {
       return this.ready();

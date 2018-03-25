@@ -73,7 +73,7 @@ class PublicCards extends Component {
         <div>
           <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
-              <h2>Public Cards</h2>
+              <h2 className={"toolbar-title"}>Public Cards</h2>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
                 <MenuItem value={"All"} primaryText="All types of card" />
                 {this.renderCardTypes()}

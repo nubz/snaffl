@@ -6,6 +6,7 @@ import LoadMethods from './methods'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
 import resetDb from './resetDb'
+import { DeckTypes } from '../imports/api/deckTypes.js'
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
 // access codes for third party services
@@ -20,10 +21,10 @@ Meteor.startup(() => {
   // @param reset Boolean
   // when true it will clean out db 
   // and re-seed
-  referenceData(false)
+  referenceData(false);
 
   if (wipeDb) {
-    resetDb(true)
+    resetDb(true);
   }
 
   /*
@@ -43,7 +44,7 @@ Meteor.startup(() => {
   **  to get your own cloudinary secrets for
   **  uploading and managing images and videos
   **  you will need an account at https://cloudinary.com/
-  **  TODO: decouple Cloudinary to permit other storage
+  **  in the future we will decouple Cloudinary to permit other storage
   **  providers via a generic CDN package
   */
   Cloudinary.config(Secrets.cloudinary.config)

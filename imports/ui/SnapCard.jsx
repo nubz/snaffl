@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../api/cards.js'
-import { Decks } from '../api/decks.js'
 import { DeckCards } from '../api/deckCards.js'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
 import imageApi from '../api/imageApi'
 import Snackbar from 'material-ui/Snackbar'
@@ -181,14 +179,6 @@ export default class SnapCard extends Component {
     const host = window.location.hostname
     const protocol = window.location.protocol
     const port = window.location.port == "80" ? '' : ':' + window.location.port
-    /* a little dance to handle cards uploaded before images
-    ** were auto generated from secure url
-    */
-    const imageUrl = this.props.card.image || null
-    if (!images && imageUrl) {
-      let secureUrl = imageApi.returnSecureUrl(imageUrl)
-      images = imageApi.makeImageUrls(secureUrl)
-    }
       
     const lightBoxAction = [
         <FlatButton

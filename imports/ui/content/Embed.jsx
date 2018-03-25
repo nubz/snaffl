@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import IframeLoader from '../IFRAME'
 
 class EmbedReader extends Component {
 
@@ -8,9 +9,11 @@ class EmbedReader extends Component {
   }
 
   render() {
-    console.log('rendering Embed')
+    const { Embed } = this.props.content
     return (
-      <div></div>
+      <div>
+        <IframeLoader src={Embed.url} width="100%" height="260"/>
+      </div>
     )
   }
 

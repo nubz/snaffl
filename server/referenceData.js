@@ -4,7 +4,11 @@ import { Tags } from '../imports/api/tags.js'
 import { TagCards } from '../imports/api/tagCards'
 import { TagDecks } from '../imports/api/tagDecks'
 
-export default (reset) => {
+export default (reset, fn) => {
+
+  if (!reset && fn) {
+    return fn();
+  }
 
   if (reset) {
     CardTypes.remove({})

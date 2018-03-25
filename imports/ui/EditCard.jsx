@@ -76,7 +76,8 @@ class EditCard extends Component {
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content
 
-    if (inputs.cardType === 'Article') {
+    if (inputs.cardType === 'Article' || inputs.cardType === 'Entity') {
+      const contentToParse = inputs.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType]
       let options = {
         blockRenderers: {
           atomic: (block) => {
@@ -87,11 +88,14 @@ class EditCard extends Component {
               let width = dim === 'medium' ? 240 : '100%';
               return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
             }
-          }
+            if (data.get('type') == 'video') {
+              let src = data.get('src');
+              return '<iframe src="' + src + '" width="100%" height="500" allowfullscreen="true" frameborder="no"></iframe>'
+            }
+          },
         }
       }
-
-      content.html = stateToHTML(editorStateFromRaw(JSON.parse(content.Article)).getCurrentContent(), options)
+      content.html = stateToHTML(editorStateFromRaw(JSON.parse(contentToParse)).getCurrentContent(), options)
     }
 
     const data = {

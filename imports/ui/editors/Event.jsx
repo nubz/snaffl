@@ -41,28 +41,38 @@ class EventEditor extends Component {
 
   }
 
+  returnDateParts = (date) => {
+    let m = moment(date);
+    return { day: m.format('D'), month: m.format('MMMM'), monthShort: m.format('MMM'), year: m.format('YYYY'), yearShort: m.format('YY')}
+  }
+
+  returnTimeParts = (date) => {
+    let m = moment(date);
+    return { time12hr: m.format('h:mm'), time24hr: m.format('kk:mm'), period: m.format('a')}
+  }
+
   handleChangeStartDate = (event, date) => {
     this.setState({
-      'content': { ...this.state.content, 'startDate' : date } 
+      'content': { ...this.state.content, 'startDate' : date, 'startDateParts': this.returnDateParts(date) }
     })
   }
 
   handleChangeStartTime = (event, date) => {
     this.setState({
-      'content': { ...this.state.content, 'startTime' : date } 
+      'content': { ...this.state.content, 'startTime' : date, 'startTimeParts': this.returnTimeParts(date) }
     })
   }
 
 
   handleChangeEndDate = (event, date) => {
     this.setState({
-      'content': { ...this.state.content, 'endDate' : date } 
+      'content': { ...this.state.content, 'endDate' : date, 'endDateParts': this.returnDateParts(date) }
     })
   }
 
   handleChangeEndTime = (event, date) => {
     this.setState({
-      'content': { ...this.state.content, 'endTime' : date } 
+      'content': { ...this.state.content, 'endTime' : date, 'endTimeParts': this.returnTimeParts(date) }
     })
   }
 

@@ -4,34 +4,39 @@
     "title": "MultiDeck", 
     "description": "A deck that can contain other decks and a mixture of card types",
     "icon": "MapsLocalActivity",
-    "iconPath": "svg-icons/maps/local-activity"
-  }, 
+    "iconPath": "svg-icons/maps/local-activity",
+    "accepts": ["Image", "Article", "Event", "Location", "Entity", "Embed", "MultiDeck", "Gallery", "Map", "Schedule", "Directory"]
+  },
   {
     "value": "Gallery", 
     "title": "Gallery", 
     "description": "An image gallery that support embeds too",
     "icon": "ImageCollections",
-    "iconPath": "svg-icons/image/collections"
+    "iconPath": "svg-icons/image/collections",
+    "accepts": ["Image"]
   }, 
   {
     "value": "Map", 
     "title": "Map", 
     "description": "A map that only recognises cards with geo data",
     "icon": "MapsMap",
-    "iconPath": "svg-icons/maps/map"
+    "iconPath": "svg-icons/maps/map",
+    "accepts": ["Location"]
   },
   {
     "value": "Schedule", 
     "title": "Event Schedule", 
     "description": "A calendar based deck that contains time sensitive events", 
     "icon": "ActionDateRange",
-    "iconPath": "svg-icons/action/date-range"
+    "iconPath": "svg-icons/action/date-range",
+    "accepts": ["Event"]
   },
   {
     "value": "Directory", 
     "title": "Profile Directory", 
     "description": "A directory of people and organisations that can contain other directories", 
     "icon": "CommunicationContacts",
-    "iconPath": "svg-icons/communication/contacts"
+    "iconPath": "svg-icons/communication/contacts",
+    "accepts": ["Entity"]
   }
 ]

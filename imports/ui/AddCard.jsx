@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
 import { Cards } from '../api/cards.js'
 import Divider from 'material-ui/Divider'
 import SnapCardListItem from './SnapCardListItem.jsx'
-import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
@@ -16,7 +12,7 @@ import parseIcon from './TypeIcons'
 import imageApi from '../api/imageApi'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
-import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft"
+import { editorStateFromRaw } from "megadraft"
 
 const styles = {
   formStyle: {
@@ -77,20 +73,45 @@ class AddCard extends Component {
       open: s,
       message: message
     })
+  };
+
+  useEmbed(content) {
+    const inputs = this.state.inputs
+    extractMeta(content.Embed.embedUrl, function (err, res) {
+      console.log('extractMeta', res);
+      inputs.title = res.title;
+      inputs.description = res.description;
+      // upload the image to cdn
+      Meteor.call('uploadRemote', res.image, function (err, data) {
+        if (data) {
+          this.setState({
+            'image': data.secure_url,
+            'images': imageApi.makeImageUrls(data.secure_url),
+            'publicId': data.public_id,
+            'uploading': false
+          });
+          this.saveContent(inputs, content)
+        }
+
+      }.bind(this))
+
+    }.bind(this))
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
     const inputs = this.state.inputs
-    let content = {}
-    let data = {}
+    let content = {};
 
-    content[inputs.cardType] = this.contentFields.state.content
+    content[inputs.cardType] = this.contentFields.state.content;
 
-    // there may be html fields in other types
-    // so TODO: transform content object for all types
-    if (inputs.cardType === 'Article') {
+    if (inputs.cardType === 'Embed') {
+      // bail out to handle the extraction of meta data
+      return this.useEmbed(content)
+
+    } else if (inputs.cardType === 'Article' || inputs.cardType === 'Entity') {
+      const contentToParse = inputs.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType]
       let options = {
         blockRenderers: {
           atomic: (block) => {
@@ -101,13 +122,23 @@ class AddCard extends Component {
               let width = dim === 'medium' ? 240 : '100%';
               return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
             }
+            if (data.get('type') == 'video') {
+              let src = data.get('src');
+              return '<iframe src="' + src + '" width="100%" height="500" allowfullscreen="true" frameborder="no"></iframe>'
+            }
           },
         }
       }
-      content.html = stateToHTML(editorStateFromRaw(JSON.parse(content.Article)).getCurrentContent(), options)
+      content.html = stateToHTML(editorStateFromRaw(JSON.parse(contentToParse)).getCurrentContent(), options)
     }
 
-    data = {
+    this.saveContent(inputs, content)
+
+  }
+
+  saveContent(inputs, content) {
+    console.log('saveContent()', inputs, content);
+    let data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: Meteor.userId(),
@@ -137,7 +168,6 @@ class AddCard extends Component {
         content: {}
       })
     })
-
   }
 
   handleRequestClose = () => {
@@ -145,10 +175,6 @@ class AddCard extends Component {
       open: false,
     });
   };
-
-  handleSelectChange = (event, index, value) => {
-    return this.setState({'inputs': {...this.state.inputs, 'cardType': value} })
-  }
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
  
@@ -158,16 +184,6 @@ class AddCard extends Component {
         key={card._id} 
         card={card} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
-      />
-    ))
-  }
-
-  renderCardTypes() {
-    return this.props.cardTypes.map((cardType) => (
-      <MenuItem 
-        value={cardType.value} 
-        primaryText={cardType.title} 
-        key={cardType.value}
       />
     ))
   }
@@ -235,6 +251,10 @@ class AddCard extends Component {
             style={{marginBottom: 20}}
           />
 
+          { this.props.cardType === 'Embed' ?
+          ''
+          : <div>
+
           { this.state.uploading ? 
             <CircularProgress size={60} thickness={7} />
           :
@@ -269,31 +289,19 @@ class AddCard extends Component {
               value={this.state.inputs.description}
             />
           </div>
+            </div>
+            }
 
-          { this.props.cardType ? 
-            <div className="form-group">
-              {
-                parseEditor(this.props.cardType, {
-                  ref: this.registerContent, 
-                  card: {}, 
-                  isNew: true,
-                  geo: this.returnLoc
-                })
-              }
-            </div>
-           :
-            <div className="form-group">
-              <SelectField 
-                onChange={this.handleSelectChange} 
-                floatingLabelText="Type of Card"
-                floatingLabelStyle={styles.floatingLabelStyle}
-                data-field="cardType"
-                value={this.state.inputs.cardType}
-              >
-              {this.renderCardTypes()}
-              </SelectField>
-            </div>
-           }
+          <div className="form-group">
+            {
+              parseEditor(this.props.cardType, {
+                ref: this.registerContent,
+                card: {},
+                isNew: true,
+                geo: this.returnLoc
+              })
+            }
+          </div>
 
           <Toggle
             label="Record posting location"
@@ -327,7 +335,7 @@ class AddCard extends Component {
 
 AddCard.propTypes = {
   cards: PropTypes.array.isRequired,
-  cardType: PropTypes.string,
+  cardType: PropTypes.string.isRequired,
   cardTypes: PropTypes.array,
   loadingCardTypes: PropTypes.bool,
   loadingCards: PropTypes.bool,

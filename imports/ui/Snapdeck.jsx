@@ -113,9 +113,8 @@ export default class Snapdeck extends Component {
 
     return (
       <div className="container">
-        <h2>{deck.title}</h2>
+        <h2>{deck.deckType}: {deck.title}</h2>
         <p>{deck.description}</p>
-        { deck.deckType == 'Map' ? <RaisedButton label="View Map" onClick={this.viewMap} /> : ''}
         { owned ? 
         <div>
           <RaisedButton label="Delete" onClick={this.handleOpen} />

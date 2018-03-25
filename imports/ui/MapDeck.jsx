@@ -30,7 +30,8 @@ class MapDeck extends Component {
     this.handleMapOptions = this.handleMapOptions.bind(this);
     this.state = {
       bounds: {},
-      map: {}
+      map: {},
+      selectedDeck: 0
     }
   }
 
@@ -123,47 +124,41 @@ class MapDeck extends Component {
       </GoogleMapContainer>
       <div className="cardSection">
 
-          <h3>Child Decks</h3>
+        <h3>Parent Decks</h3>
 
-          <ChildDecksFromIdsContainer linkedDecks={this.props.deckChildren} />
+        { owned ?
+          <DropDownMenu
+            iconStyle={{textColor:'black'}}
+            iconButton={<NavigationExpandMoreIcon/>}
+            value={this.state.selectedDeck}
+            onChange={this.handleDeckSelect}
+          >
+            <MenuItem
+              value={0}
+              primaryText="Add to deck"
+            />
+            {this.renderMyDecks()}
+          </DropDownMenu> : ''
+        }
 
-        </div> 
+        <DecksFromIdsContainer linkedDecks={this.props.deckParents} deckId={deck._id} />
 
+      </div>
+
+      <div className="cardSection">
+        <h3>API</h3>
+        <pre style={styles.meta}>
+          <code><a href={"/api/menu/" + deck._id} target="_blank">{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
+        </pre>
+      </div>
+      { host === 'dev.snaffl.io' ?
         <div className="cardSection">
-
-          <h3>Parent Decks</h3>
-
-          { owned ?
-            <DropDownMenu 
-              iconStyle={{textColor:'black'}} 
-              iconButton={<NavigationExpandMoreIcon/>} 
-              value={this.state.selectedDeck} 
-              onChange={this.handleDeckSelect}
-            >
-              <MenuItem 
-                value={0} 
-                primaryText="Add to deck" 
-              />
-              {this.renderMyDecks()}
-            </DropDownMenu> : '' 
-          }
-
-          <DecksFromIdsContainer linkedDecks={this.props.deckParents} deckId={deck._id} />
-
-        </div>
-
-        <div className="cardSection">
-          <h3>API</h3>
+          <h3>Snaffl.it!</h3>
           <pre style={styles.meta}>
-            <code><a href={"/api/menu/" + deck._id} target="_blank">{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
+            <code><a href={"http://snaffl.it/?id=" + deck._id} target="_blank">http://snaffl.it/?id={deck._id}</a></code>
           </pre>
         </div>
-        <div className="cardSection">
-          <h3>Web Demo</h3>
-          <pre style={styles.meta}>
-            <code><a href={"http://snaffl.it?id=" + deck._id} target="_blank">Demo web example</a></code>
-          </pre>
-        </div>
+        : ''}
     </div>
     );
   }
@@ -174,7 +169,6 @@ MapDeck.propTypes = {
   decks: PropTypes.array,
   deckCards: PropTypes.array,
   deckParents: PropTypes.array,
-  deckChildren: PropTypes.array,
   tagSubscription: PropTypes.object,
   multiSnackBar: PropTypes.func.isRequired
 }
