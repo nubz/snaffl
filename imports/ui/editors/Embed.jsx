@@ -6,7 +6,7 @@ import IframeLoader from '../IFRAME'
 const floatingLabelStyle = {
   color: 'black',
   fontSize: 20,
-  fontWeight: 500
+  fontWeight: 700
 }
 const badUrl = function(url) {
   return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
@@ -52,11 +52,33 @@ const urlFormats = [
 
   function (url) {
     if (url.indexOf('mixcloud.com') !== -1) {
-      return 'https://mixcloud.com/oembed?url=' + encodeURIComponent(url) +'&format=json';
+      var parts = url.split('https://www.mixcloud.com');
+      console.log('mixcloud parts', parts[1]);
+      return 'https://www.mixcloud.com/widget/iframe/?feed=' + encodeURIComponent(parts[1]);
     }
     return false;
   }
 ];
+
+const checkOEmbed = function (url) {
+  if (url.indexOf('vimeo.com') !== -1) {
+    return 'https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(url);
+  }
+
+  if (url.indexOf('soundcloud.com') !== -1) {
+    return 'https://soundcloud.com/oembed?url=' + encodeURIComponent(url) +'&format=json';
+  }
+
+  if (url.indexOf('mixcloud.com') !== -1) {
+    return 'https://mixcloud.com/oembed/?url=' + encodeURIComponent(url) +'&format=json';
+  }
+
+  if (url.indexOf('scribd.com') !== -1) {
+    return  'https://www.scribd.com/services/oembed/?url=' + encodeURIComponent(url) +'&format=json';
+  }
+
+  return url;
+}
 
 class EmbedEditor extends Component {
 
@@ -75,7 +97,7 @@ class EmbedEditor extends Component {
 
   }
 
-  handleInputChange = (event, index, value) => this.setState({'content': { ...this.state.content, [event.target.dataset.field] : event.target.value, 'url': checkUrl(event.target.value) } })
+  handleInputChange = (event, index, value) => this.setState({'content': { ...this.state.content, [event.target.dataset.field] : event.target.value, 'url': checkUrl(event.target.value), 'oEmbed': checkOEmbed(event.target.value) } })
 
   render() {
     return (

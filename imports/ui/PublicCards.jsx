@@ -70,8 +70,8 @@ class PublicCards extends Component {
   render() {
     const iconStyle = {color: "white", padding:10}
     return (
-        <div>
-          <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
+        <div style={{boxShadow: 'none'}}>
+          <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <h2 className={"toolbar-title"}>Public Cards</h2>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>

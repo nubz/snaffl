@@ -19,8 +19,10 @@ import { TagSubscriptions } from '../api/tagSubscriptions'
 
 const styles = {
   formStyle: {
-    marginBottom: 30,
-    marginTop: 30
+    padding: 20,
+    maxWidth: 960,
+    margin: '10px auto',
+    background: 'white'
   },
   floatingLabelStyle: {
     color: 'black',
@@ -169,10 +171,10 @@ class AddDeck extends Component {
  
   render() {
     return (
-      <div>
+      <div style={styles.formStyle}>
         {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value, {width:50,height:50})} {this.props.selectedType.description}</p> : ''}
-        <Paper className="dash-panel" style={styles.panel} zDepth={2}>
-          <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <Toggle
               label="Public access"
               onToggle={this.handleAccessChange}
@@ -260,7 +262,7 @@ class AddDeck extends Component {
               <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
             </div>
           </form>
-        </Paper>
+
         <Divider />
 
         <h2>Recently added decks</h2>

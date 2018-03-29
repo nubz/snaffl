@@ -19,10 +19,17 @@ export default () => {
     uploadRemote: function (remoteUrl) {
       const future = new Future();
       const uploaded = function(data) {
-        console.log('uploaded!', data);
         future.return(data);
       };
       Cloudinary.uploader.upload(remoteUrl, uploaded, {folder: Secrets.cloudinary.folder});
+      return future.wait();
+    },
+    callOEmbed: function (url) {
+      const future = new Future();
+      const dataReceived = function(err, data) {
+        future.return(data);
+      }
+      HTTP.get(url, dataReceived);
       return future.wait();
     },
     touchTag: function (string) {

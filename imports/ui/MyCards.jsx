@@ -21,8 +21,8 @@ import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import parseIcon from './TypeIcons'
 
 const styles = {
-  tabStyle: {textTransform: 'none', fontWeight: 700, color:'black'},
-  tabItem: { backgroundColor: '#eee', textColor: 'black'}
+  tabStyle: {textTransform: 'none', fontWeight: 700},
+  tabItem: { }
 }
 
 class MyCards extends Component {
@@ -54,8 +54,8 @@ class MyCards extends Component {
   handleTypeChange = (e, i, v) => {
     this.setState({
       typeValue: v,
-      publicCards: v == "All" ? this.props.publicCards : this.props.publicCards.filter(card => card.cardType == v),
-      privateCards: v == "All" ? this.props.privateCards : this.props.privateCards.filter(card => card.cardType == v)
+      publicCards: v === "All" ? this.props.publicCards : this.props.publicCards.filter(card => card.cardType == v),
+      privateCards: v === "All" ? this.props.privateCards : this.props.privateCards.filter(card => card.cardType == v)
     })
   }
 
@@ -90,8 +90,8 @@ class MyCards extends Component {
   render() {
     const iconStyle = {color: "white", padding:10}
     return (
-        <div>
-          <Toolbar style={{backgroundColor: 'white', borderBottom: '1px solid #aaa'}}>
+        <div style={{boxShadow: 'none'}}>
+          <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <h2 className={"toolbar-title"}>My Cards</h2>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
@@ -115,7 +115,7 @@ class MyCards extends Component {
             onChange={this.handleChange}
             tabItemContainerStyle={styles.tabItem}
           >
-            <Tab label={<span style={styles.tabStyle}>Public Cards</span>} value="public" style={{color: 'black'}} buttonStyle={{textColor: 'black'}}>
+            <Tab label={<span>Public Cards</span>} value="public">
                 { this.state.mode == 'grid' ? 
                     <GridList
                       cellHeight={180}
@@ -138,7 +138,7 @@ class MyCards extends Component {
                 : <CardList cards={this.state.publicCards} /> 
                 }
             </Tab>
-            <Tab label={<span style={styles.tabStyle}>Private Cards</span>} value="private">
+            <Tab label={<span>Private Cards</span>} value="private">
             { this.state.mode == 'grid'? 
                     <GridList
                       cellHeight={180}

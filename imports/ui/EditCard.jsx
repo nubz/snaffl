@@ -23,7 +23,11 @@ import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft"
 const startTime = new Date()
 const styles = {
   formStyle: {
-    marginBottom: 30
+    marginBottom: 30,
+    padding:20,
+    maxWidth: 960,
+    margin: '10px auto',
+    background: 'white'
   },
   floatingLabelStyle: {
     color: 'black',

@@ -16,9 +16,10 @@ import { editorStateFromRaw } from "megadraft"
 
 const styles = {
   formStyle: {
-    padding: 10,
-    maxWidth: 768,
-    margin: '10px auto'
+    padding: 20,
+    maxWidth: 960,
+    margin: '10px auto',
+    background: 'white'
   },
   floatingLabelStyle: {
     color: 'black',
@@ -38,8 +39,9 @@ const styles = {
 const defaultInputs = {
   title: '',
   description: '',
-  cardType: 'Article'
-}
+  content: {},
+  image: null
+};
 
 let loc = {latitude: 0,longitude: 0};
 
@@ -48,15 +50,12 @@ class AddCard extends Component {
   constructor(props) {
     super(props);
 
-    if (props.cardType) {
-      defaultInputs.cardType = props.cardType
-    }
- 
+    console.log('setting initial state with inputs:', defaultInputs);
     this.state = {
       open: false,
       uploading: false,
       message: 'Card added successfully',
-      inputs: defaultInputs,
+      inputs: {...defaultInputs},
       imagePreview: '',
       publicId: '',
       image: '',
@@ -76,26 +75,65 @@ class AddCard extends Component {
   };
 
   useEmbed(content) {
-    const inputs = this.state.inputs
-    extractMeta(content.Embed.embedUrl, function (err, res) {
-      console.log('extractMeta', res);
-      inputs.title = res.title;
-      inputs.description = res.description;
-      // upload the image to cdn
-      Meteor.call('uploadRemote', res.image, function (err, data) {
-        if (data) {
-          this.setState({
-            'image': data.secure_url,
-            'images': imageApi.makeImageUrls(data.secure_url),
-            'publicId': data.public_id,
-            'uploading': false
-          });
+    const inputs = this.state.inputs;
+    if (content.Embed.oEmbed === content.Embed.embedUrl) {
+      extractMeta(content.Embed.oEmbed, function (err, res) {
+        inputs.title = res.title;
+        inputs.description = res.description;
+        const image = res.image || res.thumbnail_url;
+        if (image) {
+          Meteor.call('uploadRemote', image, function (err, data) {
+            if (data) {
+              this.setState({
+                'image': data.secure_url,
+                'images': imageApi.makeImageUrls(data.secure_url),
+                'publicId': data.public_id,
+                'uploading': false
+              });
+              this.saveContent(inputs, content)
+            }
+
+          }.bind(this))
+        } else {
+          inputs.title = content.Embed.embedUrl;
+          inputs.description = 'Unable to extract meta data for this resource.'
           this.saveContent(inputs, content)
         }
 
-      }.bind(this))
 
-    }.bind(this))
+      }.bind(this))
+    } else {
+      // make api call to oembed resource
+      Meteor.call('callOEmbed', content.Embed.oEmbed, function (err, res) {
+        if (res) {
+          inputs.title = res.data.title;
+          inputs.description = res.data.description;
+
+          const image = res.data.image || res.data.thumbnail_url;
+
+          Meteor.call('uploadRemote', image, function (err, data) {
+
+            if (data) {
+              this.setState({
+                'image': data.secure_url,
+                'images': imageApi.makeImageUrls(data.secure_url),
+                'publicId': data.public_id,
+                'uploading': false
+              });
+              inputs.title = inputs.title || content.Embed.url;
+              inputs.description = inputs.description || 'Embedded media';
+              this.saveContent(inputs, content)
+            }
+
+          }.bind(this))
+        } else {
+          inputs.title = content.Embed.embedUrl;
+          inputs.description = 'Unable to extract meta data for this resource.'
+          this.saveContent(inputs, content)
+        }
+      }.bind(this))
+    }
+
   }
 
   handleSubmit(event) {
@@ -104,32 +142,36 @@ class AddCard extends Component {
     const inputs = this.state.inputs
     let content = {};
 
-    content[inputs.cardType] = this.contentFields.state.content;
+    content[this.props.cardType] = this.contentFields.state.content;
 
-    if (inputs.cardType === 'Embed') {
+    if (this.props.cardType === 'Embed') {
       // bail out to handle the extraction of meta data
-      return this.useEmbed(content)
+      this.useEmbed(content);
 
-    } else if (inputs.cardType === 'Article' || inputs.cardType === 'Entity') {
-      const contentToParse = inputs.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType]
+      return;
+
+    }
+
+    if (this.props.cardType === 'Article' || this.props.cardType === 'Entity') {
+      const contentToParse = this.props.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType];
       let options = {
         blockRenderers: {
           atomic: (block) => {
             let data = block.getData();
-            if (data.get('type') == 'image') {
+            if (data.get('type') === 'image') {
               let src = data.get('src');
               let dim = data.get('display')
               let width = dim === 'medium' ? 240 : '100%';
               return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
             }
-            if (data.get('type') == 'video') {
+            if (data.get('type') === 'video') {
               let src = data.get('src');
               return '<iframe src="' + src + '" width="100%" height="500" allowfullscreen="true" frameborder="no"></iframe>'
             }
           },
         }
       }
-      content.html = stateToHTML(editorStateFromRaw(JSON.parse(contentToParse)).getCurrentContent(), options)
+      content.html = stateToHTML(editorStateFromRaw(JSON.parse(contentToParse)).getCurrentContent(), options);
     }
 
     this.saveContent(inputs, content)
@@ -137,14 +179,13 @@ class AddCard extends Component {
   }
 
   saveContent(inputs, content) {
-    console.log('saveContent()', inputs, content);
     let data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: Meteor.userId(),
       createdAt: new Date(),
       access: this.state.access,
-      cardType: inputs.cardType,
+      cardType: this.props.cardType,
       image: this.state.image,
       images: this.state.images,
       content: content
@@ -202,7 +243,7 @@ class AddCard extends Component {
     // we want this to run every time
     // the page is visited or stale
     // geo data will prevail
-    var navigatorLocated = false;
+    let navigatorLocated = false;
     AllGeo.getLocationByNavigator(function (pos) {
       loc = pos
       navigatorLocated = true;

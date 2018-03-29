@@ -46,7 +46,7 @@ export default class SnapdeckListItem extends Component {
 
     return (
       <ListItem
-        innerDivStyle={{border:'1px solid #eee', marginBottom:5}}
+        innerDivStyle={{background: 'white', boxShadow: '0 0 2px rgba(0,0,0,0.27)', border:'1px solid #eee', marginBottom:5}}
         leftAvatar={avatar}
         primaryText={deck.title}
         secondaryText={deck.deckType + ' created ' + createdAgo}

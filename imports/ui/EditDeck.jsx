@@ -6,17 +6,28 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Decks } from '../api/decks.js'
 import Toggle from 'material-ui/Toggle'
 import CircularProgress from 'material-ui/CircularProgress'
+import imageApi from "../api/imageApi";
 
 const styles = {
   formStyle: {
-    marginBottom: 30
+    marginBottom: 30,
+    maxWidth: 960,
+    margin: '10px auto'
   },
   floatingLabelStyle: {
     color: 'black',
     fontSize: 20,
     fontWeight: 500
+  },
+  imagePreview: {
+    display: 'block',
+    marginBottom: 20,
+    maxWidth: '100%'
+  },
+  fileInput: {
+    display: 'none'
   }
-}
+};
 
 class EditDeck extends Component {
 
@@ -27,7 +38,10 @@ class EditDeck extends Component {
       open: false,
       message: 'Deck added successfully',
       inputs: {...this.props.deck},
-      access: this.props.deck.access
+      access: this.props.deck.access,
+      images: this.props.deck.images || null,
+      image: this.props.deck.image,
+      imagePreview: ''
     }
   }
 
@@ -46,7 +60,9 @@ class EditDeck extends Component {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: inputs.owner,
-      access: this.state.access
+      access: this.state.access,
+      images: this.state.images,
+      image: this.state.image
     }
 
     Decks.update({_id: inputs._id}, {$set: data}, () => {
@@ -54,8 +70,14 @@ class EditDeck extends Component {
         open: true,
         message: 'Deck edited ok'
       })
+
+      FlowRouter.go('/deck/' + inputs._id)
     })
 
+  }
+
+  uploadFiles(event) {
+    imageApi.uploadFiles(event, this)
   }
 
   handleRequestClose = () => {
@@ -83,6 +105,21 @@ class EditDeck extends Component {
             style={{marginBottom: 20}}
             defaultToggled={this.state.access === 'public'}
           />
+          { this.state.uploading ?
+            <CircularProgress size={60} thickness={7} />
+            :
+            <div className="form-group">
+              { this.state.images ?
+                <img style={styles.imagePreview} src={this.state.images.small} />
+                : ''}
+              <RaisedButton
+                secondary={true}
+                containerElement='label' // <-- Just add me!
+                label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
+                <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
+              </RaisedButton>
+            </div>
+          }
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}

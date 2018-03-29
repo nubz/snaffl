@@ -13,7 +13,7 @@
     "description": "An image gallery that support embeds too",
     "icon": "ImageCollections",
     "iconPath": "svg-icons/image/collections",
-    "accepts": ["Image"]
+    "accepts": ["Image", "Embed"]
   }, 
   {
     "value": "Map", 

@@ -23,7 +23,7 @@ import parseContent from './TypeContent'
 const cardStyle = {
   marginBottom: 10,
   padding: 10,
-  maxWidth: 768,
+  maxWidth: 960,
   margin: '10px auto'
 }
 

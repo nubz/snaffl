@@ -23,7 +23,8 @@ const styles = {
     backgroundColor: '#eee', 
     padding: 10, 
     fontSize: 10
-  }
+  },
+
 }
 
 export default class Snapdeck extends Component {
@@ -121,10 +122,14 @@ export default class Snapdeck extends Component {
           <RaisedButton label="Edit" onClick={this.handleEditRequest} />
         </div>
         : '' }
-        <CardsFromIdsContainer cards={this.props.deckCards} />
-        { this.props.tagSubscription ?
-          <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
-        : ''}
+        <div className="cardSection">
+          <h3>Child cards</h3>
+          <CardsFromIdsContainer cards={this.props.deckCards} />
+          { this.props.tagSubscription ?
+            <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
+            : ''}
+        </div>
+
 
         <div className="cardSection">
 
@@ -147,7 +152,7 @@ export default class Snapdeck extends Component {
             >
               <MenuItem 
                 value={0} 
-                primaryText="Add to deck" 
+                primaryText="+ Add to deck"
               />
               {this.renderMyDecks()}
             </DropDownMenu> : '' 

@@ -9,7 +9,8 @@ const styles = {
   listItem: {
     width: '100%',
     padding: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    background: 'white'
   }
 }
 
@@ -37,7 +38,7 @@ export default class SnapCardListItem extends Component {
 
     return (
       <ListItem
-        innerDivStyle={{border:'1px solid #eee', marginBottom:10}}
+        innerDivStyle={{background: 'white', boxShadow: '0 0 2px rgba(0,0,0,0.27)', border:'1px solid #eee', marginBottom:10}}
         leftAvatar={images ? <Avatar src={images.thumb} /> : null}
         primaryText={card.title}
         secondaryText={card.cardType + ' created ' + createdAgo}
