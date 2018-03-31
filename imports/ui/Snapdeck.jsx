@@ -117,7 +117,7 @@ export default class Snapdeck extends Component {
         <div className="cardSection">
           <h3>Child cards</h3>
           { this.props.tagSubscription ?
-            <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
+            <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} types={this.props.tagSubscription.types} />
             : <CardsFromIdsContainer cards={this.props.deckCards} />}
         </div>
 

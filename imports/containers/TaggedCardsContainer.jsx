@@ -9,9 +9,11 @@ export default TaggedCardsContainer = withTracker(props => {
   const loading = !cardsHandle.ready()
   const tagged = true
   const cards = TagCards.find({tagId: props.tagId}).fetch()
+  const types = props.types || []
   return {
     cards,
     tagged,
-    loading
+    loading,
+    types
   }
 })(CardsFromIdsContainer)

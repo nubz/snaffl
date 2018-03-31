@@ -108,7 +108,7 @@ class AddDeck extends Component {
     }, (error, result) => {
       if (inputs.subscriptionTag.trim().length) {
         Meteor.call('touchTag', inputs.subscriptionTag.trim(), (tagerror, tagResult) => {
-          TagSubscriptions.insert({deckId: result, tagId: tagResult}, this.successState)
+          TagSubscriptions.insert({deckId: result, tagId: tagResult, types: this.props.selectedType.subscribes}, this.successState)
         })
       } else {
         this.successState()

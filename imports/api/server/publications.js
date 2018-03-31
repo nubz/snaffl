@@ -29,7 +29,7 @@ export default () => {
     return Tags.find({ _id : { $in : ids } })
   })
 
-  Meteor.publish('tag.cards', function (tagId) {
+  Meteor.publish('tag.cards', function (tagId, types) {
     return TagCards.find({tagId: tagId})
   })
 

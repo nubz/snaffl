@@ -70,17 +70,23 @@ export default () => {
 
       return Meteor.call('taggedById', tag._id);
     },
-    taggedById: function (tagId) {
+    taggedById: function (tagId, types) {
       const tagCards = TagCards.find({tagId: tagId}).fetch();
       const cardIds = _.pluck(tagCards, 'cardId');
-      return Cards.find({ _id : { $in : cardIds } }).fetch()
+      if (types && types.length > 0) {
+        return Cards.find({$and: [{ _id : { $in : cardIds }}, {cardType: { $in: types} }]}).fetch()
+      }
+      return Cards.find({ _id : { $in : cardIds }}).fetch()
     },
     subscribedToTag: function (deckId) {
+      // todo: we need an array of type filters here
+      // todo: it needs adding as a field to TagSubscriptions
       const sub = TagSubscriptions.findOne({deckId: deckId});
       if (!sub) {
         return null
       }
-      return Meteor.call('taggedById', sub.tagId);
+      sub.types = sub.types || ['Location', 'Embed'];
+      return Meteor.call('taggedById', sub.tagId, sub.types);
     },
     linkedCards: function (links) {
       const cardIds = _.pluck(links, 'cardId');

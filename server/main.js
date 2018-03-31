@@ -27,6 +27,9 @@ Meteor.startup(() => {
     resetDb(true);
   }
 
+  DeckTypes.update({"value": "TagDeck"}, {$set: {"subscribes": ["Image", "Article", "Event", "Location", "Entity", "Embed"]}});
+  DeckTypes.update({"value": "TagMap"}, {$set: {"subscribes": ["Location"]}});
+
   /*
   ** Create indexes on collections
   */

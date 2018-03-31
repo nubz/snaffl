@@ -13,7 +13,8 @@
     "description": "A deck that subscribes to a mixture of tagged cards that match the deck tag",
     "icon": "ActionBookmarkBorder",
     "iconPath": "svg-icons/action/bookmark-border",
-    "accepts": ["Image", "Article", "Event", "Location", "Entity", "Embed"]
+    "allows": [],
+    "subscribes": ["Image", "Article", "Event", "Location", "Entity", "Embed"]
   },
   {
     "value": "TagMap",
@@ -21,7 +22,8 @@
     "description": "A map that subscribes to a mixture of tagged Location cards that match the deck tag",
     "icon": "MapsMyLocation",
     "iconPath": "svg-icons/maps/my-location",
-    "accepts": ["Location"]
+    "subscribes": ["Location"],
+    "allows": []
   },
   {
     "value": "Gallery", 
