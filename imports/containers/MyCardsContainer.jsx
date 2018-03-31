@@ -6,8 +6,8 @@ import { CardTypes } from '../api/cardTypes.js'
 import MyCards from '../ui/MyCards'
 
 export default MyCardsContainer = withTracker(props => {
-  cardsHandle = Meteor.subscribe('cards.owned')
-  typesHandle = Meteor.subscribe('card.types')
+  const cardsHandle = Meteor.subscribe('cards.owned')
+  const typesHandle = Meteor.subscribe('card.types')
   const loading = !cardsHandle.ready() && !typesHandle.ready()
   const cardTypes = CardTypes.find({}).fetch()
   const publicCards = Cards.find({access: 'public'}, { sort: { createdAt: -1 } }).fetch()

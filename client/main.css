@@ -29,7 +29,8 @@ header > h1 {
 #content-wrapper > div {
     max-width: 960px;
     margin: 10px auto;
-    box-shadow: 0 0 2px rgba(0,0,0,0.27);
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .branding {

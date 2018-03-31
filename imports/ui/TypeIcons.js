@@ -15,6 +15,8 @@ import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit'
 import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
+import ActionBookmarkBorder from 'material-ui/svg-icons/action/bookmark-border'
+import MapsMyLocation from 'material-ui/svg-icons/maps/my-location'
 
 const TypeIcons = {
   'Article': ActionDescription,
@@ -32,7 +34,9 @@ const TypeIcons = {
   'View': AvPlayArrow,
   'Delete': ActionDeleteForever,
   'List': ActionViewList,
-  'Grid': ActionViewModule
+  'Grid': ActionViewModule,
+  'TagMap': MapsMyLocation,
+  'TagDeck': ActionBookmarkBorder
 }
 
 export default function parseIcon(typeName, style, props) {

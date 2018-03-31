@@ -11,6 +11,7 @@ import { editorStateFromRaw } from "megadraft";
 import Secrets from "../secrets";
 import { Cloudinary } from 'meteor/lepozepo:cloudinary';
 import Future from 'fibers/future'
+import {TagSubscriptions} from "../imports/api/tagSubscriptions";
 
 const HOST = Meteor.absoluteUrl()
 
@@ -67,9 +68,19 @@ export default () => {
         return []
       }
 
-      const tagCards = TagCards.find({tagId: tag._id}).fetch();
+      return Meteor.call('taggedById', tag._id);
+    },
+    taggedById: function (tagId) {
+      const tagCards = TagCards.find({tagId: tagId}).fetch();
       const cardIds = _.pluck(tagCards, 'cardId');
       return Cards.find({ _id : { $in : cardIds } }).fetch()
+    },
+    subscribedToTag: function (deckId) {
+      const sub = TagSubscriptions.findOne({deckId: deckId});
+      if (!sub) {
+        return null
+      }
+      return Meteor.call('taggedById', sub.tagId);
     },
     linkedCards: function (links) {
       const cardIds = _.pluck(links, 'cardId');
@@ -84,10 +95,11 @@ export default () => {
       return Decks.find({ _id : { $in : childIds } }).fetch()
     },
     deckMenu: function (deckId, top) {
+      const isTagDeck = Meteor.call('subscribedToTag', deckId);
       const deckCards = DeckCards.find({deckId: deckId}).fetch();
       const deckDecks = DeckDecks.find({deckId: deckId}).fetch();
 
-      const cards = Meteor.call('linkedCards', deckCards);
+      const cards = isTagDeck || Meteor.call('linkedCards', deckCards);
       const decks = Meteor.call('linkedChildDecks', deckDecks);
       // the menu for each deck
       let menu = [];

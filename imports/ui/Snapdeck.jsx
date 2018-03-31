@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Cards } from '../api/cards.js'
 import { Decks } from '../api/decks.js'
 import { DeckDecks } from '../api/deckDecks'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
-import imageApi from '../api/imageApi'
-import { ListItem } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
 import parseIcon from './TypeIcons'
 import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
 import TaggedCardsContainer from '../containers/TaggedCardsContainer'
@@ -78,7 +74,6 @@ export default class Snapdeck extends Component {
 
   }
 
-
   renderMyDecks() {
     return this.props.decks.map((deck) => (
       <MenuItem 
@@ -96,7 +91,6 @@ export default class Snapdeck extends Component {
     const port = window.location.port == "80" ? '' : ':' + window.location.port
     const deck = this.props.deck
     const owned = deck.owner === Meteor.userId()
-    const images = deck.images || null
     const actions = [
         <FlatButton
           label="Cancel"
@@ -110,8 +104,6 @@ export default class Snapdeck extends Component {
         />,
       ];
 
-    let createdAgo = moment(deck.createdAt).fromNow()
-
     return (
       <div className="container">
         <h2>{deck.deckType}: {deck.title}</h2>
@@ -124,25 +116,20 @@ export default class Snapdeck extends Component {
         : '' }
         <div className="cardSection">
           <h3>Child cards</h3>
-          <CardsFromIdsContainer cards={this.props.deckCards} />
           { this.props.tagSubscription ?
             <TaggedCardsContainer tagId={this.props.tagSubscription.tagId} />
-            : ''}
+            : <CardsFromIdsContainer cards={this.props.deckCards} />}
         </div>
 
-
+        { deck.deckType === 'MultiDeck' ?
         <div className="cardSection">
-
           <h3>Child Decks</h3>
-
           <ChildDecksFromIdsContainer linkedDecks={this.props.deckChildren} />
-
-        </div> 
+        </div>
+          : '' }
 
         <div className="cardSection">
-
           <h3>Parent Decks</h3>
-
           { owned ?
             <DropDownMenu 
               iconStyle={{textColor:'black'}} 

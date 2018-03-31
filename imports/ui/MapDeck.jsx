@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Session } from 'meteor/session';
 import GoogleMapContainer from '../containers/GoogleMapContainer';
-import { Cards } from '../api/cards'
 import { Decks } from '../api/decks.js'
 import { DeckDecks } from '../api/deckDecks'
 import parseIcon from './TypeIcons'
-import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
-import TaggedCardsContainer from '../containers/TaggedCardsContainer'
 import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
-import ChildDecksFromIdsContainer from '../containers/ChildDecksFromIdsContainer'
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import Dialog from 'material-ui/Dialog'
 
 const styles = {
   meta: {
@@ -31,7 +29,8 @@ class MapDeck extends Component {
     this.state = {
       bounds: {},
       map: {},
-      selectedDeck: 0
+      selectedDeck: 0,
+      open: false
     }
   }
 
@@ -95,6 +94,29 @@ class MapDeck extends Component {
 
   }
 
+  handleClose = () => {
+    this.setState({open: false});
+  }
+
+  handleOpen = () => {
+    this.setState({open: true});
+  }
+
+  handleEditRequest = () => {
+    FlowRouter.go('Edit.Deck', {_id: this.props.deck._id})
+  }
+
+  deleteThisDeck() {
+    const deckId = this.props.deck._id
+    if (this.props.deck.owner === Meteor.userId()) {
+      Decks.remove(deckId, () => {
+        this.handleClose()
+        Meteor.call('removeAllCardsFromDeck', deckId)
+        this.props.multiSnackBar('Deck deleted ok', true);
+        FlowRouter.go('My.Decks')
+      })
+    }
+  }
 
   renderMyDecks() {
     return this.props.decks.map((deck) => (
@@ -113,6 +135,18 @@ class MapDeck extends Component {
     const port = window.location.port == "80" ? '' : ':' + window.location.port
     const deck = this.props.deck
     const owned = deck.owner === Meteor.userId()
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={false}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onClick={this.deleteThisDeck.bind(this)}
+      />,
+    ];
     return (
     <div>
       <GoogleMapContainer
@@ -122,6 +156,12 @@ class MapDeck extends Component {
       >
         Loading!
       </GoogleMapContainer>
+      { owned ?
+        <div>
+          <RaisedButton label="Delete" onClick={this.handleOpen} />
+          <RaisedButton label="Edit" onClick={this.handleEditRequest} />
+        </div>
+        : '' }
       <div className="cardSection">
 
         <h3>Parent Decks</h3>
@@ -159,9 +199,21 @@ class MapDeck extends Component {
           </pre>
         </div>
         : ''}
+      <Dialog
+        title={'Delete "' + deck.title + '"'}
+        actions={actions}
+        modal={true}
+        open={this.state.open}
+      >
+        Confirm you want to permanently delete this deck.
+      </Dialog>
     </div>
     );
   }
+}
+
+FlatButton.propTypes = {
+  deck: PropTypes.object
 }
 
 MapDeck.propTypes = {

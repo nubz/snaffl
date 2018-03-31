@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
 import { Decks } from '../api/decks.js'
 import Divider from 'material-ui/Divider'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
-import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
 import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
-import Paper from 'material-ui/Paper'
 import { TagSubscriptions } from '../api/tagSubscriptions'
 
 const styles = {
@@ -63,7 +58,7 @@ class AddDeck extends Component {
       open: false,
       uploading: false,
       message: 'deck added successfully',
-      inputs: defaultInputs,
+      inputs: {...defaultInputs},
       imagePreview: '',
       publicId: '',
       image: '',
@@ -83,9 +78,21 @@ class AddDeck extends Component {
     })
   }
 
+  successState() {
+    this.setState({
+      open: true,
+      message: 'deck added ok',
+      inputs: defaultInputs,
+      imagePreview: '',
+      publicId: '',
+      image: '',
+      access: 'private',
+      images: null
+    })
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-
     const inputs = this.state.inputs
  
     Decks.insert({
@@ -101,35 +108,12 @@ class AddDeck extends Component {
     }, (error, result) => {
       if (inputs.subscriptionTag.trim().length) {
         Meteor.call('touchTag', inputs.subscriptionTag.trim(), (tagerror, tagResult) => {
-          TagSubscriptions.insert({deckId: result, tagId: tagResult}, () => {
-              this.setState({
-                open: true,
-                message: 'deck added ok',
-                inputs: defaultInputs,
-                imagePreview: '',
-                publicId: '',
-                image: '',
-                access: 'private',
-                images: null
-              })
-          })
+          TagSubscriptions.insert({deckId: result, tagId: tagResult}, this.successState)
         })
-
       } else {
-        this.setState({
-          open: true,
-          message: 'deck added ok',
-          inputs: defaultInputs,
-          imagePreview: '',
-          publicId: '',
-          image: '',
-          access: 'private',
-          images: null
-        })
+        this.successState()
       }
-
     })
-
   }
 
   handleRequestClose = () => {
@@ -137,10 +121,6 @@ class AddDeck extends Component {
       open: false,
     });
   };
-
-  handleSelectChange = (event, index, value) => {
-    return this.setState({'inputs': {...this.state.inputs, 'deckType': value} })
-  }
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
  
@@ -150,16 +130,6 @@ class AddDeck extends Component {
         key={deck._id} 
         deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)} 
-      />
-    ))
-  }
-
-  renderdeckTypes() {
-    return this.props.deckTypes.map((deckType) => (
-      <MenuItem 
-        value={deckType.value} 
-        primaryText={deckType.title} 
-        key={deckType.value}
       />
     ))
   }
@@ -190,7 +160,7 @@ class AddDeck extends Component {
               : ''}
               <RaisedButton
                  secondary={true} 
-                 containerElement='label' // <-- Just add me!
+                 containerElement='label'
                  label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
                  <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
               </RaisedButton>
@@ -222,42 +192,20 @@ class AddDeck extends Component {
               />
             </div>
 
-            { this.props.deckType ? '' :
-            <div className="form-group">
-              <SelectField 
-                onChange={this.handleSelectChange} 
-                floatingLabelText="Type of deck"
-                floatingLabelStyle={styles.floatingLabelStyle}
-                data-field="deckType"
-                value={this.state.inputs.deckType}
-              >
-              {this.renderdeckTypes()}
-              </SelectField>
-            </div>
-             }
-
+            { this.props.deckType === 'TagDeck' || this.props.deckType === 'TagMap' ?
             <div className="form-group">
              <h3>Auto Population</h3>
-             <p>Subscribe to tags or users to auto populate this deck as matching content is added.</p>
               <TextField
                 floatingLabelStyle={styles.floatingLabelStyle}
-                floatingLabelText="Subscribe to a tag"
+                floatingLabelText="Enter a tag to subscribe to"
                 floatingLabelFixed={true}
                 id="text-tag"
                 data-field="subscriptionTag"
                 onChange={this.handleInputChange}
                 value={this.state.inputs.subscriptionTag}
               />
-              <TextField
-                floatingLabelStyle={styles.floatingLabelStyle}
-                floatingLabelText="Subscribe to a username"
-                floatingLabelFixed={true}
-                id="text-username"
-                data-field="subscriptionUsername"
-                onChange={this.handleInputChange}
-                value={this.state.inputs.subscriptionUsernames}
-              />
             </div>
+              : ''}
             <div className="form-group">
               <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
             </div>
@@ -283,9 +231,7 @@ class AddDeck extends Component {
 AddDeck.propTypes = {
   decks: PropTypes.array.isRequired,
   deckType: PropTypes.string,
-  deckTypes: PropTypes.array,
-  loadingdeckTypes: PropTypes.bool,
-  loadingdecks: PropTypes.bool,
+  loading: PropTypes.bool,
   selectedType: PropTypes.object
 }
 

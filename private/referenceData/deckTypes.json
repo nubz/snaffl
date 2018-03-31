@@ -5,7 +5,23 @@
     "description": "A deck that can contain other decks and a mixture of card types",
     "icon": "MapsLocalActivity",
     "iconPath": "svg-icons/maps/local-activity",
-    "accepts": ["Image", "Article", "Event", "Location", "Entity", "Embed", "MultiDeck", "Gallery", "Map", "Schedule", "Directory"]
+    "accepts": ["Image", "Article", "Event", "Location", "Entity", "Embed", "MultiDeck", "Gallery", "Map", "Schedule", "Directory", "TagDeck", "TagMap"]
+  },
+  {
+    "value": "TagDeck",
+    "title": "TagDeck",
+    "description": "A deck that subscribes to a mixture of tagged cards that match the deck tag",
+    "icon": "ActionBookmarkBorder",
+    "iconPath": "svg-icons/action/bookmark-border",
+    "accepts": ["Image", "Article", "Event", "Location", "Entity", "Embed"]
+  },
+  {
+    "value": "TagMap",
+    "title": "TagMap",
+    "description": "A map that subscribes to a mixture of tagged Location cards that match the deck tag",
+    "icon": "MapsMyLocation",
+    "iconPath": "svg-icons/maps/my-location",
+    "accepts": ["Location"]
   },
   {
     "value": "Gallery", 
