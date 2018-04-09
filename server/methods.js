@@ -79,13 +79,10 @@ export default () => {
       return Cards.find({ _id : { $in : cardIds }}).fetch()
     },
     subscribedToTag: function (deckId) {
-      // todo: we need an array of type filters here
-      // todo: it needs adding as a field to TagSubscriptions
       const sub = TagSubscriptions.findOne({deckId: deckId});
       if (!sub) {
         return null
       }
-      sub.types = sub.types || ['Location', 'Embed'];
       return Meteor.call('taggedById', sub.tagId, sub.types);
     },
     linkedCards: function (links) {
@@ -155,6 +152,34 @@ export default () => {
       card.content.html = stateToHTML(editorStateFromRaw(JSON.parse(card.content.Article)).getCurrentContent())
       delete card.content.Article
       return card
+    },
+    cards() {
+      const query = Cards.createQuery({
+        title: 1,
+        createdAt: 1,
+        owner: 1,
+        description: 1,
+        images: 1,
+        access: 1,
+        content: 1,
+        $options: {
+          sort: {createdAt: -1}
+        },
+      });
+
+      return query.fetch();
+    },
+    getCard({cardId}) {
+      let card = Cards.createQuery({
+        $filters: {_id: cardId},
+        title: 1,
+        createdAt: 1,
+        author: {
+          username: 1
+        }
+      });
+
+      return card.fetchOne();
     }
   })
 }

@@ -16,8 +16,8 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 
 const styles = {
   meta: {
-    backgroundColor: '#eee', 
-    padding: 10, 
+    backgroundColor: '#eee',
+    padding: 10,
     fontSize: 10
   },
 
@@ -76,19 +76,20 @@ export default class Snapdeck extends Component {
 
   renderMyDecks() {
     return this.props.decks.map((deck) => (
-      <MenuItem 
+      <MenuItem
         rightIcon={parseIcon(deck.deckType)}
-        value={deck._id} 
-        primaryText={deck.title} 
+        value={deck._id}
+        primaryText={deck.title}
         key={deck._id}
       />
     ))
   }
 
+
   render() {
     const host = window.location.hostname
     const protocol = window.location.protocol
-    const port = window.location.port == "80" ? '' : ':' + window.location.port
+    const port = window.location.port === "80" ? '' : ':' + window.location.port
     const deck = this.props.deck
     const owned = deck.owner === Meteor.userId()
     const actions = [
@@ -107,8 +108,9 @@ export default class Snapdeck extends Component {
     return (
       <div className="container">
         <h2>{deck.deckType}: {deck.title}</h2>
+        { deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap} /> : ''}
         <p>{deck.description}</p>
-        { owned ? 
+        { owned ?
         <div>
           <RaisedButton label="Delete" onClick={this.handleOpen} />
           <RaisedButton label="Edit" onClick={this.handleEditRequest} />
@@ -131,18 +133,18 @@ export default class Snapdeck extends Component {
         <div className="cardSection">
           <h3>Parent Decks</h3>
           { owned ?
-            <DropDownMenu 
-              iconStyle={{textColor:'black'}} 
-              iconButton={<NavigationExpandMoreIcon/>} 
-              value={this.state.selectedDeck} 
+            <DropDownMenu
+              iconStyle={{textColor:'black'}}
+              iconButton={<NavigationExpandMoreIcon/>}
+              value={this.state.selectedDeck}
               onChange={this.handleDeckSelect}
             >
-              <MenuItem 
-                value={0} 
+              <MenuItem
+                value={0}
                 primaryText="+ Add to deck"
               />
               {this.renderMyDecks()}
-            </DropDownMenu> : '' 
+            </DropDownMenu> : ''
           }
 
           <DecksFromIdsContainer linkedDecks={this.props.deckParents} deckId={deck._id} />
@@ -179,7 +181,7 @@ export default class Snapdeck extends Component {
 FlatButton.propTypes = {
   deck: PropTypes.object
 }
- 
+
 Snapdeck.propTypes = {
   deck: PropTypes.object.isRequired,
   decks: PropTypes.array,

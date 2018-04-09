@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Restivus } from 'meteor/nimble:restivus'
-import { Cards } from '../cards'
-import { Decks } from '../decks'
+import { Cards } from '../cards/collection'
+import { Decks } from '../decks/collection'
 
 export default () => {
 

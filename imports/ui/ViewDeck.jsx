@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Snapdeck from './Snapdeck.jsx'
-import Subheader from 'material-ui/Subheader'
-import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import CardList from './CardList'
 
 const styles = {
   spinner: {
@@ -19,6 +16,7 @@ class ViewDeck extends Component {
 
   constructor(props) {
     super(props);
+    console.log('ViewDeck with props', props);
   }
  
   render() {
@@ -35,7 +33,7 @@ class ViewDeck extends Component {
           deckParents={this.props.deckParents}
           deckChildren={this.props.deckChildren}
           tagSubscription={this.props.tagSubscription}
-          multiSnackBar={()=>false} 
+          multiSnackBar={()=>false}
         />
       }
       </div>

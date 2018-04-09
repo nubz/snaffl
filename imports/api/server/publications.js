@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor'
-import { Mongo } from 'meteor/mongo'
 import { Cards } from '../cards'
 import { Decks } from '../decks'
 import { DeckCards } from '../deckCards'
