@@ -1,5 +1,6 @@
 import {Cards} from './collection'
 import {CardTypes} from '../api/cardTypes/collection'
+import { TagCards } from '../api/tagCards/collection'
 
 Cards.addLinks({
   'author': {
@@ -15,5 +16,10 @@ Cards.addLinks({
     field: 'cardType',
     unique: true,
     index: true
+  },
+  'tags': {
+    type: 'many',
+    collection: TagCards,
+    inversedBy: 'cards'
   }
 });

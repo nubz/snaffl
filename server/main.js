@@ -12,6 +12,7 @@ import { TagSubscriptions } from '../imports/api/tagSubscriptions'
 import initDeckLinks from '../imports/db/decks/links'
 import initUserLinks from '../imports/db/users/links'
 import getDeck from '../imports/db/decks/getDeck'
+import '/imports/startup/server';
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
 // access codes for third party services
