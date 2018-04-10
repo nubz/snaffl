@@ -8,7 +8,7 @@ import referenceData from './referenceData'
 import resetDb from './resetDb'
 import { DeckTypes } from '../imports/api/deckTypes/collection'
 import { Decks } from '../imports/api/decks/collection'
-import { TagSubscriptions } from '../imports/api/tagSubscriptions/collection'
+import { TagSubscriptions } from '/imports/api/tagSubscriptions/collection'
 import getDeck from '../imports/api/decks/getDeck'
 import '/imports/startup/server';
 // note this will not work without a secrets.js file
@@ -31,33 +31,10 @@ Meteor.startup(() => {
     resetDb(true);
   }
 
-  const decksWithoutTypeIds = Decks.find({deckTypeId: {$exists: false }}).fetch();
+  const query = getDeck.clone()
+  const tagDecks = query.setParams({deckType: 'TagDeck'}).fetch()
 
-  decksWithoutTypeIds.forEach(deck => {
-    let type = DeckTypes.findOne({value: deck.deckType})
-    Decks.update({_id: deck._id}, {$set: {deckTypeId: type._id}}, (err, data) => {
-      console.log('updated deck ' + deck.title + ' with deckType ' + type.value + ' with deckTypeId ' + type._id + ' result: ', data);
-    })
-  })
-
-  const tagSubscriptions = TagSubscriptions.find({}).fetch();
-  tagSubscriptions.forEach(sub => {
-    Decks.update({_id: sub.deckId}, {$set: {tagSubscriptionId: sub._id}})
-  });
-
-  getDeck.expose()
-  const allDecks = Decks.find({}).fetch();
-
-  _.each(allDecks, (deck) => {
-    const deckOwnerLink = Decks.getLink(deck, 'author');
-    const deckTypeLink = Decks.getLink(deck, 'type');
-    const deckTagSubscriptionLink = Decks.getLink(deck, 'tagSubscription')
-    deckOwnerLink.set(deck.owner)
-    deckTypeLink.set(deck.deckTypeId)
-    if (deck.tagSubscriptionId) {
-      deckTagSubscriptionLink.set(deck.tagSubscriptionId)
-    }
-  })
+  console.log('decks from query', tagDecks);
 
   /*
   ** Create indexes on collections

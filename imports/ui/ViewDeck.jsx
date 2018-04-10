@@ -16,7 +16,6 @@ class ViewDeck extends Component {
 
   constructor(props) {
     super(props);
-    console.log('ViewDeck with props', props);
   }
  
   render() {

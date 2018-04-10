@@ -11,6 +11,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
 import { TagSubscriptions } from '../api/tagSubscriptions/collection'
+import {DeckTypes} from "../api/deckTypes/collection";
 
 const styles = {
   formStyle: {
@@ -94,7 +95,6 @@ class AddDeck extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const inputs = this.state.inputs
- 
     Decks.insert({
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -102,14 +102,20 @@ class AddDeck extends Component {
       createdAt: new Date(),
       access: this.state.access,
       deckType: inputs.deckType,
+      deckTypeId: this.props.selectedType._id,
       image: this.state.image,
       images: this.state.images,
       subscriptionTag: inputs.subscriptionTag.trim()
     }, (error, result) => {
+      const deckOwnerLink = Decks.getLink(result, 'author');
+      const deckTypeLink = Decks.getLink(result, 'type');
+      const deckTagSubscriptionLink = Decks.getLink(result, 'tagSubscription')
+      deckOwnerLink.set(Meteor.userId())
+      deckTypeLink.set(this.props.selectedType._id)
       if (inputs.subscriptionTag.trim().length) {
         Meteor.call('touchTag', inputs.subscriptionTag.trim(), (tagerror, tagResult) => {
-          Decks.update({_id: result}, {$set: {tagSubscription: tagResult}});
-          TagSubscriptions.insert({deckId: result, tagId: tagResult, types: this.props.selectedType.subscribes}, this.successState.bind(this))
+          deckTagSubscriptionLink.set({deckId: result, tagId: tagResult, types: this.props.selectedType.subscribes})
+          this.successState.bind(this)
         })
       } else {
         this.successState().bind(this)

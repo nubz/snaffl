@@ -3,7 +3,12 @@ import {createQuery} from 'meteor/cultofcoders:grapher'
 
 export default Decks.createQuery('getDeck', {
   $filter({filters, options, params}) {
-    filters._id = params._id;
+    if (params._id) {
+      filters._id = params._id;
+    }
+    if (params.deckType) {
+      filters.deckType = params.deckType;
+    }
   },
   title: 1,
   description: 1,
@@ -18,5 +23,8 @@ export default Decks.createQuery('getDeck', {
   author: {
     username: 1
   },
-  tagSubscription: 1
+  tagSubscription: {
+    tagId: 1,
+    types: 1
+  }
   });
