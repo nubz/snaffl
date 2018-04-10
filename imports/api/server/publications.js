@@ -1,14 +1,13 @@
 import { Meteor } from 'meteor/meteor'
-import { Cards } from '../cards'
-import { Decks } from '../decks'
-import { DeckCards } from '../deckCards'
-import { DeckDecks } from '../deckDecks'
-import { CardTypes } from '../cardTypes'
-import { DeckTypes } from '../deckTypes'
-import { Tags } from '../tags'
-import { TagCards } from '../tagCards'
-import { TagDecks } from '../tagDecks'
-import { TagSubscriptions } from '../tagSubscriptions'
+import { Cards } from '../cards/collection'
+import { Decks } from '../decks/collection'
+import { DeckCards } from '../deckCards/collection'
+import { DeckDecks } from '../deckDecks/collection'
+import { CardTypes } from '../cardTypes/collection'
+import { DeckTypes } from '../deckTypes/collection'
+import { Tags } from '../tags/collection'
+import { TagCards } from '../tagCards/collection'
+import { TagSubscriptions } from '../tagSubscriptions/collection'
 
 export default () => {
 
@@ -20,20 +19,12 @@ export default () => {
     return TagCards.find({cardId: cardId})
   })
 
-  Meteor.publish('deck.tags', function (deckId) {
-    return TagDecks.find({deckId: deckId})
-  })
-
   Meteor.publish('tags.fromIds', function (ids) {
     return Tags.find({ _id : { $in : ids } })
   })
 
   Meteor.publish('tag.cards', function (tagId, types) {
     return TagCards.find({tagId: tagId})
-  })
-
-  Meteor.publish('tag.decks', function (tagId) {
-    return TagDecks.find({tagId: tagId})
   })
 
   Meteor.publish('deck.types', function () {

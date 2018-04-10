@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
 import Nav from '../ui/Nav'
-import { CardTypes } from '../api/cardTypes.js'
-import { DeckTypes } from '../api/deckTypes.js'
+import { CardTypes } from '../api/cardTypes/collection'
+import { DeckTypes } from '../api/deckTypes/collection'
 
 export default NavContainer = withTracker(props => {
   const cardTypesHandle = Meteor.subscribe('card.types')

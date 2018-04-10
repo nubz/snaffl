@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Cards } from '../api/cards.js'
+import { Cards } from '../api/cards/collection'
 import MapCard from '../ui/MapCard'
 
 export default MapCardContainer = withTracker(props => {

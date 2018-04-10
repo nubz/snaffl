@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { DeckCards } from '../api/deckCards'
-import { Decks } from '../api/decks'
-import { DeckDecks } from '../api/deckDecks'
-import { TagSubscriptions } from '../api/tagSubscriptions'
+import { DeckCards } from '../api/deckCards/collection'
+import { Decks } from '../api/decks/collection'
+import { DeckDecks } from '../api/deckDecks/collection'
+import { TagSubscriptions } from '../api/tagSubscriptions/collection'
 import ViewMapContainer from './ViewMapContainer'
-import {DeckTypes} from "../api/deckTypes";
+import {DeckTypes} from "../api/deckTypes/collection";
 
 export default MapDeckContainer = withTracker(props => {
   const cardsHandle = Meteor.subscribe('deck.cards', props._id)

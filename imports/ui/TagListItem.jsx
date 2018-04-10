@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import imageApi from '../api/imageApi'
 import Chip from 'material-ui/Chip'
-import Avatar from 'material-ui/Avatar'
-import parseIcon from './TypeIcons'
-import { TagCards } from '../api/tagCards'
-import { TagDecks } from '../api/tagDecks'
 
 export default class TagListItem extends Component {
   constructor(props) {

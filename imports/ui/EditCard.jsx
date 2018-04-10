@@ -1,24 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
 import Snackbar from 'material-ui/Snackbar'
-import Divider from 'material-ui/Divider'
-import SnapCard from './SnapCard.jsx'
-import Subheader from 'material-ui/Subheader'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Cards } from '../api/cards.js'
-import { Decks } from '../api/decks.js'
+import { Cards } from '../api/cards/collection'
 import Toggle from 'material-ui/Toggle'
 import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
-import { TagCards } from '../api/tagCards'
-import TagsFromIdsContainer from '../containers/TagsFromIdsContainer'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
-import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft"
+import {editorStateFromRaw} from "megadraft"
 
 const startTime = new Date()
 const styles = {

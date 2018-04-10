@@ -8,7 +8,6 @@ import { lightGreen500 } from 'material-ui/styles/colors'
 import { Session } from 'meteor/session'
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right'
 import CircularProgress from 'material-ui/CircularProgress'
-import AvVideoLibrary from 'material-ui/svg-icons/av/video-library'
 import parseIcon from './TypeIcons'
 
 const styles = {

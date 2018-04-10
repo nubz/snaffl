@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Session } from 'meteor/session';
 import GoogleMapContainer from '../containers/GoogleMapContainer';
-import { Cards } from '../api/cards'
 
 class MapCard extends Component {
   constructor(props) {

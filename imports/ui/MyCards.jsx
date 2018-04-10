@@ -5,17 +5,12 @@ import CardList from './CardList'
 import CircularProgress from 'material-ui/CircularProgress'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
-import Subheader from 'material-ui/Subheader'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import imageApi from '../api/imageApi'
-import Toggle from 'material-ui/Toggle'
-import IconMenu from 'material-ui/IconMenu';
-import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
-import RaisedButton from 'material-ui/RaisedButton'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar'
 import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import parseIcon from './TypeIcons'

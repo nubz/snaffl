@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import PropTypes from 'prop-types'
-import { convertToRaw } from 'draft-js'
 import {MegadraftEditor, editorStateFromRaw, editorStateToJSON} from "megadraft";
 
 class DraftEditor extends Component {

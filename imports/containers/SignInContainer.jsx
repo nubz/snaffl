@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import { Accounts, STATES } from 'meteor/std:accounts-ui'
-import { Session } from 'meteor/session'
 
 export default class SignInContainer extends Component {
 

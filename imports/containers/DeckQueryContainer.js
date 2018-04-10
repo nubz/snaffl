@@ -1,11 +1,11 @@
 import React from 'react'
-import { Decks } from '../api/decks'
-import { DeckCards } from '../api/deckCards'
-import { DeckDecks } from '../api/deckDecks'
+import { Decks } from '../api/decks/collection'
+import { DeckCards } from '../api/deckCards/collection'
+import { DeckDecks } from '../api/deckDecks/collection'
 import ViewDeck from '../ui/ViewDeck'
-import { DeckTypes } from '../api/deckTypes.js'
+import { DeckTypes } from '../api/deckTypes/collection'
 import {Meteor} from "meteor/meteor";
-import getDeck from '../db/decks/getDeck'
+import getDeck from '../api/decks/getDeck'
 import { createQuery } from 'meteor/cultofcoders:grapher'
 import {withQuery} from 'meteor/cultofcoders:grapher-react';
 import { withTracker } from 'meteor/react-meteor-data'

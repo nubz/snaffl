@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Decks } from '../api/decks.js'
+import { Decks } from '../api/decks/collection'
 import Toggle from 'material-ui/Toggle'
 import CircularProgress from 'material-ui/CircularProgress'
 import imageApi from "../api/imageApi";

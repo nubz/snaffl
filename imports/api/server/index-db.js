@@ -1,15 +1,9 @@
-import { Meteor } from 'meteor/meteor'
-import { Mongo } from 'meteor/mongo'
-import { Cards } from '../cards'
-import { Decks } from '../decks'
-import { DeckCards } from '../deckCards'
-import { DeckDecks } from '../deckDecks'
-import { CardTypes } from '../cardTypes'
-import { DeckTypes } from '../deckTypes'
-import { Tags } from '../tags'
-import { TagCards } from '../tagCards'
-import { TagDecks } from '../tagDecks'
-import { TagSubscriptions } from '../tagSubscriptions'
+import { Cards } from '../cards/collection'
+import { DeckCards } from '../deckCards/collection'
+import { DeckDecks } from '../deckDecks/collection'
+import { Tags } from '../tags/collection'
+import { TagCards } from '../tagCards/collection'
+import { TagDecks } from '../tagDecks/collection'
 
 export default () => {
   Cards._ensureIndex({createdAt: -1})

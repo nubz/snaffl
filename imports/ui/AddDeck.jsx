@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
-import { Decks } from '../api/decks.js'
+import { Decks } from '../api/decks/collection'
 import Divider from 'material-ui/Divider'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -10,7 +10,7 @@ import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
-import { TagSubscriptions } from '../api/tagSubscriptions'
+import { TagSubscriptions } from '../api/tagSubscriptions/collection'
 
 const styles = {
   formStyle: {

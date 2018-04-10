@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {List, ListItem} from 'material-ui/List'
 import TagListItem from './TagListItem.jsx'
 import CircularProgress from 'material-ui/CircularProgress'
 

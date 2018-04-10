@@ -4,7 +4,6 @@ import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton';
 import Remove from 'material-ui/svg-icons/content/remove-circle-outline'
-import parseIcon from './TypeIcons'
 
 export default class SnapdeckListItem extends Component {
   constructor(props) {

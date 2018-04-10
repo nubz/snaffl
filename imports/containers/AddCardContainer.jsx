@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Cards } from '../api/cards.js'
+import { Cards } from '../api/cards/collection'
 import AddCard from '../ui/AddCard'
-import { CardTypes } from '../api/cardTypes.js'
+import { CardTypes } from '../api/cardTypes/collection'
 
 const startTime = new Date()
 

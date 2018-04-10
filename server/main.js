@@ -6,12 +6,12 @@ import LoadMethods from './methods'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
 import resetDb from './resetDb'
-import { DeckTypes } from '../imports/api/deckTypes.js'
-import { Decks } from '../imports/api/decks'
-import { TagSubscriptions } from '../imports/api/tagSubscriptions'
+import { DeckTypes } from '../imports/api/deckTypes/collection'
+import { Decks } from '../imports/api/decks/collection'
+import { TagSubscriptions } from '../imports/api/tagSubscriptions/collection'
 import initDeckLinks from '../imports/db/decks/links'
 import initUserLinks from '../imports/db/users/links'
-import getDeck from '../imports/db/decks/getDeck'
+import getDeck from '../imports/api/decks/getDeck'
 import '/imports/startup/server';
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 

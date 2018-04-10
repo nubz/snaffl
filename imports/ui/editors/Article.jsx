@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Cards } from '../../api/cards.js'
+import { Cards } from '../../api/cards/collection'
 import DraftEditor from '../DraftEditor'
 
 class ArticleEditor extends Component {

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Decks } from '../api/decks.js'
+import { Decks } from '../api/decks/collection'
 import DeckList from '../ui/DeckList'
 
 export default DecksFromIdsContainer = withTracker(props => {

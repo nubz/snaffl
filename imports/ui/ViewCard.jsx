@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SnapCard from './SnapCard.jsx'
-import Subheader from 'material-ui/Subheader'
-import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {

@@ -1,4 +1,4 @@
-import { Decks } from '../../api/decks'
+import { Decks } from './collection'
 import {createQuery} from 'meteor/cultofcoders:grapher'
 
 export default Decks.createQuery('getDeck', {

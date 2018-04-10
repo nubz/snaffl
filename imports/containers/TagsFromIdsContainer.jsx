@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Tags } from '../api/tags.js'
+import { Tags } from '../api/tags/collection'
 import TagList from '../ui/TagList'
 
 export default TagsFromIdsContainer = withTracker(props => {

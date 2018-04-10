@@ -3,16 +3,6 @@ import PropTypes from 'prop-types'
 import imageApi from '../api/imageApi'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import parseIcon from './TypeIcons'
-
-const styles = {
-  listItem: {
-    width: '100%',
-    padding: 10,
-    marginBottom: 10,
-    background: 'white'
-  }
-}
 
 export default class SnapCardListItem extends Component {
   constructor(props) {

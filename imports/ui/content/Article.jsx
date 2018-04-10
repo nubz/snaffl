@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { convertToRaw } from 'draft-js'
 import {MegadraftEditor, editorStateFromRaw} from "megadraft";
 
 class ArticleReader extends Component {

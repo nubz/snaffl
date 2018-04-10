@@ -1,17 +1,17 @@
 import { Meteor } from 'meteor/meteor'
-import { Cards } from '../imports/api/cards'
-import { Decks } from '../imports/api/decks'
-import { DeckCards } from '../imports/api/deckCards'
-import { DeckDecks } from '../imports/api/deckDecks'
-import { Tags } from '../imports/api/tags'
-import { TagCards } from '../imports/api/tagCards'
-import { TagDecks } from '../imports/api/tagDecks'
+import { Cards } from '../imports/api/cards/collection'
+import { Decks } from '../imports/api/decks/collection'
+import { DeckCards } from '../imports/api/deckCards/collection'
+import { DeckDecks } from '../imports/api/deckDecks/collection'
+import { Tags } from '../imports/api/tags/collection'
+import { TagCards } from '../imports/api/tagCards/collection'
+import { TagDecks } from '../imports/api/tagDecks/collection'
 import { stateToHTML } from 'draft-js-export-html'
 import { editorStateFromRaw } from "megadraft";
 import Secrets from "../secrets";
 import { Cloudinary } from 'meteor/lepozepo:cloudinary';
 import Future from 'fibers/future'
-import {TagSubscriptions} from "../imports/api/tagSubscriptions";
+import {TagSubscriptions} from "../imports/api/tagSubscriptions/collection";
 
 const HOST = Meteor.absoluteUrl()
 

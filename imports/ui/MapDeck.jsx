@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import GoogleMapContainer from '../containers/GoogleMapContainer';
-import { Decks } from '../api/decks.js'
-import { DeckDecks } from '../api/deckDecks'
+import { Decks } from '../api/decks/collection'
+import { DeckDecks } from '../api/deckDecks/collection'
 import parseIcon from './TypeIcons'
 import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'

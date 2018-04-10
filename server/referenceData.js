@@ -1,8 +1,8 @@
-import { CardTypes } from '../imports/api/cardTypes.js'
-import { DeckTypes } from '../imports/api/deckTypes.js'
-import { Tags } from '../imports/api/tags.js'
-import { TagCards } from '../imports/api/tagCards'
-import { TagDecks } from '../imports/api/tagDecks'
+import { CardTypes } from '../imports/api/cardTypes/collection'
+import { DeckTypes } from '../imports/api/deckTypes/collection'
+import { Tags } from '../imports/api/tags/collection'
+import { TagCards } from '../imports/api/tagCards/collection'
+import { TagDecks } from '../imports/api/tagDecks/collection'
 
 export default (reset, fn) => {
 

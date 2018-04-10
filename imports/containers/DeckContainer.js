@@ -1,11 +1,11 @@
 import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Decks } from '../api/decks'
-import { DeckCards } from '../api/deckCards'
-import { DeckDecks } from '../api/deckDecks'
-import { TagSubscriptions } from '../api/tagSubscriptions'
+import { Decks } from '../api/decks/collection'
+import { DeckCards } from '../api/deckCards/collection'
+import { DeckDecks } from '../api/deckDecks/collection'
+import { TagSubscriptions } from '../api/tagSubscriptions/collection'
 import ViewDeck from '../ui/ViewDeck'
-import { DeckTypes } from '../api/deckTypes.js'
+import { DeckTypes } from '../api/deckTypes/collection'
 import {Meteor} from "meteor/meteor";
 
 export default DeckContainer = withTracker(props => {

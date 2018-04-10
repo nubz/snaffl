@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MapDeck from './MapDeck.jsx'
-import Subheader from 'material-ui/Subheader'
-import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import CardList from './CardList'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 import Avatar from 'material-ui/Avatar'
 
 const styles = {
