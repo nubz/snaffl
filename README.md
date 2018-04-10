@@ -1,3 +1,3 @@
-# snapcards
+# snaffl
 
-Development repo using Meteor, ReactJS and Material UI.
+Development repo using Meteor, ReactJS, grapher and Material UI.
