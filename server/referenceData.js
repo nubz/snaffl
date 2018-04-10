@@ -2,7 +2,6 @@ import { CardTypes } from '../imports/api/cardTypes/collection'
 import { DeckTypes } from '../imports/api/deckTypes/collection'
 import { Tags } from '../imports/api/tags/collection'
 import { TagCards } from '../imports/api/tagCards/collection'
-import { TagDecks } from '../imports/api/tagDecks/collection'
 
 export default (reset, fn) => {
 
@@ -14,7 +13,6 @@ export default (reset, fn) => {
     CardTypes.remove({})
     DeckTypes.remove({})
     TagCards.remove({})
-    TagDecks.remove({})
     Tags.remove({})
   }
 

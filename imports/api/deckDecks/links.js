@@ -1,12 +1,13 @@
-import { DeckDecks } from './collection';
+import DeckDecks from './collection';
+import { Decks } from '../decks/collection'
 
 DeckDecks.addLinks({
   'childDecks': {
     collection: Decks,
-    fieldName: 'childId'
+    field: 'childId'
   },
   'parentDecks': {
     collection: Decks,
-    fieldName: 'deckId'
+    field: 'deckId'
   }
 })

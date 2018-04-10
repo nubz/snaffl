@@ -1,6 +1,6 @@
 import {Cards} from './collection'
-import {CardTypes} from '../api/cardTypes/collection'
-import { TagCards } from '../api/tagCards/collection'
+import {CardTypes} from '../cardTypes/collection'
+import { TagCards } from '../tagCards/collection'
 
 Cards.addLinks({
   'author': {

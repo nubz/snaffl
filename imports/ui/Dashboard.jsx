@@ -5,10 +5,7 @@ import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
 import ActionLockOutline from 'material-ui/svg-icons/action/lock-outline'
 import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
-import ActionVisibility from 'material-ui/svg-icons/action/visibility'
-import ActionFavorite from 'material-ui/svg-icons/action/favorite'
 import Subheader from 'material-ui/Subheader'
-import Divider from 'material-ui/Divider'
 import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
@@ -109,35 +106,6 @@ class Dashboard extends Component {
               <CircularProgress size={60} thickness={7} />
             }
             <span style={styles.panelText}>Private Decks</span>
-          </Badge>
-        </Paper>
-        <Divider />
-        <Subheader>My Stats</Subheader>
-        <Paper style={styles.panel} zDepth={2}>
-          <Badge
-            badgeContent={<IconButton tooltip="Public Views"><ActionVisibility /></IconButton>}
-            style={styles.statsCount}
-          >
-            312
-            <span style={styles.panelText}>Public Views</span>
-          </Badge>
-        </Paper>
-        <Paper style={styles.panel} zDepth={2}>
-          <Badge
-            badgeContent={<IconButton tooltip="Private Views"><ActionVisibility /></IconButton>}
-            style={styles.statsCount}
-          >
-            1139
-            <span style={styles.panelText}>Private Views</span>
-          </Badge>
-        </Paper>
-        <Paper style={styles.panel} zDepth={2}>
-          <Badge
-            badgeContent={<IconButton tooltip="Favorited"><ActionFavorite /></IconButton>}
-            style={styles.statsCount}
-          >
-            39
-            <span style={styles.panelText}>Your Cards Favourited</span>
           </Badge>
         </Paper>
       </div>

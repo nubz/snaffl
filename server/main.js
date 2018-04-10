@@ -9,8 +9,6 @@ import resetDb from './resetDb'
 import { DeckTypes } from '../imports/api/deckTypes/collection'
 import { Decks } from '../imports/api/decks/collection'
 import { TagSubscriptions } from '../imports/api/tagSubscriptions/collection'
-import initDeckLinks from '../imports/db/decks/links'
-import initUserLinks from '../imports/db/users/links'
 import getDeck from '../imports/api/decks/getDeck'
 import '/imports/startup/server';
 // note this will not work without a secrets.js file
@@ -46,8 +44,6 @@ Meteor.startup(() => {
   tagSubscriptions.forEach(sub => {
     Decks.update({_id: sub.deckId}, {$set: {tagSubscriptionId: sub._id}})
   });
-  initUserLinks();
-  initDeckLinks();
 
   getDeck.expose()
   const allDecks = Decks.find({}).fetch();

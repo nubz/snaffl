@@ -3,7 +3,7 @@ import { Decks } from '../decks/collection'
 
 DeckTypes.addLinks({
   'decks': {
-    inversedBy: 'type',
-    collection: Decks
+    collection: Decks,
+    inversedBy: 'type'
   }
 })

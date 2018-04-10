@@ -6,6 +6,9 @@ import '/imports/api/cards/collection';
 import '/imports/api/cardTypes/collection';
 import '/imports/api/deckTypes/collection';
 import '/imports/api/tagSubscriptions/collection';
+import '/imports/api/tagCards/collection';
+import '/imports/api/tags/collection';
+import '/imports/api/deckDecks/collection';
 
 // Links are imported outside collection level
 // The reason is that we may have two collections referencing each other, and this results
@@ -17,7 +20,6 @@ import '/imports/api/users/links';
 import '/imports/api/tagSubscriptions/links';
 import '/imports/api/cardTypes/links';
 import '/imports/api/deckTypes/links';
-
-// We also need to import the named queries
-// Otherwise they will be unusable without specifically importing them.
-import './namedQueries';
+import '/imports/api/deckDecks/links';
+import '/imports/api/tagCards/links';
+import '/imports/api/tags/links'

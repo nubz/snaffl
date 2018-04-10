@@ -1,3 +1,3 @@
-import { Users } from './collection.js';
+import Users from './collection.js';
 
 Users.expose();

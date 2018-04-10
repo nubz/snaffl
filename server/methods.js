@@ -5,7 +5,6 @@ import { DeckCards } from '../imports/api/deckCards/collection'
 import { DeckDecks } from '../imports/api/deckDecks/collection'
 import { Tags } from '../imports/api/tags/collection'
 import { TagCards } from '../imports/api/tagCards/collection'
-import { TagDecks } from '../imports/api/tagDecks/collection'
 import { stateToHTML } from 'draft-js-export-html'
 import { editorStateFromRaw } from "megadraft";
 import Secrets from "../secrets";
@@ -44,9 +43,6 @@ export default () => {
     },
     removeTagFromCard: function (tagId, cardId) {
       TagCards.remove({cardId: cardId, tagId: tagId})
-    },
-    removeTagFromDeck: function (tagId, deckId) {
-      TagDecks.remove({deckId: deckId, tagId: tagId})
     },
     removeFromAllDecks: function (cardId) {
       DeckCards.remove({cardId: cardId});

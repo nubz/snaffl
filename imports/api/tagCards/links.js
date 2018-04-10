@@ -5,10 +5,10 @@ import { Tags } from '../tags/collection'
 TagCards.addLinks({
   'cards': {
     collection: Cards,
-    fieldName: 'cardId'
+    field: 'cardId'
   },
   'tags': {
     collection: Tags,
-    fieldName: 'tagId'
+    field: 'tagId'
   }
 })

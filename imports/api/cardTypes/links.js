@@ -1,9 +1,9 @@
 import { CardTypes } from "./collection";
-import { Cards } from '../decks/collection'
+import { Cards } from '../cards/collection'
 
 CardTypes.addLinks({
   'cards': {
-    inversedBy: 'type',
-    collection: Cards
+    collection: Cards,
+    inversedBy: 'type'
   }
 })
