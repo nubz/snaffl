@@ -1,6 +1,6 @@
 import { createQuery } from 'meteor/cultofcoders:grapher';
 
-const query = createQuery('getDeck', {
+export default createQuery({
   decks: {
     $filter({filters, options, params}) {
       if (params._id) {
@@ -31,7 +31,3 @@ const query = createQuery('getDeck', {
     }
   }
 });
-
-if (Meteor.isServer) {
-  query.expose()
-}

@@ -113,10 +113,7 @@ class AddDeck extends Component {
       deckOwnerLink.set(Meteor.userId())
       deckTypeLink.set(this.props.selectedType._id)
       if (inputs.subscriptionTag.trim().length) {
-        Meteor.call('touchTag', inputs.subscriptionTag.trim(), (tagerror, tagResult) => {
-          deckTagSubscriptionLink.set({deckId: result, tagId: tagResult, types: this.props.selectedType.subscribes})
-          this.successState.bind(this)
-        })
+        Meteor.call('createTagSubscription', inputs.subscriptionTag.trim(), result, deckTagSubscriptionLink, this.props.selectedType.subscribes, this.successState.bind(this))
       } else {
         this.successState().bind(this)
       }

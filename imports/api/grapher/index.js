@@ -23,3 +23,5 @@ import '/imports/api/deckTypes/links';
 import '/imports/api/deckDecks/links';
 import '/imports/api/tagCards/links';
 import '/imports/api/tags/links'
+
+import '/imports/api/decks/getDeck'

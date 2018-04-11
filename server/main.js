@@ -31,11 +31,6 @@ Meteor.startup(() => {
     resetDb(true);
   }
 
-  const query = getDeck.clone()
-  const tagDecks = query.setParams({deckType: 'TagDeck'}).fetch()
-
-  console.log('decks from query', tagDecks);
-
   /*
   ** Create indexes on collections
   */

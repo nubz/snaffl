@@ -18,13 +18,5 @@ Decks.addLinks({
     type: 'one',
     collection: TagSubscriptions,
     field: 'tagSubscriptionId'
-  },
-  'parentDecks': {
-    collection: DeckDecks,
-    inversedBy: 'parentDecks'
-  },
-  'childDecks': {
-    collection: DeckDecks,
-    inversedBy: 'childDecks'
   }
 });

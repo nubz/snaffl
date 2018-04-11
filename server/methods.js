@@ -32,10 +32,16 @@ export default () => {
       HTTP.get(url, dataReceived);
       return future.wait();
     },
+    createTagSubscription: function (tag, deckId, grapherLink, types) {
+      console.log('createTagSubscription() for tag ' + tag + ' in deckId ' + deckId, grapherLink)
+      const tagId = Meteor.call('touchTag', tag);
+      grapherLink.set({deckId: deckId, tagId: tagId, types: types})
+    },
     touchTag: function (string) {
       const exists = Tags.findOne({tag: string.trim()});
 
       if (exists) {
+
         return exists._id
       }
 
