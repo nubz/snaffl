@@ -1,13 +1,15 @@
-import { Cards } from '../cards/collection'
-import { TagCards } from './collection'
-import { Tags } from '../tags/collection'
+import Cards from '../cards/collection'
+import TagCards from './collection'
+import Tags from '../tags/collection'
 
 TagCards.addLinks({
-  'cards': {
+  'card': {
+    type: 'one',
     collection: Cards,
     field: 'cardId'
   },
-  'tags': {
+  'tag': {
+    type: 'one',
     collection: Tags,
     field: 'tagId'
   }

@@ -1,3 +1,3 @@
-import { DeckTypes } from './collection.js';
+import DeckTypes from './collection.js';
 
 DeckTypes.expose();

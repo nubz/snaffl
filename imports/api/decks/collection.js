@@ -1,3 +1,6 @@
 import { Mongo } from 'meteor/mongo';
+import schema from './schema'
 
-export const Decks = new Mongo.Collection('decks');
+const Decks = new Mongo.Collection('decks');
+export default Decks
+Decks.attachSchema(schema)

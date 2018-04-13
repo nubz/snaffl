@@ -1,5 +1,5 @@
-import { Decks } from '../decks/collection'
-import { Cards } from '../cards/collection'
+import Decks from '../decks/collection'
+import Cards from '../cards/collection'
 
 Meteor.users.addLinks({
   'decks': {

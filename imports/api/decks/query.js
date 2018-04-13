@@ -12,6 +12,7 @@ export default createQuery({
     },
     title: 1,
     description: 1,
+    image: 1,
     images: 1,
     access: 1,
     createdAt: 1,
@@ -21,6 +22,9 @@ export default createQuery({
     tagSubscriptionId: 1,
     type: {
       title: 1,
+      icon: 1,
+      accepts: 1,
+      subscribes: 1
     },
     author: {
       username: 1
@@ -28,6 +32,12 @@ export default createQuery({
     tagSubscription: {
       tagId: 1,
       types: 1
+    },
+    parentDecks: {
+      deckId: 1
+    },
+    childDecks: {
+      childId: 1
     }
   }
 });

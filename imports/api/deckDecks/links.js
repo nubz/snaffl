@@ -1,14 +1,14 @@
 import DeckDecks from './collection';
-import { Decks } from '../decks/collection'
+import Decks from '../decks/collection'
 
 DeckDecks.addLinks({
-  'childDecks': {
-    type: 'many',
+  'childDeck': {
+    type: 'one',
     collection: Decks,
     field: 'childId'
   },
-  'parentDecks': {
-    type: 'many',
+  'parentDeck': {
+    type: 'one',
     collection: Decks,
     field: 'deckId'
   }

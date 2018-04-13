@@ -1,13 +1,13 @@
 import { Meteor } from 'meteor/meteor'
-import { Cards } from '../cards/collection'
-import { Decks } from '../decks/collection'
+import Cards from '../cards/collection'
+import Decks from '../decks/collection'
 import DeckCards from '../deckCards/collection'
 import DeckDecks from '../deckDecks/collection'
-import { CardTypes } from '../cardTypes/collection'
-import { DeckTypes } from '../deckTypes/collection'
-import { Tags } from '../tags/collection'
-import { TagCards } from '../tagCards/collection'
-import { TagSubscriptions } from '../tagSubscriptions/collection'
+import CardTypes from '../cardTypes/collection'
+import DeckTypes from '../deckTypes/collection'
+import Tags from '../tags/collection'
+import TagCards from '../tagCards/collection'
+import TagSubscriptions from '../tagSubscriptions/collection'
 
 export default () => {
 

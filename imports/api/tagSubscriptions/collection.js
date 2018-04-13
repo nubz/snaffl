@@ -1,3 +1,7 @@
 import { Mongo } from 'meteor/mongo';
+import schema from './schema'
 
-export const TagSubscriptions = new Mongo.Collection('tagSubscriptions');
+const TagSubscriptions = new Mongo.Collection('tagSubscriptions');
+export  default TagSubscriptions
+
+TagSubscriptions.attachSchema(schema)

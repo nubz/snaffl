@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 import { Random } from 'meteor/random';
 import Secrets from '../../secrets'
 
-const Styles = {
-  width: '100%',
-  height: 'calc(100vh - 64px)'
-}
-
 class GoogleMap extends Component {
 
   componentDidMount() {

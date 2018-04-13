@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import AvVideoLibrary from 'material-ui/svg-icons/av/video-library'
 import ImagePhoto from 'material-ui/svg-icons/image/photo'
 import MapsAddLocation from 'material-ui/svg-icons/maps/add-location'

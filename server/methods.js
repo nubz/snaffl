@@ -1,16 +1,16 @@
 import { Meteor } from 'meteor/meteor'
-import { Cards } from '../imports/api/cards/collection'
-import { Decks } from '../imports/api/decks/collection'
+import Cards from '../imports/api/cards/collection'
+import Decks from '../imports/api/decks/collection'
 import DeckCards from '../imports/api/deckCards/collection'
 import DeckDecks from '../imports/api/deckDecks/collection'
-import { Tags } from '../imports/api/tags/collection'
-import { TagCards } from '../imports/api/tagCards/collection'
+import Tags from '../imports/api/tags/collection'
+import TagCards from '../imports/api/tagCards/collection'
 import { stateToHTML } from 'draft-js-export-html'
 import { editorStateFromRaw } from "megadraft";
 import Secrets from "../secrets";
 import { Cloudinary } from 'meteor/lepozepo:cloudinary';
 import Future from 'fibers/future'
-import {TagSubscriptions} from "../imports/api/tagSubscriptions/collection";
+import TagSubscriptions from "../imports/api/tagSubscriptions/collection";
 
 const HOST = Meteor.absoluteUrl()
 
@@ -32,10 +32,12 @@ export default () => {
       HTTP.get(url, dataReceived);
       return future.wait();
     },
-    createTagSubscription: function (tag, deckId, grapherLink, types) {
-      console.log('createTagSubscription() for tag ' + tag + ' in deckId ' + deckId, grapherLink)
-      const tagId = Meteor.call('touchTag', tag);
-      grapherLink.set({deckId: deckId, tagId: tagId, types: types})
+    createTagSubscription: function (props) {
+      Meteor.call('touchTag', props.tag, (err, tagId) => {
+        console.log('createTagSubscription() for tag ' + props.tag + ' with id ' + tagId + ' in deckId ' + props.deckId)
+        grapherLink.set({deckId: props.deckId, tagId: tagId, types: props.types})
+      });
+
     },
     touchTag: function (string) {
       const exists = Tags.findOne({tag: string.trim()});

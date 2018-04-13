@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Cards } from '../api/cards/collection'
+import Cards from '../api/cards/collection'
 import Toggle from 'material-ui/Toggle'
 import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -11,7 +11,6 @@ import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
 import {editorStateFromRaw} from "megadraft"
 
-const startTime = new Date()
 const styles = {
   formStyle: {
     marginBottom: 30,
@@ -58,15 +57,6 @@ class EditCard extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (!this.state.images) {
-      let secureUrl = imageApi.returnSecureUrl(this.props.card.image)
-      images = imageApi.makeImageUrls(this.props.card.image)
-      this.setState({
-          images: images,
-          image: secureUrl
-        })
-    }
-
     const inputs = this.state.inputs
     let content = {}
     content[inputs.cardType] = this.contentFields.state.content
@@ -77,13 +67,13 @@ class EditCard extends Component {
         blockRenderers: {
           atomic: (block) => {
             let data = block.getData();
-            if (data.get('type') == 'image') {
+            if (data.get('type') === 'image') {
               let src = data.get('src');
               let dim = data.get('display')
               let width = dim === 'medium' ? 240 : '100%';
               return '<img src="' + src + '" width="' + width + '" style="display: block; margin: 10px; border-width: 2px; border-color: black; box-sizing: border-box; border-style: solid;">'
             }
-            if (data.get('type') == 'video') {
+            if (data.get('type') === 'video') {
               let src = data.get('src');
               return '<iframe src="' + src + '" width="100%" height="500" allowfullscreen="true" frameborder="no"></iframe>'
             }
@@ -154,7 +144,7 @@ class EditCard extends Component {
             onToggle={this.handleAccessChange}
             labelPosition="right"
             style={{marginBottom: 20}}
-            defaultToggled={this.state.inputs.access === 'public'}
+            toggled={this.state.inputs.access === 'public'}
           />
           { this.state.uploading ? 
             <CircularProgress size={60} thickness={7} />
@@ -165,7 +155,7 @@ class EditCard extends Component {
               : ''}
             <RaisedButton
                secondary={true} 
-               containerElement='label' // <-- Just add me!
+               containerElement='label'
                label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
                <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
             </RaisedButton>
@@ -201,7 +191,7 @@ class EditCard extends Component {
             {parseEditor(this.props.card.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: this.props.card, isNew: true})}
           </div>
 
-          { this.state.inputs.lat && this.state.inputs.lat !=0 ?
+          { this.state.inputs.lat && this.state.inputs.lat !== 0 ?
           <Toggle
             label="Remove posting location"
             onToggle={this.handleGEOChange}

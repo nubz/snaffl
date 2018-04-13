@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
-import { Decks } from '../api/decks/collection'
+import Decks from '../api/decks/collection'
 import Divider from 'material-ui/Divider'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -10,8 +10,6 @@ import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
-import { TagSubscriptions } from '../api/tagSubscriptions/collection'
-import {DeckTypes} from "../api/deckTypes/collection";
 
 const styles = {
   formStyle: {
@@ -80,6 +78,7 @@ class AddDeck extends Component {
   }
 
   successState() {
+    console.log('successState()')
     this.setState({
       open: true,
       message: 'deck added ok',
@@ -94,8 +93,8 @@ class AddDeck extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const inputs = this.state.inputs
-    Decks.insert({
+    const inputs = this.state.inputs;
+    const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
       owner: Meteor.userId(),
@@ -104,18 +103,27 @@ class AddDeck extends Component {
       deckType: inputs.deckType,
       deckTypeId: this.props.selectedType._id,
       image: this.state.image,
-      images: this.state.images,
       subscriptionTag: inputs.subscriptionTag.trim()
-    }, (error, result) => {
+    };
+    data.images = Object.assign({}, {...this.state.images});;
+    console.log('data', JSON.stringify(data.images));
+    Decks.insert(data, (error, result) => {
+      console.log('deck added', error, result)
       const deckOwnerLink = Decks.getLink(result, 'author');
       const deckTypeLink = Decks.getLink(result, 'type');
       const deckTagSubscriptionLink = Decks.getLink(result, 'tagSubscription')
       deckOwnerLink.set(Meteor.userId())
       deckTypeLink.set(this.props.selectedType._id)
       if (inputs.subscriptionTag.trim().length) {
-        Meteor.call('createTagSubscription', inputs.subscriptionTag.trim(), result, deckTagSubscriptionLink, this.props.selectedType.subscribes, this.successState.bind(this))
+        let tagProps = {
+          tag: inputs.subscriptionTag.trim(),
+          deckId: result,
+          grapherLink: deckTagSubscriptionLink,
+          types: this.props.selectedType.subscribes
+        }
+        Meteor.call('createTagSubscription', tagProps, this.successState.bind(this))
       } else {
-        this.successState().bind(this)
+        this.successState()
       }
     })
   }

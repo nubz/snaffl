@@ -1,7 +1,8 @@
-import { Decks } from './collection'
-import {DeckTypes} from '../deckTypes/collection'
-import {TagSubscriptions} from '../tagSubscriptions/collection'
+import Decks from './collection'
+import DeckTypes from '../deckTypes/collection'
+import TagSubscriptions from '../tagSubscriptions/collection'
 import DeckDecks from '../deckDecks/collection'
+import DeckCards from '../deckCards/collection'
 
 Decks.addLinks({
   'author': {
@@ -18,5 +19,20 @@ Decks.addLinks({
     type: 'one',
     collection: TagSubscriptions,
     field: 'tagSubscriptionId'
+  },
+  'parentDecks': {
+    type: 'many',
+    collection: DeckDecks,
+    inversedBy: 'childDeck'
+  },
+  'childDecks': {
+    type: 'many',
+    collection: DeckDecks,
+    inversedBy: 'parentDeck'
+  },
+  'cards': {
+    type: 'many',
+    collection: DeckCards,
+    inversedBy: 'deck'
   }
 });

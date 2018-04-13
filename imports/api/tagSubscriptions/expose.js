@@ -1,3 +1,3 @@
-import { TagSubscriptions } from "./collection";
+import TagSubscriptions from "./collection";
 
 TagSubscriptions.expose();

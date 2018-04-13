@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Decks } from '../api/decks/collection'
+import Decks from '../api/decks/collection'
 import Dashboard from '../ui/Dashboard'
 
 export default DashboardContainer = withTracker(props => {

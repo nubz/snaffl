@@ -1,3 +1,3 @@
-import { Tags } from './collection.js';
+import Tags from './collection.js';
 
 Tags.expose();

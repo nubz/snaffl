@@ -13,7 +13,7 @@
     "description": "A deck that subscribes to a mixture of tagged cards that match the deck tag",
     "icon": "ActionBookmarkBorder",
     "iconPath": "svg-icons/action/bookmark-border",
-    "allows": [],
+    "accepts": [],
     "subscribes": ["Image", "Article", "Event", "Location", "Entity", "Embed"]
   },
   {
@@ -23,7 +23,7 @@
     "icon": "MapsMyLocation",
     "iconPath": "svg-icons/maps/my-location",
     "subscribes": ["Location"],
-    "allows": []
+    "accepts": []
   },
   {
     "value": "Gallery", 

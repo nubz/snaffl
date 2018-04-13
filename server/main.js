@@ -6,17 +6,16 @@ import LoadMethods from './methods'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
 import resetDb from './resetDb'
-import { DeckTypes } from '../imports/api/deckTypes/collection'
-import { Decks } from '../imports/api/decks/collection'
-import { TagSubscriptions } from '/imports/api/tagSubscriptions/collection'
-import getDeck from '../imports/api/decks/getDeck'
 import '/imports/startup/server';
+import Decks from '/imports/api/decks/collection'
+
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
 // access codes for third party services
 import Secrets from '../secrets'
 
 const wipeDb = false
+const wipeRef = false
 
 Meteor.startup(() => {
 
@@ -25,7 +24,7 @@ Meteor.startup(() => {
   // @param reset Boolean
   // when true it will clean out db 
   // and re-seed
-  referenceData(false);
+  referenceData(wipeRef);
 
   if (wipeDb) {
     resetDb(true);
@@ -35,6 +34,8 @@ Meteor.startup(() => {
   ** Create indexes on collections
   */
   indexDb()
+
+  console.log('decks:', Decks.find().fetch())
 
   /*
   ** here we are using Secrets.cloudinary.config

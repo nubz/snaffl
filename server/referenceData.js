@@ -1,7 +1,7 @@
-import { CardTypes } from '../imports/api/cardTypes/collection'
-import { DeckTypes } from '../imports/api/deckTypes/collection'
-import { Tags } from '../imports/api/tags/collection'
-import { TagCards } from '../imports/api/tagCards/collection'
+import CardTypes from '../imports/api/cardTypes/collection'
+import DeckTypes from '../imports/api/deckTypes/collection'
+import Tags from '../imports/api/tags/collection'
+import TagCards from '../imports/api/tagCards/collection'
 
 export default (reset, fn) => {
 

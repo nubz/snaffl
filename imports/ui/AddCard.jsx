@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
-import { Cards } from '../api/cards/collection'
+import Cards from '../api/cards/collection'
 import Divider from 'material-ui/Divider'
 import SnapCardListItem from './SnapCardListItem.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -50,7 +50,6 @@ class AddCard extends Component {
   constructor(props) {
     super(props);
 
-    console.log('setting initial state with inputs:', defaultInputs);
     this.state = {
       open: false,
       uploading: false,
@@ -186,10 +185,11 @@ class AddCard extends Component {
       createdAt: new Date(),
       access: this.state.access,
       cardType: this.props.cardType,
+      cardTypeId: this.props.selectedType._id,
       image: this.state.image,
       images: this.state.images,
       content: content
-    }
+    };
 
     if (this.state.geo) {
       let location = AllGeo.getLocation()
@@ -197,7 +197,11 @@ class AddCard extends Component {
       data.lng = location.lng
     }
 
-    Cards.insert(data, () => {
+    Cards.insert(data, (err, result) => {
+      const cardOwnerLink = Cards.getLink(result, 'author');
+      const cardTypeLink = Cards.getLink(result, 'type');
+      cardOwnerLink.set(data.owner)
+      cardTypeLink.set(data.cardTypeId)
       this.setState({
         open: true,
         message: 'Card added ok',

@@ -27,7 +27,6 @@ const styles = {
 
 function logOut() {
   Meteor.logout(() => {
-    console.log('logged out')
     if (Meteor.isClient) {
       Session.set('logged', false)
     }

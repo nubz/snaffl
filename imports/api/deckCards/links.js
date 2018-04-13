@@ -1,13 +1,15 @@
 import DeckCards from './collection';
-import { Cards } from '../cards/collection'
-import { Decks } from '../decks/collection'
+import Cards from '../cards/collection'
+import Decks from '../decks/collection'
 
 DeckCards.addLinks({
-  'cards': {
+  'card': {
+    type: 'one',
     collection: Cards,
     field: 'cardId'
   },
-  'decks': {
+  'deck': {
+    type: 'one',
     collection: Decks,
     field: 'deckId'
   }

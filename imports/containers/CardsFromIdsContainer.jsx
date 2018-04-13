@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
-import React, { Component } from 'react'
+import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Cards } from '../api/cards/collection'
+import Cards from '../api/cards/collection'
 import Gallery from '../ui/Gallery'
 
 export default CardsFromIdsContainer = withTracker(props => {

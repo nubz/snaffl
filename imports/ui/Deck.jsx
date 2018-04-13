@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Decks } from '../api/decks/collection'
+import Decks from '../api/decks/collection'
 import DeckDecks from '../api/deckDecks/collection'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -110,9 +110,6 @@ export default class Deck extends Component {
 
     return (
       <div className="container">
-        {this.props.isLoading ?
-          <CircularProgress style={styles.spinner} size={60} thickness={7}/> :
-          <div>
             <h2>{deck.deckType}: {deck.title}</h2>
             {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
             <p>{deck.description}</p>
@@ -146,17 +143,7 @@ export default class Deck extends Component {
             >
               Confirm you want to permanently delete this deck.
             </Dialog>
-          </div>
-        }
       </div>
     )
   }
-}
-
-FlatButton.propTypes = {
-  deck: PropTypes.object
-}
-
-Deck.propTypes = {
-  isLoading: PropTypes.bool
 }

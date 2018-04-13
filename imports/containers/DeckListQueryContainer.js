@@ -1,8 +1,8 @@
 import React from 'react'
-import Deck from '../ui/Deck'
+import DeckList from '../ui/DeckList'
 import query from '/imports/api/decks/query.js';
 import {withQuery} from 'meteor/cultofcoders:grapher-react';
 
 export default withQuery((props) => {
-  return query.clone({_id: props._id});
-}, {single: true, reactive: true})(Deck)
+  return query.clone({...props});
+}, {reactive: true})(DeckList)

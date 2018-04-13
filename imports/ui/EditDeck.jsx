@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Decks } from '../api/decks/collection'
+import Decks from '../api/decks/collection'
 import Toggle from 'material-ui/Toggle'
 import CircularProgress from 'material-ui/CircularProgress'
 import imageApi from "../api/imageApi";
@@ -58,11 +58,13 @@ class EditDeck extends Component {
     const inputs = this.state.inputs
     const data = {
       title: inputs.title.trim(),
-      description: inputs.description.trim(),
-      owner: inputs.owner,
       access: this.state.access,
       images: this.state.images,
       image: this.state.image
+    };
+
+    if (inputs.description) {
+      data.description = inputs.description.trim();
     }
 
     Decks.update({_id: inputs._id}, {$set: data}, () => {
@@ -103,7 +105,7 @@ class EditDeck extends Component {
             onToggle={this.handleAccessChange}
             labelPosition="right"
             style={{marginBottom: 20}}
-            defaultToggled={this.state.access === 'public'}
+            toggled={this.state.access === 'public'}
           />
           { this.state.uploading ?
             <CircularProgress size={60} thickness={7} />

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {List, ListItem} from 'material-ui/List'
+import {List} from 'material-ui/List'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
 import Snackbar from 'material-ui/Snackbar'
-import CircularProgress from 'material-ui/CircularProgress'
 
 class DeckList extends Component {
 
@@ -11,7 +10,8 @@ class DeckList extends Component {
     super(props)
     this.state = {
       open: false,
-      message: 'Deck added successfully'
+      message: 'Deck added successfully',
+      decks: props.data || props.decks //this can be called with a grapher query or regular container
     };
   }
 
@@ -29,7 +29,7 @@ class DeckList extends Component {
   };
 
   renderDecks() {
-    return this.props.decks.map((deck) => (
+    return this.state.decks.map((deck) => (
       <SnapdeckListItem 
         key={deck._id} 
         deck={deck} 
@@ -43,13 +43,9 @@ class DeckList extends Component {
   render() {
     return (
       <div>
-      { this.props.loading ? 
-        <CircularProgress size={60} thickness={7} />
-      :
         <List>
           {this.renderDecks()}
         </List>
-      }
         <Snackbar
           open={this.state.open}
           message={this.state.message}
@@ -65,10 +61,8 @@ class DeckList extends Component {
 }
 
 DeckList.propTypes = {
-  decks: PropTypes.array.isRequired,
   cardId: PropTypes.string,
-  deckId: PropTypes.string,
-  loading: PropTypes.bool
+  deckId: PropTypes.string
 }
 
 DeckList.defaultProps = {

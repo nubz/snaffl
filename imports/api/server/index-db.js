@@ -1,8 +1,8 @@
-import { Cards } from '../cards/collection'
+import Cards from '../cards/collection'
 import DeckCards from '../deckCards/collection'
 import DeckDecks from '../deckDecks/collection'
-import { Tags } from '../tags/collection'
-import { TagCards } from '../tagCards/collection'
+import Tags from '../tags/collection'
+import TagCards from '../tagCards/collection'
 
 export default () => {
   Cards._ensureIndex({createdAt: -1})

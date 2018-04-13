@@ -1,8 +1,8 @@
 import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
-import { Decks } from '../api/decks/collection'
+import Decks from '../api/decks/collection'
 import AddDeck from '../ui/AddDeck'
-import { DeckTypes } from '../api/deckTypes/collection'
+import DeckTypes from '../api/deckTypes/collection'
 
 const startTime = new Date()
 

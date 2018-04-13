@@ -1,3 +1,3 @@
-import { Cards } from './collection.js';
+import Cards from './collection.js';
 
 Cards.expose();

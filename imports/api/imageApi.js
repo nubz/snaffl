@@ -12,21 +12,23 @@ const imageApi = {
       event.currentTarget.files,
       {'folder': Secrets.cloudinary.folder},
       function (res, data) {
+        const images = imageApi.makeImageUrls(data.secure_url);
         ctx.setState({
-          'image': data.secure_url,
-          'images': imageApi.makeImageUrls(data.secure_url),
+          "image": data.secure_url,
+          "images": images,
           'publicId': data.public_id,
           'uploading': false
         })
       }.bind(ctx));
   },
   makeImageUrls: url => {
-    return {
-      'thumb': imageApi.avatar(url),
-      'small': imageApi.preview(url),
-      'medium': imageApi.medium(url),
-      'large': imageApi.fullFat(url)
-    }
+    const images = {};
+    images.thumb = imageApi.avatar(url);
+    images.small = imageApi.preview(url);
+    images.medium = imageApi.medium(url);
+    images.large = imageApi.fullFat(url);
+    console.log('returning images', JSON.stringify(images));
+    return images;
   },
   returnSecureUrl: url => {
     return url.replace('http:', 'https:')

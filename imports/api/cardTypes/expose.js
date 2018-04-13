@@ -1,3 +1,3 @@
-import { CardTypes } from './collection.js';
+import CardTypes from './collection.js';
 
 CardTypes.expose();

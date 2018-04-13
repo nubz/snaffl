@@ -1,6 +1,6 @@
-import { TagSubscriptions } from "./collection";
-import { Decks } from '../decks/collection'
-import { Tags } from '../tags/collection'
+import TagSubscriptions from "./collection";
+import Decks from '../decks/collection'
+import Tags from '../tags/collection'
 
 TagSubscriptions.addLinks({
   'deck': {

@@ -1,3 +1,3 @@
-import { TagCards } from './collection'
+import TagCards from './collection'
 
 TagCards.expose()

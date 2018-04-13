@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withTracker } from 'meteor/react-meteor-data'
 import GoogleMap from '../ui/GoogleMap'
 
