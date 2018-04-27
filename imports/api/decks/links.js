@@ -21,17 +21,14 @@ Decks.addLinks({
     field: 'tagSubscriptionId'
   },
   'parentDecks': {
-    type: 'many',
     collection: DeckDecks,
     inversedBy: 'childDeck'
   },
   'childDecks': {
-    type: 'many',
     collection: DeckDecks,
     inversedBy: 'parentDeck'
   },
-  'cards': {
-    type: 'many',
+  'childCards': {
     collection: DeckCards,
     inversedBy: 'deck'
   }

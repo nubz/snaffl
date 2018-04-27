@@ -8,6 +8,7 @@ import referenceData from './referenceData'
 import resetDb from './resetDb'
 import '/imports/startup/server';
 import Decks from '/imports/api/decks/collection'
+import Cards from '/imports/api/cards/collection'
 
 // note this will not work without a secrets.js file
 // a secrets.js file can contain secret api keys and 
@@ -34,8 +35,6 @@ Meteor.startup(() => {
   ** Create indexes on collections
   */
   indexDb()
-
-  console.log('decks:', Decks.find().fetch())
 
   /*
   ** here we are using Secrets.cloudinary.config

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SnapCardListItem from './SnapCardListItem.jsx'
-import CircularProgress from 'material-ui/CircularProgress'
 
 class CardList extends Component {
 
@@ -14,7 +13,7 @@ class CardList extends Component {
   }
 
   renderCards() {
-    return this.props.cards.map((card) => (
+    return this.props.data.map((card) => (
       <SnapCardListItem 
         key={card._id} 
         card={card} 
@@ -25,11 +24,8 @@ class CardList extends Component {
   render() {
     return (
       <div>
-      {this.props.loading ? 
-        <CircularProgress size={60} thickness={7} />
-      :
-        this.renderCards()
-      }
+        <h3>{ this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
+        {this.renderCards()}
       </div>
     )
   }
@@ -37,8 +33,11 @@ class CardList extends Component {
 }
 
 CardList.propTypes = {
-  cards: PropTypes.array.isRequired,
-  loading: PropTypes.bool
+  title: PropTypes.string
 }
- 
+
+CardList.defaultProps = {
+  title: 'Cards'
+}
+
 export default CardList

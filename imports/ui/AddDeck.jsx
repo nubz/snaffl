@@ -62,7 +62,7 @@ class AddDeck extends Component {
       publicId: '',
       image: '',
       access: 'private',
-      images: null
+      images: {}
     }
   }
 
@@ -87,8 +87,13 @@ class AddDeck extends Component {
       publicId: '',
       image: '',
       access: 'private',
-      images: null
+      images: {}
     })
+  }
+
+  setImages(images) {
+    this.uploadedImages = images;
+    console.log('images = ', this.uploadedImages)
   }
 
   handleSubmit(event) {
@@ -105,26 +110,26 @@ class AddDeck extends Component {
       image: this.state.image,
       subscriptionTag: inputs.subscriptionTag.trim()
     };
-    data.images = Object.assign({}, {...this.state.images});;
-    console.log('data', JSON.stringify(data.images));
+    data.images = Object.assign({}, {...this.uploadedImages});
+    const linkData = {
+      'author': Meteor.userId(),
+      'type': this.props.selectedType._id
+    }
     Decks.insert(data, (error, result) => {
-      console.log('deck added', error, result)
-      const deckOwnerLink = Decks.getLink(result, 'author');
-      const deckTypeLink = Decks.getLink(result, 'type');
-      const deckTagSubscriptionLink = Decks.getLink(result, 'tagSubscription')
-      deckOwnerLink.set(Meteor.userId())
-      deckTypeLink.set(this.props.selectedType._id)
-      if (inputs.subscriptionTag.trim().length) {
-        let tagProps = {
-          tag: inputs.subscriptionTag.trim(),
-          deckId: result,
-          grapherLink: deckTagSubscriptionLink,
-          types: this.props.selectedType.subscribes
+      Meteor.call('setLinks', Decks, result, linkData, () => {
+        const deckTagSubscriptionLink = Decks.getLink(result, 'tagSubscription')
+        if (inputs.subscriptionTag.trim().length) {
+          let tagProps = {
+            tag: inputs.subscriptionTag.trim(),
+            deckId: result,
+            grapherLink: deckTagSubscriptionLink,
+            types: this.props.selectedType.subscribes
+          }
+          Meteor.call('createTagSubscription', tagProps, this.successState.bind(this))
+        } else {
+          this.successState()
         }
-        Meteor.call('createTagSubscription', tagProps, this.successState.bind(this))
-      } else {
-        this.successState()
-      }
+      });
     })
   }
 

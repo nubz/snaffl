@@ -1,13 +1,16 @@
 import { createQuery } from 'meteor/cultofcoders:grapher';
 
 export default createQuery({
-  decks: {
+  cards: {
     $filter({filters, options, params}) {
       if (params._id) {
         filters._id = params._id;
       }
-      if (params.deckType) {
-        filters.deckType = params.deckType;
+      if (params.createdAt) {
+        filters.createdAt = params.createdAt
+      }
+      if (params.cardType) {
+        filters.cardType = params.cardType;
       }
       if (params.owner) {
         filters.owner = params.owner;
@@ -15,6 +18,8 @@ export default createQuery({
       if (params.access) {
         filters.access = params.access;
       }
+
+      options.sort = {createdAt: -1}
     },
     title: 1,
     description: 1,
@@ -23,9 +28,10 @@ export default createQuery({
     access: 1,
     createdAt: 1,
     owner: 1,
-    deckType: 1,
-    subscriptionTag: 1,
-    tagSubscriptionId: 1,
+    cardType: 1,
+    cardTypeId: 1,
+    lat: 1,
+    lng: 1,
     type: {
       title: 1,
       icon: 1,
@@ -34,19 +40,6 @@ export default createQuery({
     },
     author: {
       username: 1
-    },
-    tagSubscription: {
-      tagId: 1,
-      types: 1
-    },
-    parentDecks: {
-      deckId: 1
-    },
-    childDecks: {
-      childId: 1
-    },
-    cards: {
-      cardId: 1
     }
   }
 });

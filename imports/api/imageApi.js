@@ -13,10 +13,13 @@ const imageApi = {
       {'folder': Secrets.cloudinary.folder},
       function (res, data) {
         const images = imageApi.makeImageUrls(data.secure_url);
+        if (ctx.setImages) {
+          ctx.setImages(images)
+        }
         ctx.setState({
-          "image": data.secure_url,
           "images": images,
           'publicId': data.public_id,
+          "image": data.secure_url,
           'uploading': false
         })
       }.bind(ctx));
@@ -27,7 +30,6 @@ const imageApi = {
     images.small = imageApi.preview(url);
     images.medium = imageApi.medium(url);
     images.large = imageApi.fullFat(url);
-    console.log('returning images', JSON.stringify(images));
     return images;
   },
   returnSecureUrl: url => {

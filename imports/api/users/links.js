@@ -1,7 +1,8 @@
 import Decks from '../decks/collection'
 import Cards from '../cards/collection'
+import Users from './collection.js';
 
-Meteor.users.addLinks({
+Users.addLinks({
   'decks': {
     inversedBy: 'author',
     collection: Decks,

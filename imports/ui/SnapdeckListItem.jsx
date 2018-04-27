@@ -11,10 +11,8 @@ export default class SnapdeckListItem extends Component {
   }
 
   viewFull = () => {
-    console.log('viewfull')
     // this is temporary map handling until deck readers are ready
     const view = this.props.deck.deckType === 'Map' ? 'View.Map' : 'View.Deck'
-    console.log('with view ' + view + ' and id ' + this.props.deck._id)
     FlowRouter.go(view, {_id: this.props.deck._id})
   }
 
@@ -48,7 +46,7 @@ export default class SnapdeckListItem extends Component {
         innerDivStyle={{background: 'white', boxShadow: '0 0 2px rgba(0,0,0,0.27)', border:'1px solid #eee', marginBottom:5}}
         leftAvatar={avatar}
         primaryText={deck.title}
-        secondaryText={deck.deckType + ' created ' + createdAgo}
+        secondaryText={deck.deckType + ' created by ' + deck.author? deck.author.username : deck.owner + ' ' + createdAgo}
         onClick={this.viewFull.bind(this)}
         rightIconButton={canRemove}
       >

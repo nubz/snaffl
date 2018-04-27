@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
-import Cards from '../api/cards/collection'
+import CardListQueryContainer from '../containers/CardListQueryContainer'
 import Divider from 'material-ui/Divider'
-import SnapCardListItem from './SnapCardListItem.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
@@ -13,6 +12,9 @@ import imageApi from '../api/imageApi'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
 import { editorStateFromRaw } from "megadraft"
+
+const startTime = new Date(moment(new Date()).subtract(1, 'hours').format())
+console.log('startTime', startTime);
 
 const styles = {
   formStyle: {
@@ -64,6 +66,10 @@ class AddCard extends Component {
 
   uploadFiles(event) {
     imageApi.uploadFiles(event, this)
+  }
+
+  setImages(images) {
+    this.uploadedImages = images;
   }
 
   multiSnackBar = (message, s) => {
@@ -151,6 +157,8 @@ class AddCard extends Component {
 
     }
 
+    console.log('content', content)
+
     if (this.props.cardType === 'Article' || this.props.cardType === 'Entity') {
       const contentToParse = this.props.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType];
       let options = {
@@ -187,7 +195,7 @@ class AddCard extends Component {
       cardType: this.props.cardType,
       cardTypeId: this.props.selectedType._id,
       image: this.state.image,
-      images: this.state.images,
+      images: this.uploadedImages,
       content: content
     };
 
@@ -197,11 +205,7 @@ class AddCard extends Component {
       data.lng = location.lng
     }
 
-    Cards.insert(data, (err, result) => {
-      const cardOwnerLink = Cards.getLink(result, 'author');
-      const cardTypeLink = Cards.getLink(result, 'type');
-      cardOwnerLink.set(data.owner)
-      cardTypeLink.set(data.cardTypeId)
+    Meteor.call('addCard', data, () => {
       this.setState({
         open: true,
         message: 'Card added ok',
@@ -209,10 +213,11 @@ class AddCard extends Component {
         publicId: '',
         image: '',
         access: 'private',
-        images: [],
+        images: {},
         content: {}
-      })
+      });
     })
+
   }
 
   handleRequestClose = () => {
@@ -222,16 +227,6 @@ class AddCard extends Component {
   };
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
- 
-  renderCards() {
-    return this.props.cards.map((card) => (
-      <SnapCardListItem 
-        key={card._id} 
-        card={card} 
-        multiSnackBar={this.multiSnackBar.bind(this)} 
-      />
-    ))
-  }
 
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
@@ -363,8 +358,7 @@ class AddCard extends Component {
 
         <Divider />
 
-        <h2>Recently added Cards</h2>
-        {this.renderCards()}
+        <CardListQueryContainer createdAt={{$gt: startTime}} owner={Meteor.userId()} />
 
         <Snackbar
           open={this.state.open}
@@ -379,11 +373,9 @@ class AddCard extends Component {
 }
 
 AddCard.propTypes = {
-  cards: PropTypes.array.isRequired,
   cardType: PropTypes.string.isRequired,
   cardTypes: PropTypes.array,
   loadingCardTypes: PropTypes.bool,
-  loadingCards: PropTypes.bool,
   selectedType: PropTypes.object
 }
 

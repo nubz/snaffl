@@ -16,6 +16,16 @@ const HOST = Meteor.absoluteUrl()
 
 export default () => {
   Meteor.methods({
+    addCard: function (data) {
+      Cards.insert(data, (err, result) => {
+        const authorLink = Cards.getLink(result, 'author');
+        console.log('setting authorLink with ' + data.owner)
+        authorLink.set(data.owner)
+        const typeLink = Cards.getLink(result, 'type');
+        console.log('setting typeLink with ' + data.cardTypeId)
+        typeLink.set(data.cardTypeId)
+      })
+    },
     uploadRemote: function (remoteUrl) {
       const future = new Future();
       const uploaded = function(data) {
@@ -34,10 +44,8 @@ export default () => {
     },
     createTagSubscription: function (props) {
       Meteor.call('touchTag', props.tag, (err, tagId) => {
-        console.log('createTagSubscription() for tag ' + props.tag + ' with id ' + tagId + ' in deckId ' + props.deckId)
         grapherLink.set({deckId: props.deckId, tagId: tagId, types: props.types})
       });
-
     },
     touchTag: function (string) {
       const exists = Tags.findOne({tag: string.trim()});
@@ -151,6 +159,14 @@ export default () => {
       return menu
 
     },
+    setLinks: function (collection, record, linkData) {
+      const keys = Object.keys(linkData)
+      const collectionMap = {'Cards': Cards, 'Decks': Decks}
+      keys.forEach(function(linkName) {
+        const link = collectionMap[collection].getLink(record, linkName)
+        link.set(linkData[linkName]);
+      })
+    },
     getArticle: function(id) {
       const card = Cards.findOne({_id: id})
       card.content.html = stateToHTML(editorStateFromRaw(JSON.parse(card.content.Article)).getCurrentContent())
@@ -162,10 +178,22 @@ export default () => {
         title: 1,
         createdAt: 1,
         owner: 1,
+        author: {
+          username: 1
+        },
+        type: {
+          title: 1,
+          icon: 1,
+          accepts: 1,
+          subscribes: 1
+        },
         description: 1,
+        image: 1,
         images: 1,
         access: 1,
         content: 1,
+        lat: 1,
+        lng: 1,
         $options: {
           sort: {createdAt: -1}
         },

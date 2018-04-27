@@ -45,6 +45,7 @@ const styles = {
 export default class SnapCard extends Component {
   constructor(props) {
     super(props);
+    console.log('card with props', props);
     this.state = {
       open: false,
       snackOpen: false,

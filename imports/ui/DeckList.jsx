@@ -8,6 +8,7 @@ class DeckList extends Component {
 
   constructor(props) {
     super(props)
+    console.log('deck list called with props', props);
     this.state = {
       open: false,
       message: 'Deck added successfully',

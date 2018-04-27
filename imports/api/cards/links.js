@@ -2,23 +2,24 @@ import Cards from './collection'
 import CardTypes from '../cardTypes/collection'
 import TagCards from '../tagCards/collection'
 import DeckCards from '../deckCards/collection'
+import Users from '../users/collection'
 
 Cards.addLinks({
-  'author': {
+  author: {
     type: 'one',
-    collection: Meteor.users,
+    collection: Users,
     field: 'owner'
   },
-  'type': {
+  type: {
     type: 'one',
     collection: CardTypes,
-    field: 'cardType'
+    field: 'cardTypeId'
   },
-  'tags': {
+  tagIds: {
     collection: TagCards,
     inversedBy: 'card'
   },
-  'decks': {
+  deckIds: {
     collection: DeckCards,
     inversedBy: 'card'
   }
