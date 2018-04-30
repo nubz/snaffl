@@ -5,9 +5,10 @@ import TextField from 'material-ui/TextField'
 import MapEditor from '../MapEditor'
 import Secrets from '../../../secrets'
 import { HTTP } from 'meteor/http'
+import Paper from 'material-ui/Paper';
 
 const fields = [
-  {"name": "postcode", "label": "Postcode", "default": "", "disabled": false},
+  {"name": "postcode", "label": "Enter Postcode", "default": "", "disabled": false},
   {"name": "propertyNumber", "label": "Property number", "default": "", "disabled": false},
   {"name": "address", "label": "Address", "default": "", "disabled": false},
   {"name": "email", "label": "Email", "default": "", "disabled": false},
@@ -66,7 +67,7 @@ class LocationEditor extends Component {
   }
 
   renderTextField = field => (
-      <div className="form-group" key={"field-" + field.name}>
+      <div className={"form-group field-" +  field.name} key={"field-" + field.name}>
         <TextField
           floatingLabelStyle={field.disabled ? {} : floatingLabelStyle}
           floatingLabelText={field.label}
@@ -81,7 +82,9 @@ class LocationEditor extends Component {
     )
 
   renderTextFields() {
-    return fields.map((field) => (
+    var clonedFields = fields.slice();
+    clonedFields.shift()
+    return clonedFields.map((field) => (
       this.renderTextField(field)
     ))
   }
@@ -91,8 +94,7 @@ class LocationEditor extends Component {
   handleInputChange = (event, index, value) => this.setState({'content': { ...this.state.content, [event.target.dataset.field] : event.target.value } })
 
   handleUseCurrentLocation() {
-    let loc = this.props.geo();
-    console.log('selected location', loc);
+    let loc = this.props.geo;
     this.setState({'content': { ...this.state.content, 'latitude' : loc.lat, 'longitude': loc.lng, 'map': true } })
   }
 
@@ -120,27 +122,33 @@ class LocationEditor extends Component {
     return (
       <div>
         <h3>Create a map</h3>
-        <RaisedButton
-           secondary={true} 
-           containerElement='label' 
-           label='Use current location'
-           onClick={this.handleUseCurrentLocation.bind(this)} />
-        <p>OR</p>
-        { this.state.content.postcode.length ? 
-          <div className="form-group">
-            <RaisedButton
-               secondary={true} 
-               containerElement='label' 
-               label='Use postcode entered in form'
-               onClick={this.findPostcode.bind(this)} />
-          </div> 
-          : 'enter postcode below for auto generation'}
-
-        { this.state.content.map ?
-          <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
-        
+        <Paper style={{padding: 20}}>
+          <div style={{overflow:'hidden'}}>
+            <div style={{float:'left', maxWidth: '30%'}}>
+              { this.renderTextField({"name": "postcode", "label": "Postcode", "default": "", "disabled": false}) }
+              { this.state.content.postcode.length ?
+                <div className="form-group" style={{display:'inline-block', marginTop: 30}}>
+                  <RaisedButton
+                     secondary={true}
+                     containerElement='label'
+                     label='Show map'
+                     onClick={this.findPostcode.bind(this)} />
+                </div>
+                : ''}
+              <p>OR</p>
+              <RaisedButton
+                secondary={true}
+                containerElement='label'
+                label='Use current location'
+                onClick={this.handleUseCurrentLocation.bind(this)} />
+            </div>
+            <div style={{float:'left', width: '60%', marginLeft: 20}}>
+              { this.state.content.map ?
+                <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
+            </div>
+          </div>
+        </Paper>
         { this.renderTextFields() }
-
       </div>
     )
   }
@@ -149,7 +157,7 @@ class LocationEditor extends Component {
 
 LocationEditor.propTypes = {
   card: PropTypes.object,
-  geo: PropTypes.func
+  geo: PropTypes.object
 }
  
 export default LocationEditor

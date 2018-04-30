@@ -133,6 +133,13 @@ form.accounts {
 .headlineButton:focus {
     background: #f3f3f3;
 }
+
+div.field-postcode {
+    width: 85px;
+    display: inline-block;
+    overflow: hidden;
+    float:left;
+}
 /**
  * Content CSS
  */

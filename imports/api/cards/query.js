@@ -1,7 +1,10 @@
 import { createQuery } from 'meteor/cultofcoders:grapher';
+import Cards from '/imports/api/cards/collection'
+
+const cards = Cards
 
 export default createQuery({
-  cards: {
+  'cards': {
     $filter({filters, options, params}) {
       if (params._id) {
         filters._id = params._id;
@@ -40,6 +43,7 @@ export default createQuery({
     },
     author: {
       username: 1
-    }
+    },
+    content: 1
   }
 });

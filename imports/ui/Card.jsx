@@ -116,7 +116,7 @@ export default class Card extends Component {
     let images = this.state.card.images || false
     const host = window.location.hostname
     const protocol = window.location.protocol
-    const port = window.location.port == "80" ? '' : ':' + window.location.port
+    const port = window.location.port === "80" ? '' : ':' + window.location.port
       
     const lightBoxAction = [
         <FlatButton
@@ -163,7 +163,7 @@ export default class Card extends Component {
           <h2>{this.state.card.title}</h2>
           <p>{this.state.card.description}</p>
           { this.state.card.content ?
-            parseContent(this.props.state.cardType, {content: this.state.card.content, card: this.state.card}) : '' }
+            parseContent(this.state.card.cardType, {content: this.state.card.content, card: this.state.card}) : '' }
         </div>
 
         { owned ? 

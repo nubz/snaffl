@@ -1,14 +1,9 @@
 import React from 'react'
-import { withTracker } from 'meteor/react-meteor-data'
 import AddCard from '../ui/AddCard'
-import CardTypes from '../api/cardTypes/collection'
+import query from '/imports/api/cardTypes/query.js'
+import { withQuery } from 'meteor/cultofcoders:grapher-react'
 
-export default AddCardTypeContainer = withTracker(props => {
-  const cardTypesHandle = Meteor.subscribe('card.types')
-  const loadingCardTypes = !cardTypesHandle.ready()
-  const selectedType = CardTypes.findOne({value: props.cardType})
-  return {
-    loadingCardTypes,
-    selectedType
-  }
-})(AddCard)
+export default withQuery((props) => {
+  console.log('AddCardQuery props', props)
+  return query.clone({...props})
+}, {single: true, reactive: true})(AddCard)

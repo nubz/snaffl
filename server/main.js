@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor'
-import Publish from '../imports/api/server/publications'
-import PublishApi from '../imports/api/server/http-api'
-import indexDb from '../imports/api/server/index-db'
+import Publish from '/imports/api/server/publications'
+import PublishApi from '/imports/api/server/http-api'
+import indexDb from '/imports/api/server/index-db'
 import LoadMethods from './methods'
 import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import referenceData from './referenceData'
 import resetDb from './resetDb'
-import '/imports/startup/server';
+import '/imports/startup/server'
 import Decks from '/imports/api/decks/collection'
 import Cards from '/imports/api/cards/collection'
 

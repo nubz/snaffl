@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
@@ -11,9 +11,9 @@ import parseIcon from './TypeIcons'
 import imageApi from '../api/imageApi'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
-import { editorStateFromRaw } from "megadraft"
+import {editorStateFromRaw} from "megadraft"
 
-const startTime = new Date(moment(new Date()).subtract(1, 'hours').format())
+const startTime = moment().subtract(1, 'hours').toDate()
 console.log('startTime', startTime);
 
 const styles = {
@@ -45,12 +45,14 @@ const defaultInputs = {
   image: null
 };
 
-let loc = {latitude: 0,longitude: 0};
+let loc = {latitude: 0, longitude: 0};
 
 class AddCard extends Component {
 
   constructor(props) {
     super(props);
+
+    console.log('AddCard props', props)
 
     this.state = {
       open: false,
@@ -60,7 +62,25 @@ class AddCard extends Component {
       imagePreview: '',
       publicId: '',
       image: '',
-      access: 'private'
+      access: 'private',
+      cardType: props.data.value,
+      selectedType: props.data
+    }
+
+    let navigatorLocated = false;
+    AllGeo.getLocationByNavigator(function (pos) {
+      this.setState({'location': pos})
+      console.log('locationByNavigator', pos);
+      navigatorLocated = true;
+    }.bind(this));
+
+    if (!navigatorLocated) {
+      AllGeo.getLocationByIp(function (pos) {
+        if (!navigatorLocated) {
+          this.setState({'location': pos})
+          console.log('locationByIp', pos)
+        }
+      }.bind(this));
     }
   }
 
@@ -147,9 +167,9 @@ class AddCard extends Component {
     const inputs = this.state.inputs
     let content = {};
 
-    content[this.props.cardType] = this.contentFields.state.content;
+    content[this.state.cardType] = this.contentFields.state.content;
 
-    if (this.props.cardType === 'Embed') {
+    if (this.state.cardType === 'Embed') {
       // bail out to handle the extraction of meta data
       this.useEmbed(content);
 
@@ -159,8 +179,9 @@ class AddCard extends Component {
 
     console.log('content', content)
 
-    if (this.props.cardType === 'Article' || this.props.cardType === 'Entity') {
-      const contentToParse = this.props.cardType === 'Entity' ? content.Entity.bio : content[inputs.cardType];
+    if (this.state.cardType === 'Article' || this.state.cardType === 'Entity') {
+      const contentToParse = this.state.cardType === 'Entity' ? content.Entity.bio : content[this.state.cardType];
+      console.log('contentToParse', contentToParse);
       let options = {
         blockRenderers: {
           atomic: (block) => {
@@ -192,17 +213,16 @@ class AddCard extends Component {
       owner: Meteor.userId(),
       createdAt: new Date(),
       access: this.state.access,
-      cardType: this.props.cardType,
-      cardTypeId: this.props.selectedType._id,
+      cardType: this.state.cardType,
+      cardTypeId: this.state.selectedType._id,
       image: this.state.image,
       images: this.uploadedImages,
       content: content
     };
 
     if (this.state.geo) {
-      let location = AllGeo.getLocation()
-      data.lat = location.lat
-      data.lng = location.lng
+      data.lat = this.state.location.lat
+      data.lng = this.state.location.lng
     }
 
     Meteor.call('addCard', data, () => {
@@ -226,7 +246,12 @@ class AddCard extends Component {
     });
   };
 
-  handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
+  handleInputChange = (event, index, value) => this.setState({
+    'inputs': {
+      ...this.state.inputs,
+      [event.target.dataset.field]: event.target.value
+    }
+  })
 
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
@@ -237,26 +262,6 @@ class AddCard extends Component {
     const selectedGeo = geo ? 'geo' : 'private'
     this.setState({geo: selectedGeo});
   };
-
-  componentDidMount() {
-    // we want this to run every time
-    // the page is visited or stale
-    // geo data will prevail
-    let navigatorLocated = false;
-    AllGeo.getLocationByNavigator(function (pos) {
-      loc = pos
-      navigatorLocated = true;
-    });
-
-    if (!navigatorLocated) {
-        AllGeo.getLocationByIp(function (pos) {
-            if (!navigatorLocated) {
-              loc = pos
-            }
-        });
-    }
-
-  }
 
   registerContent = contentFields => this.contentFields = contentFields
 
@@ -273,14 +278,16 @@ class AddCard extends Component {
       />
     )
   }
+
   returnLoc() {
     return loc;
   }
+
   render() {
     return (
       <div style={styles.formStyle}>
 
-        {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value)} {this.props.selectedType.description}</p> : ''}
+        <p>{parseIcon(this.state.selectedType.value)} {this.state.selectedType.description}</p>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
 
@@ -291,54 +298,54 @@ class AddCard extends Component {
             style={{marginBottom: 20}}
           />
 
-          { this.props.cardType === 'Embed' ?
-          ''
-          : <div>
+          {this.state.cardType === 'Embed' ?
+            ''
+            : <div>
 
-          { this.state.uploading ? 
-            <CircularProgress size={60} thickness={7} />
-          :
-            <div className="form-group">
-              { this.state.images ? 
-                <img style={styles.imagePreview} src={this.state.images.small} /> 
-                : ''}
-              <RaisedButton
-                 secondary={true} 
-                 containerElement='label' 
-                 label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-                 <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-              </RaisedButton>
+              {this.state.uploading ?
+                <CircularProgress size={60} thickness={7}/>
+                :
+                <div className="form-group">
+                  {this.state.images ?
+                    <img style={styles.imagePreview} src={this.state.images.small}/>
+                    : ''}
+                  <RaisedButton
+                    secondary={true}
+                    containerElement='label'
+                    label={this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image'}>
+                    <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)}/>
+                  </RaisedButton>
+                </div>
+              }
+
+              <div className="form-group">
+                {this.returnTextField("title", "Title")}
+              </div>
+
+              <div className="form-group">
+                <TextField
+                  floatingLabelStyle={styles.floatingLabelStyle}
+                  floatingLabelText="Summary (optional)"
+                  hintText="A short, plain text summary"
+                  floatingLabelFixed={true}
+                  id="description"
+                  data-field="description"
+                  multiLine={true}
+                  rows={2}
+                  onChange={this.handleInputChange}
+                  value={this.state.inputs.description}
+                />
+              </div>
             </div>
           }
 
           <div className="form-group">
-            {this.returnTextField("title", "Title")}
-          </div>
-
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Summary (optional)"
-              hintText="A short, plain text summary"
-              floatingLabelFixed={true}
-              id="description"
-              data-field="description"
-              multiLine={true}
-              rows={2}
-              onChange={this.handleInputChange}
-              value={this.state.inputs.description}
-            />
-          </div>
-            </div>
-            }
-
-          <div className="form-group">
             {
-              parseEditor(this.props.cardType, {
+              parseEditor(this.state.cardType, {
                 ref: this.registerContent,
                 card: {},
                 isNew: true,
-                geo: this.returnLoc
+                geo: this.state.location
               })
             }
           </div>
@@ -351,14 +358,14 @@ class AddCard extends Component {
           />
 
           <div className="form-group">
-            <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true} />
+            <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true}/>
           </div>
 
         </form>
 
-        <Divider />
+        <Divider/>
 
-        <CardListQueryContainer createdAt={{$gt: startTime}} owner={Meteor.userId()} />
+        <CardListQueryContainer createdAt={{$gt: startTime}} owner={Meteor.userId()}/>
 
         <Snackbar
           open={this.state.open}
@@ -370,13 +377,6 @@ class AddCard extends Component {
     )
   }
 
-}
-
-AddCard.propTypes = {
-  cardType: PropTypes.string.isRequired,
-  cardTypes: PropTypes.array,
-  loadingCardTypes: PropTypes.bool,
-  selectedType: PropTypes.object
 }
 
 export default AddCard
