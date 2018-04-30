@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
 import CardListQueryContainer from '../containers/CardListQueryContainer'

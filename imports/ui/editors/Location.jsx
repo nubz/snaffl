@@ -8,7 +8,7 @@ import { HTTP } from 'meteor/http'
 import Paper from 'material-ui/Paper';
 
 const fields = [
-  {"name": "postcode", "label": "Enter Postcode", "default": "", "disabled": false},
+  {"name": "postcode", "label": "Postcode", "default": "", "disabled": false},
   {"name": "propertyNumber", "label": "Property number", "default": "", "disabled": false},
   {"name": "address", "label": "Address", "default": "", "disabled": false},
   {"name": "email", "label": "Email", "default": "", "disabled": false},
@@ -142,7 +142,7 @@ class LocationEditor extends Component {
                 label='Use current location'
                 onClick={this.handleUseCurrentLocation.bind(this)} />
             </div>
-            <div style={{float:'left', width: '60%', marginLeft: 20}}>
+            <div style={{float:'left', width: '60%', minHeight: 500, marginLeft: 95, backgroundColor: '#eee'}}>
               { this.state.content.map ?
                 <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
             </div>
