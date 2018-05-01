@@ -6,6 +6,7 @@ import MapEditor from '../MapEditor'
 import Secrets from '../../../secrets'
 import { HTTP } from 'meteor/http'
 import Paper from 'material-ui/Paper';
+import parseIcon from '../TypeIcons'
 
 const fields = [
   {"name": "postcode", "label": "Postcode", "default": "", "disabled": false},
@@ -83,6 +84,7 @@ class LocationEditor extends Component {
 
   renderTextFields() {
     var clonedFields = fields.slice();
+    // remove the postcode (first item in fields array) as it is duplicated in map search
     clonedFields.shift()
     return clonedFields.map((field) => (
       this.renderTextField(field)
@@ -103,12 +105,14 @@ class LocationEditor extends Component {
   findPostcode() {
     let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(this.state.content.postcode) + "&key=" + Secrets.googleMaps.apiKey
 
-    HTTPRequest('GET', url).then(function(response) { 
-      const location = response.data.results[0].geometry.location;
-      const addressComponents = response.data.results[0].address_components;
+    HTTPRequest('GET', url).then(function(response) {
+      const result = response.data.results[0];
+
+      const location = result.geometry.location;
+      const addressComponents = result.address_components;
       const exclusions = ['postal_code', 'country', 'administrative_area_level_1', 'administrative_area_level_2'];
       let address = addressComponents.reduce(function (parts, next) {
-        if (exclusions.indexOf(next.types[0]) == -1) {
+        if (exclusions.indexOf(next.types[0]) === -1) {
           parts.push(next.short_name)
         }
         return parts
@@ -121,8 +125,8 @@ class LocationEditor extends Component {
   render() {
     return (
       <div>
-        <h3>Create a map</h3>
         <Paper style={{padding: 20}}>
+          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50})} Create a map</h3>
           <div style={{overflow:'hidden'}}>
             <div style={{float:'left', maxWidth: '30%'}}>
               { this.renderTextField({"name": "postcode", "label": "Postcode", "default": "", "disabled": false}) }
@@ -148,7 +152,10 @@ class LocationEditor extends Component {
             </div>
           </div>
         </Paper>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30}}>
+          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50})} Address fields (optional)</h3>
         { this.renderTextFields() }
+        </Paper>
       </div>
     )
   }

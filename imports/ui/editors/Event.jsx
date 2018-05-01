@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
+import Paper from 'material-ui/Paper'
+import parseIcon from '../TypeIcons'
 
 const floatingLabelStyle = {
   color: 'black',
@@ -78,7 +80,8 @@ class EventEditor extends Component {
 
   render() {
     return (
-      <div>
+      <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+        <h3 className="paperHead">{parseIcon('Event', {height:50,width:50})} Event timings</h3>
         <div className="form-group">
           <DatePicker
             floatingLabelStyle={floatingLabelStyle}
@@ -123,7 +126,7 @@ class EventEditor extends Component {
             onChange={this.handleChangeEndTime}
           />
         </div>
-      </div>
+      </Paper>
     )
   }
 

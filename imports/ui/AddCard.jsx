@@ -11,6 +11,7 @@ import imageApi from '../api/imageApi'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
 import {editorStateFromRaw} from "megadraft"
+import Paper from 'material-ui/Paper'
 
 const startTime = moment().subtract(1, 'hours').toDate()
 console.log('startTime', startTime);
@@ -32,8 +33,7 @@ const styles = {
   },
   imagePreview: {
     display: 'block',
-    marginBottom: 20,
-    maxWidth: '100%'
+    width: '100%'
   }
 }
 
@@ -176,8 +176,6 @@ class AddCard extends Component {
 
     }
 
-    console.log('content', content)
-
     if (this.state.cardType === 'Article' || this.state.cardType === 'Entity') {
       const contentToParse = this.state.cardType === 'Entity' ? content.Entity.bio : content[this.state.cardType];
       console.log('contentToParse', contentToParse);
@@ -285,33 +283,26 @@ class AddCard extends Component {
   render() {
     return (
       <div style={styles.formStyle}>
-
-        <p>{parseIcon(this.state.selectedType.value)} {this.state.selectedType.description}</p>
-
         <form onSubmit={this.handleSubmit.bind(this)}>
-
-          <Toggle
-            label="Public access"
-            onToggle={this.handleAccessChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-          />
 
           {this.state.cardType === 'Embed' ?
             ''
-            : <div>
+            : <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+
+              <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50})} {this.state.cardType} info</h3>
+
+
 
               {this.state.uploading ?
-                <CircularProgress size={60} thickness={7}/>
+                <div className="imagePreview">
+                  <CircularProgress size={60} thickness={7}/>
+                </div>
                 :
-                <div className="form-group">
-                  {this.state.images ?
-                    <img style={styles.imagePreview} src={this.state.images.small}/>
-                    : ''}
+                <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
                   <RaisedButton
                     secondary={true}
                     containerElement='label'
-                    label={this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image'}>
+                    label={this.state.images ? 'Upload a different image' : 'Upload a cover image' }>
                     <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)}/>
                   </RaisedButton>
                 </div>
@@ -335,7 +326,7 @@ class AddCard extends Component {
                   value={this.state.inputs.description}
                 />
               </div>
-            </div>
+            </Paper>
           }
 
           <div className="form-group">
@@ -349,22 +340,34 @@ class AddCard extends Component {
             }
           </div>
 
-          <Toggle
-            label="Record posting location"
-            onToggle={this.handleGEOChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-          />
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+            <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50})} Publishing details</h3>
 
-          <div className="form-group">
-            <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true}/>
-          </div>
+            <Toggle
+              label="Record posting location"
+              onToggle={this.handleGEOChange}
+              labelPosition="right"
+              style={{marginBottom: 20}}
+            />
+
+            <Toggle
+              label="Public access"
+              onToggle={this.handleAccessChange}
+              labelPosition="right"
+              style={{marginBottom: 20}}
+            />
+
+            <div className="form-group">
+              <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true}/>
+            </div>
+
+          </Paper>
 
         </form>
 
         <Divider/>
 
-        <CardListQueryContainer createdAt={{$gt: startTime}} owner={Meteor.userId()}/>
+        <CardListQueryContainer createdAt={{$gt: startTime}} title="Recent cards" owner={Meteor.userId()}/>
 
         <Snackbar
           open={this.state.open}

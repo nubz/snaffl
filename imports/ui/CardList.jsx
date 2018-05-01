@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SnapCardListItem from './SnapCardListItem.jsx'
+import Paper from 'material-ui/Paper';
 
 class CardList extends Component {
 
@@ -23,10 +24,10 @@ class CardList extends Component {
  
   render() {
     return (
-      <div>
-        <h3>{ this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
+      <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+        <h3 className="paperHeadOther">{ this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
         {this.renderCards()}
-      </div>
+      </Paper>
     )
   }
 

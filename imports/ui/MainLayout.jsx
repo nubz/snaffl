@@ -100,7 +100,7 @@ export default class MainLayout extends Component {
           />
           <div className={this.props.className}>
             <header>
-              { this.props.heading ? <h1 className={"branding"}>{this.props.heading}</h1> : ''}
+              { this.props.heading ? <h1>{this.props.heading}</h1> : ''}
             </header>
             <main id="content-wrapper">
               {this.props.content()}
