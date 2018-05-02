@@ -23,7 +23,7 @@ h3, h4, h5, h6 {
 }
 
 .container header {
-    background: #6420ff;
+    background: rgb(75, 24, 190);
     color: white;
     padding: 35px 30px 10px 30px;
     margin: -30px -38px;
@@ -225,12 +225,10 @@ div.field-postcode {
  * Content CSS
  */
 #content-wrapper {
-    min-height: 100%;
-
-    /* sticky footer */
+    min-height: calc(100vh - 75px);
     box-sizing: border-box;
-    margin-bottom: -100px;
-    padding-bottom: 100px;
+    margin-bottom: -42px;
+    padding-bottom: 88px;
 }
 
 /**
@@ -245,6 +243,19 @@ footer {
     padding-left: 1em;
     font-size: 75%;
     color:#666;
+    position: relative;
+}
+
+footer:before {
+    content: '';
+    display: block;
+    z-index: -1;
+    height: 320px;
+    background-color: #1d0d40;
+    position: absolute;
+    bottom: 102px;
+    left: 0;
+    width: 100%;
 }
 
 @media (max-width: 655px) {

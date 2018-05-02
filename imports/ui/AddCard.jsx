@@ -21,7 +21,7 @@ const styles = {
     padding: 20,
     maxWidth: 960,
     margin: '10px auto',
-    background: 'white'
+    background: '#ffffffe3'
   },
   floatingLabelStyle: {
     color: 'black',
