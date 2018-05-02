@@ -8,6 +8,8 @@ import Snackbar from 'material-ui/Snackbar'
 import MapCardContainer from '../containers/MapCardContainer'
 import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import parseContent from './TypeContent'
+import Paper from 'material-ui/Paper';
+import parseIcon from './TypeIcons'
 
 const cardStyle = {
   marginBottom: 10,
@@ -29,6 +31,12 @@ const styles = {
     backgroundColor: '#eee', 
     padding: 10, 
     fontSize: 10
+  },
+  formStyle: {
+    padding: 20,
+    maxWidth: 960,
+    margin: '10px auto',
+    background: '#ffffffe3'
   }
 }
 
@@ -142,25 +150,20 @@ export default class Card extends Component {
     let createdAgo = moment(this.state.card.createdAt).fromNow()
 
     return (
-      <div
-        style={cardStyle}
-      >
-        <div>
-          <h2>{this.state.card.title}</h2>
-            <p>{this.state.card.cardType + ' created ' + createdAgo}</p>
-        </div>
-
+      <div style={styles.formStyle}>
+      <Paper style={{padding: 20}}>
+        <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} {this.state.card.title}</h3>
         { images ?
             <img 
               onLoad={this.onImgLoad.bind(this)} 
               src={images.medium} 
               alt={this.state.card.title}
+              style={{minWidth: '100%'}}
               onClick={this.handleLightboxOpen} 
             /> : ''
         }
 
         <div>
-          <h2>{this.state.card.title}</h2>
           <p>{this.state.card.description}</p>
           { this.state.card.content ?
             parseContent(this.state.card.cardType, {content: this.state.card.content, card: this.state.card}) : '' }
@@ -218,6 +221,7 @@ export default class Card extends Component {
           onRequestClose={this.handleRequestClose}
           style={{'fontWeight': 700}}
         />
+      </Paper>
       </div>
     )
   }

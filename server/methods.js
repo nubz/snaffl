@@ -26,6 +26,16 @@ export default () => {
         typeLink.set(data.cardTypeId)
       })
     },
+    addDeck: function (data) {
+      Decks.insert(data, (err, result) => {
+        const authorLink = Decks.getLink(result, 'author');
+        console.log('setting authorLink with ' + data.owner)
+        authorLink.set(data.owner)
+        const typeLink = Decks.getLink(result, 'type');
+        console.log('setting typeLink with ' + data.deckTypeId)
+        typeLink.set(data.deckTypeId)
+      })
+    },
     uploadRemote: function (remoteUrl) {
       const future = new Future();
       const uploaded = function(data) {

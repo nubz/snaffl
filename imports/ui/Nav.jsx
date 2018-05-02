@@ -146,7 +146,7 @@ export default class Nav extends Component {
   render() {
     return (
       <Drawer
-        docked={false}
+        docked={true}
         width={280}
         open={this.props.open}
         logged={Session.get('logged')}

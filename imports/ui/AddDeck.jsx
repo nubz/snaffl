@@ -10,6 +10,9 @@ import imageApi from '../api/imageApi'
 import CircularProgress from 'material-ui/CircularProgress'
 import Toggle from 'material-ui/Toggle'
 import parseIcon from './TypeIcons'
+import Paper from 'material-ui/Paper'
+import DeckListQueryContainer from '/imports/containers/DeckListQueryContainer'
+
 
 const styles = {
   formStyle: {
@@ -43,6 +46,8 @@ const defaultInputs = {
   deckType: 'MultiDeck',
   subscriptionTag: ''
 }
+
+const startTime = moment().subtract(1, 'hours').toDate()
 
 class AddDeck extends Component {
 
@@ -115,21 +120,8 @@ class AddDeck extends Component {
       'author': Meteor.userId(),
       'type': this.props.selectedType._id
     }
-    Decks.insert(data, (error, result) => {
-      Meteor.call('setLinks', Decks, result, linkData, () => {
-        const deckTagSubscriptionLink = Decks.getLink(result, 'tagSubscription')
-        if (inputs.subscriptionTag.trim().length) {
-          let tagProps = {
-            tag: inputs.subscriptionTag.trim(),
-            deckId: result,
-            grapherLink: deckTagSubscriptionLink,
-            types: this.props.selectedType.subscribes
-          }
-          Meteor.call('createTagSubscription', tagProps, this.successState.bind(this))
-        } else {
-          this.successState()
-        }
-      });
+    Meteor.call('addDeck', data, (error, result) => {
+      this.successState().bind(this)
     })
   }
 
@@ -159,30 +151,26 @@ class AddDeck extends Component {
   render() {
     return (
       <div style={styles.formStyle}>
-        {this.props.selectedType? <p>{parseIcon(this.props.selectedType.value, {width:50,height:50})} {this.props.selectedType.description}</p> : ''}
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <Toggle
-              label="Public access"
-              onToggle={this.handleAccessChange}
-              labelPosition="right"
-              style={{marginBottom: 20}}
-            />
-            { this.state.uploading ? 
-              <CircularProgress size={60} thickness={7} />
-            :
-            <div className="form-group">
-              { this.state.images ? 
-                <img style={styles.imagePreview} src={this.state.images.small} /> 
-              : ''}
-              <RaisedButton
-                 secondary={true} 
-                 containerElement='label'
-                 label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-                 <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-              </RaisedButton>
-            </div>
+            <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} {this.props.deckType} info</h3>
+
+            {this.state.uploading ?
+              <div className="imagePreview">
+                <CircularProgress style={{margin:'auto'}} size={60} thickness={7}/>
+              </div>
+              :
+              <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
+                <RaisedButton
+                  secondary={true}
+                  containerElement='label'
+                  label={this.state.images ? 'Upload a different image' : 'Upload a cover image' }>
+                  <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)}/>
+                </RaisedButton>
+              </div>
             }
+
             <div className="form-group">
               <TextField
                 floatingLabelStyle={styles.floatingLabelStyle}
@@ -209,29 +197,43 @@ class AddDeck extends Component {
               />
             </div>
 
-            { this.props.deckType === 'TagDeck' || this.props.deckType === 'TagMap' ?
-            <div className="form-group">
-             <h3>Auto Population</h3>
-              <TextField
-                floatingLabelStyle={styles.floatingLabelStyle}
-                floatingLabelText="Enter a tag to subscribe to"
-                floatingLabelFixed={true}
-                id="text-tag"
-                data-field="subscriptionTag"
-                onChange={this.handleInputChange}
-                value={this.state.inputs.subscriptionTag}
+          </Paper>
+
+          { this.props.deckType === 'TagDeck' || this.props.deckType === 'TagMap' ?
+            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+              <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Subscribe to tag</h3>
+                <div className="form-group">
+                  <TextField
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelText="Enter a tag to subscribe to"
+                    floatingLabelFixed={true}
+                    id="text-tag"
+                    data-field="subscriptionTag"
+                    onChange={this.handleInputChange}
+                    value={this.state.inputs.subscriptionTag}
+                  />
+                </div>
+            </Paper>
+            : ''}
+            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+
+              <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Publishing detail</h3>
+              <Toggle
+                label="Public access"
+                onToggle={this.handleAccessChange}
+                labelPosition="right"
+                style={{marginBottom: 20}}
               />
-            </div>
-              : ''}
-            <div className="form-group">
-              <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
-            </div>
+              <div className="form-group">
+                <RaisedButton type="submit" disabled={this.state.uploading} label="Add deck" primary={true} />
+              </div>
+            </Paper>
           </form>
 
         <Divider />
 
-        <h2>Recently added decks</h2>
         {this.renderdecks()}
+        <DeckListQueryContainer createdAt={{$gt: startTime}} title="Recent decks" owner={Meteor.userId()}/>
 
         <Snackbar
           open={this.state.open}

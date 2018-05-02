@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {List} from 'material-ui/List'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
 import Snackbar from 'material-ui/Snackbar'
+import parseIcon from "./TypeIcons"
+import Paper from 'material-ui/Paper'
 
 class DeckList extends Component {
 
@@ -12,7 +14,7 @@ class DeckList extends Component {
     this.state = {
       open: false,
       message: 'Deck added successfully',
-      decks: props.data || props.decks //this can be called with a grapher query or regular container
+      decks: props.data || props.decks
     };
   }
 
@@ -43,10 +45,11 @@ class DeckList extends Component {
  
   render() {
     return (
-      <div>
-        <List>
+      <div className="main-bg">
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHeadOther">{parseIcon('Recent', {height:50,width:50,color: 'white'})} { this.props.data.length ? this.props.title : 'As you add decks they will appear here'}</h3>
           {this.renderDecks()}
-        </List>
+        </Paper>
         <Snackbar
           open={this.state.open}
           message={this.state.message}

@@ -358,7 +358,7 @@ class AddCard extends Component {
             />
 
             <div className="form-group">
-              <RaisedButton type="submit" disabled={this.state.uploading} label="Add Card" primary={true}/>
+              <RaisedButton type="submit" style={{minWidth: 150}} disabled={this.state.uploading} label="Add Card" secondary={true}/>
             </div>
 
           </Paper>

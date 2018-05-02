@@ -10,6 +10,8 @@ import CircularProgress from 'material-ui/CircularProgress'
 import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
 import {editorStateFromRaw} from "megadraft"
+import Paper from 'material-ui/Paper'
+import parseIcon from "./TypeIcons";
 
 const styles = {
   formStyle: {
@@ -134,75 +136,78 @@ class EditCard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-bg">
       { this.state.loading ? 
         <CircularProgress style={{margin:'auto'}} size={60} thickness={7} />
       :
-        <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-          <Toggle
-            label="Public access"
-            onToggle={this.handleAccessChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-            toggled={this.state.inputs.access === 'public'}
-          />
-          { this.state.uploading ? 
-            <CircularProgress size={60} thickness={7} />
-          :
-          <div className="form-group">
-            { this.state.images ? 
-              <img style={styles.imagePreview} src={this.state.images.small} /> 
-              : ''}
-            <RaisedButton
-               secondary={true} 
-               containerElement='label'
-               label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-               <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-            </RaisedButton>
-          </div>
-          }
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Title"
-              floatingLabelFixed={true}
-              id="text-field-controlled"
-              data-field="title"
-              onChange={this.handleInputChange}
-              value={this.state.inputs.title}
-            />
-          </div>
-          <div className="form-group">
-            <TextField
-              floatingLabelStyle={styles.floatingLabelStyle}
-              floatingLabelText="Summary"
-              hintText="A short, plain text summary"
-              floatingLabelFixed={true}
-              id="description"
-              data-field="description"
-              multiLine={true}
-              rows={2}
-              onChange={this.handleInputChange}
-              value={this.state.inputs.description}
-            />
-          </div>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+              <h3 className="paperHead">{parseIcon(this.state.inputs.cardType, {height:50,width:50,color: 'white'})} {this.state.inputs.cardType} info</h3>
+              {this.state.uploading ?
+                <div className="imagePreview">
+                  <CircularProgress style={{margin:'auto'}} size={60} thickness={7}/>
+                </div>
+                :
+                <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
+                  <RaisedButton
+                    secondary={true}
+                    containerElement='label'
+                    label={this.state.images ? 'Upload a different image' : 'Upload a cover image' }>
+                    <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)}/>
+                  </RaisedButton>
+                </div>
+              }
+              <div className="form-group">
+                <TextField
+                  floatingLabelStyle={styles.floatingLabelStyle}
+                  floatingLabelText="Title"
+                  floatingLabelFixed={true}
+                  id="text-field-controlled"
+                  data-field="title"
+                  onChange={this.handleInputChange}
+                  value={this.state.inputs.title}
+                />
+              </div>
+              <div className="form-group">
+                <TextField
+                  floatingLabelStyle={styles.floatingLabelStyle}
+                  floatingLabelText="Summary"
+                  hintText="A short, plain text summary"
+                  floatingLabelFixed={true}
+                  id="description"
+                  data-field="description"
+                  multiLine={true}
+                  rows={2}
+                  onChange={this.handleInputChange}
+                  value={this.state.inputs.description}
+                />
+              </div>
+            </Paper>
 
-          <div className="form-group">
             {parseEditor(this.props.card.cardType, {ref: function(contentFields){this.contentFields = contentFields;}.bind(this), card: this.props.card, isNew: true})}
-          </div>
 
-          { this.state.inputs.lat && this.state.inputs.lat !== 0 ?
-          <Toggle
-            label="Remove posting location"
-            onToggle={this.handleGEOChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-          />
-          : ''}
+            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+              <h3 className="paperHead">{parseIcon(this.state.inputs.cardType, {height:50,width:50,color: 'white'})} Publishing info</h3>
+              { this.state.inputs.lat && this.state.inputs.lat !== 0 ?
+              <Toggle
+                label="Remove posting location"
+                onToggle={this.handleGEOChange}
+                labelPosition="right"
+                style={{marginBottom: 20}}
+              />
+              : ''}
+              <Toggle
+                label="Public access"
+                onToggle={this.handleAccessChange}
+                labelPosition="right"
+                style={{marginBottom: 20}}
+                toggled={this.state.inputs.access === 'public'}
+              />
 
-          <div className="form-group">
-            <RaisedButton type="submit" label="Save Edits" primary={true} />
-          </div>
+              <div className="form-group">
+                <RaisedButton type="submit" label="Save Edits" primary={true} />
+              </div>
+            </Paper>
 
           <Snackbar
             open={this.state.open}

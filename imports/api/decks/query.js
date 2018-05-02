@@ -1,7 +1,7 @@
 import { createQuery } from 'meteor/cultofcoders:grapher';
 
 export default createQuery({
-  decks: {
+  'decks': {
     $filter({filters, options, params}) {
       if (params._id) {
         filters._id = params._id;
@@ -15,6 +15,11 @@ export default createQuery({
       if (params.access) {
         filters.access = params.access;
       }
+      if(params.createdAt) {
+        filters.createdAt = params.createdAt
+      }
+
+      options.sort = {createdAt: -1}
     },
     title: 1,
     description: 1,

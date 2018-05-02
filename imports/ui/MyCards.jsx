@@ -85,7 +85,7 @@ class MyCards extends Component {
   render() {
     const iconStyle = {color: "white", padding:10}
     return (
-        <div style={{boxShadow: 'none'}}>
+        <div className="main-bg">
           <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>

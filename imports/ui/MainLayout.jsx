@@ -30,7 +30,8 @@ injectTapEventPlugin();
 const styles = {
   title: {
     cursor: 'pointer',
-    fontFamily: 'Chewy'
+    fontFamily: 'Chewy',
+    fontSize: 36
   },
   fab: {
     position: "fixed",

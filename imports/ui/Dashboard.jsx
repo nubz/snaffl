@@ -55,7 +55,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Subheader>My Content</Subheader>
         <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
           <Badge
             badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
