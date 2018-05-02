@@ -17,6 +17,7 @@ import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import ActionBookmarkBorder from 'material-ui/svg-icons/action/bookmark-border'
 import MapsMyLocation from 'material-ui/svg-icons/maps/my-location'
+import ActionHistory from 'material-ui/svg-icons/action/history'
 
 const TypeIcons = {
   'Article': ActionDescription,
@@ -36,7 +37,8 @@ const TypeIcons = {
   'List': ActionViewList,
   'Grid': ActionViewModule,
   'TagMap': MapsMyLocation,
-  'TagDeck': ActionBookmarkBorder
+  'TagDeck': ActionBookmarkBorder,
+  'Recent': ActionHistory
 }
 
 export default function parseIcon(typeName, style, props) {

@@ -81,7 +81,7 @@ class EventEditor extends Component {
   render() {
     return (
       <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-        <h3 className="paperHead">{parseIcon('Event', {height:50,width:50})} Event timings</h3>
+        <h3 className="paperHead">{parseIcon('Event', {height:50,width:50,color: 'white'})} Event timings</h3>
         <div className="form-group">
           <DatePicker
             floatingLabelStyle={floatingLabelStyle}

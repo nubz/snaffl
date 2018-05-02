@@ -10,8 +10,22 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import { Session } from 'meteor/session'
 import NavContainer from '../containers/NavContainer'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { deepPurpleA400, deepPurpleA600, grey400, green700, green500, deepOrange500 } from 'material-ui/styles/colors'
+
+const customTheme = {
+  palette: {
+    primary1Color: deepPurpleA400,
+    primary2Color: deepPurpleA600,
+    primary3Color: grey400,
+    pickerHeaderColor: deepOrange500
+  }
+};
+
+const theme = getMuiTheme(customTheme);
 
 injectTapEventPlugin();
+
 
 const styles = {
   title: {
@@ -89,7 +103,7 @@ export default class MainLayout extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={theme}>
         <div>
           <AppBar
             title={<span style={styles.title}>SNAFFL</span>}

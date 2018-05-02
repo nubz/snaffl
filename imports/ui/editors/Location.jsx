@@ -126,9 +126,9 @@ class LocationEditor extends Component {
     return (
       <div>
         <Paper style={{padding: 20}}>
-          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50})} Create a map</h3>
-          <div style={{overflow:'hidden'}}>
-            <div style={{float:'left', maxWidth: '30%'}}>
+          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50,color: 'white'})} Create a map</h3>
+          <div className="splitPaper">
+            <div className="splitLeft">
               { this.renderTextField({"name": "postcode", "label": "Postcode", "default": "", "disabled": false}) }
               { this.state.content.postcode.length ?
                 <div className="form-group" style={{display:'inline-block', marginTop: 30}}>
@@ -139,21 +139,21 @@ class LocationEditor extends Component {
                      onClick={this.findPostcode.bind(this)} />
                 </div>
                 : ''}
-              <p>OR</p>
+              <div>OR</div>
               <RaisedButton
                 secondary={true}
                 containerElement='label'
                 label='Use current location'
                 onClick={this.handleUseCurrentLocation.bind(this)} />
             </div>
-            <div style={{float:'left', width: '60%', minHeight: 500, marginLeft: 95, backgroundColor: '#eee'}}>
+            <div className="splitRight">
               { this.state.content.map ?
                 <MapEditor ref={this.registerMapVals} onChange={this.onMarkerChange} latitude={this.state.content.latitude} longitude={this.state.content.longitude} /> : ''}
             </div>
           </div>
         </Paper>
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30}}>
-          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50})} Address fields (optional)</h3>
+          <h3 className="paperHead">{parseIcon('Location', {height:50,width:50,color: 'white'})} Address fields (optional)</h3>
         { this.renderTextFields() }
         </Paper>
       </div>

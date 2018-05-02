@@ -91,7 +91,7 @@ class EntityEditor extends Component {
 
       </Paper>
 
-        <h3>{parseIcon('Entity', {height:50,width:50})} Bio</h3>
+        <h3>{parseIcon('Entity', {height:50,width:50,color: 'white'})} Bio</h3>
         <div className="editor">
           <DraftEditor onChange={this.onChangeBio} content={this.state.content.bio} _id={this.props.card._id} />
         </div>

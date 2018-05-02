@@ -136,7 +136,7 @@ class EditCard extends Component {
     return (
       <div>
       { this.state.loading ? 
-        <CircularProgress size={60} thickness={7} />
+        <CircularProgress style={{margin:'auto'}} size={60} thickness={7} />
       :
         <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
           <Toggle

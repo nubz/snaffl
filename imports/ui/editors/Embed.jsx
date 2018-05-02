@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import IframeLoader from '../IFRAME'
-import Paper from 'material-ui/Paper';
+import Paper from 'material-ui/Paper'
+import parseIcon from '../TypeIcons'
 
 const floatingLabelStyle = {
   color: 'black',
@@ -103,7 +104,7 @@ class EmbedEditor extends Component {
   render() {
     return (
       <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-        <h3 className="paperHead">Media url</h3>
+        <h3 className="paperHead">{parseIcon('Embed', {height:50,width:50, color:'white'})} Media url</h3>
         <TextField
           floatingLabelStyle={floatingLabelStyle}
           floatingLabelText={"Paste or enter an embed url"}

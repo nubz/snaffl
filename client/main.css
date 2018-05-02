@@ -7,6 +7,12 @@ body {
 	font-size: 20px;
 }
 
+h1 {
+    font-size: 36px;
+    text-indent: 30px;
+    margin-bottom: 0;
+}
+
 h1, h2, {
 	font-weight: 300;
 	font-family: 'Chewy', cursive;
@@ -16,11 +22,22 @@ h3, h4, h5, h6 {
 	font-weight: 300;
 }
 
+.container header {
+    background: #6420ff;
+    color: white;
+    padding: 35px 30px 10px 30px;
+    margin: -30px -38px;
+}
+
 h3.paperHead {
     border-bottom: 1px solid black;
-    background-color: #eeeeee;
+    background-color: #651FFF;
     margin: -30px -30px 30px -30px;
     padding: 30px;
+    padding-left: 90px;
+    font-size: 2em;
+    color:  white;
+    position: relative;
 }
 
 h3.paperHeadOther {
@@ -28,7 +45,15 @@ h3.paperHeadOther {
     color: white;
     margin: -30px -30px 30px -30px;
     padding: 30px;
+    padding-left: 90px;
     border-bottom: 1px solid black;
+    font-size: 2em;
+    position: relative;
+}
+
+h3.paperHead svg, h3.paperHeadOther svg {
+    position: absolute;
+    left: 30px;
 }
 
 h3.iconHead {
@@ -44,6 +69,8 @@ h3:after {
 
 .imagePreview {
     float: right;
+    padding-top: 200px;
+    text-align: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -62,8 +89,10 @@ p {
 }
 
 header > h1 {
-    max-width: 960px;
-    margin: 20px auto;
+    max-width: 940px;
+    margin: 10px auto;
+    font-weight: normal;
+    font-size: 1.3em;
 }
 
 #content-wrapper > div {
@@ -90,11 +119,23 @@ header > h1 {
     font-weight: normal;
 }
 
-@media (max-width: 655px) {
-    h2.toolbar-title {
-        font-size: 0.8em;
-    }
+.splitPaper {
+    overflow: hidden;
 }
+
+.splitLeft {
+    float: left;
+    max-width: 30%;
+}
+
+.splitRight {
+    float: left;
+    width: 60%;
+    min-height: 500px;
+    margin-left: 95px;
+    background-color: '#eee'
+}
+
 
 form.accounts {
 	max-width: 600px;
@@ -204,4 +245,27 @@ footer {
     padding-left: 1em;
     font-size: 75%;
     color:#666;
+}
+
+@media (max-width: 655px) {
+    h2.toolbar-title {
+        font-size: 0.8em;
+    }
+    h3.paperHead {
+        font-size: 1.3em;
+    }
+
+    .imagePreview {
+        float: none;
+        margin: 5px;
+        width: 100%;
+        height: 250px;
+    }
+
+    .splitLeft, .splitRight {
+        float: none;
+        max-width: 100%;
+        width: 100%;
+        margin: 10px 0;
+    }
 }

@@ -289,13 +289,13 @@ class AddCard extends Component {
             ''
             : <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 
-              <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50})} {this.state.cardType} info</h3>
+              <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50,color: 'white'})} {this.state.cardType} info</h3>
 
 
 
               {this.state.uploading ?
                 <div className="imagePreview">
-                  <CircularProgress size={60} thickness={7}/>
+                  <CircularProgress style={{margin:'auto'}} size={60} thickness={7}/>
                 </div>
                 :
                 <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
@@ -341,7 +341,7 @@ class AddCard extends Component {
           </div>
 
           <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-            <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50})} Publishing details</h3>
+            <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50,color: 'white'})} Publishing details</h3>
 
             <Toggle
               label="Record posting location"
