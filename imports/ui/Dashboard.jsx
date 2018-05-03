@@ -5,8 +5,11 @@ import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
 import ActionLockOutline from 'material-ui/svg-icons/action/lock-outline'
 import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
-import Subheader from 'material-ui/Subheader'
 import CircularProgress from 'material-ui/CircularProgress'
+import parseIcon from "./TypeIcons";
+import CardListQueryContainer from '../containers/CardListQueryContainer'
+
+const startTime = moment().subtract(1, 'hours').toDate()
 
 const styles = {
   panel: {
@@ -54,59 +57,63 @@ class Dashboard extends Component {
  
   render() {
     return (
-      <div>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
-          <Badge
-            badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
-            style={styles.count}
-          >
-            {
-              !this.props.publicLoading ? 
-              this.props.publicCardCount :
-              <CircularProgress size={60} thickness={7} />
-            }
-            <span style={styles.panelText}>Public Cards</span>
-          </Badge>
+      <div className="main-bg">
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHeadOther">{parseIcon('Recent', {height:50,width:50,color: 'white'})} Content Stats</h3>
+          <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
+            <Badge
+              badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}
+              style={styles.count}
+            >
+              {
+                !this.props.publicLoading ?
+                this.props.publicCardCount :
+                <CircularProgress size={60} thickness={7} />
+              }
+              <span style={styles.panelText}>Public Cards</span>
+            </Badge>
+          </Paper>
+          <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateCardsClick}>
+            <Badge
+              badgeContent={<IconButton tooltip="Private Cards"><ActionLockOutline /></IconButton>}
+              style={styles.count}
+            >
+              {
+                !this.props.privateLoading ?
+                this.props.privateCardCount :
+                <CircularProgress size={60} thickness={7} />
+              }
+              <span style={styles.panelText}>Private Cards</span>
+            </Badge>
+          </Paper>
+          <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicDecksClick}>
+            <Badge
+              badgeContent={<IconButton tooltip="Public Decks"><ActionLockOpen /></IconButton>}
+              style={styles.count}
+            >
+              {
+                !this.props.loading ?
+                this.props.publicDeckCount :
+                <CircularProgress size={60} thickness={7} />
+              }
+              <span style={styles.panelText}>Public Decks</span>
+            </Badge>
+          </Paper>
+          <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateDecksClick}>
+            <Badge
+              badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
+              style={styles.count}
+            >
+              {
+                !this.props.decksLoading ?
+                this.props.privateDeckCount :
+                <CircularProgress size={60} thickness={7} />
+              }
+              <span style={styles.panelText}>Private Decks</span>
+            </Badge>
+          </Paper>
         </Paper>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateCardsClick}>
-          <Badge
-            badgeContent={<IconButton tooltip="Private Cards"><ActionLockOutline /></IconButton>}
-            style={styles.count}
-          >
-            {
-              !this.props.privateLoading ? 
-              this.props.privateCardCount :
-              <CircularProgress size={60} thickness={7} />
-            }
-            <span style={styles.panelText}>Private Cards</span>
-          </Badge>
-        </Paper>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicDecksClick}>
-          <Badge
-            badgeContent={<IconButton tooltip="Public Decks"><ActionLockOpen /></IconButton>}
-            style={styles.count}
-          >
-            {
-              !this.props.loading ? 
-              this.props.publicDeckCount :
-              <CircularProgress size={60} thickness={7} />
-            }
-            <span style={styles.panelText}>Public Decks</span>
-          </Badge>
-        </Paper>
-        <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePrivateDecksClick}>
-          <Badge
-            badgeContent={<IconButton tooltip="Private Decks"><ActionLockOutline /></IconButton>}
-            style={styles.count}
-          >
-            {
-              !this.props.decksLoading ? 
-              this.props.privateDeckCount :
-              <CircularProgress size={60} thickness={7} />
-            }
-            <span style={styles.panelText}>Private Decks</span>
-          </Badge>
-        </Paper>
+        <CardListQueryContainer createdAt={{$gt: startTime}} title="Recent cards" owner={Meteor.userId()}/>
       </div>
     )
   }

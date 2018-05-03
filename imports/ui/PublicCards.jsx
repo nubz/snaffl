@@ -12,6 +12,8 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar'
 import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import parseIcon from './TypeIcons'
+import Paper from 'material-ui/Paper'
+import CardListQueryContainer from '../containers/CardListQueryContainer'
 
 class PublicCards extends Component {
 
@@ -64,10 +66,11 @@ class PublicCards extends Component {
   render() {
     const iconStyle = {color: "white", padding:10}
     return (
-        <div style={{boxShadow: 'none'}}>
+      <div className="main-bg">
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHeadOther">{parseIcon('MultiDeck', {height:50,width:50,color: 'white'})} Public Cards</h3>
           <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
-              <h2 className={"toolbar-title"}>Public Cards</h2>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
                 <MenuItem value={"All"} primaryText="All types of card" />
                 {this.renderCardTypes()}
@@ -104,10 +107,11 @@ class PublicCards extends Component {
                   </GridTile>
                 ))}
               </GridList> 
-          : <CardList cards={this.state.publicCards} /> 
+          : <CardListQueryContainer  headless={true} owner={{$ne: Meteor.userId()}} access={'public'} />
           }
           </div>
         }
+        </Paper>
         </div>
     )
   }

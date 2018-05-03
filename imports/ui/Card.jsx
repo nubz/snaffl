@@ -158,7 +158,7 @@ export default class Card extends Component {
               onLoad={this.onImgLoad.bind(this)} 
               src={images.medium} 
               alt={this.state.card.title}
-              style={{minWidth: '100%'}}
+              style={{width: '100%'}}
               onClick={this.handleLightboxOpen} 
             /> : ''
         }
