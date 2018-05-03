@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {List} from 'material-ui/List'
 import SnapdeckListItem from './SnapdeckListItem.jsx'
 import Snackbar from 'material-ui/Snackbar'
 import parseIcon from "./TypeIcons"
@@ -71,7 +70,8 @@ DeckList.propTypes = {
 
 DeckList.defaultProps = {
   cardId: "",
-  deckId: ""
+  deckId: "",
+  title: 'Decks'
 }
  
 export default DeckList

@@ -150,7 +150,7 @@ export default class Card extends Component {
     let createdAgo = moment(this.state.card.createdAt).fromNow()
 
     return (
-      <div style={styles.formStyle}>
+      <div className="main-bg">
       <Paper style={{padding: 20}}>
         <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} {this.state.card.title}</h3>
         { images ?
@@ -169,24 +169,13 @@ export default class Card extends Component {
             parseContent(this.state.card.cardType, {content: this.state.card.content, card: this.state.card}) : '' }
         </div>
 
-        { owned ? 
-          <div>
-            <RaisedButton 
-              label="Delete" 
-              onClick={this.handleOpen} />
-            <RaisedButton 
-              label="Edit" 
-              onClick={this.handleEditRequest} />
-          </div> : ''
-        }
-
         <Dialog
           title={'Delete "' + title + '"'}
           actions={actions}
           modal={true}
           open={this.state.open}
         >
-          Confirm you want to permanently delete this SnapCard.
+          Confirm you want to permanently delete this card.
         </Dialog>
 
         <FullscreenDialog
@@ -222,6 +211,22 @@ export default class Card extends Component {
           style={{'fontWeight': 700}}
         />
       </Paper>
+
+      { owned ?
+        <Paper style={{padding: 20}}>
+          <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Actions</h3>
+          <RaisedButton
+            label="Manage Access"
+            onClick={this.handleEditRequest} />
+          <RaisedButton
+            label="Delete"
+            onClick={this.handleOpen} />
+          <RaisedButton
+            label="Edit"
+            onClick={this.handleEditRequest} />
+        </Paper> : ''
+      }
+
       </div>
     )
   }

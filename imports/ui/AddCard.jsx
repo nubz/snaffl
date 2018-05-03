@@ -282,7 +282,7 @@ class AddCard extends Component {
 
   render() {
     return (
-      <div style={styles.formStyle}>
+      <div className="main-bg">
         <form onSubmit={this.handleSubmit.bind(this)}>
 
           {this.state.cardType === 'Embed' ?

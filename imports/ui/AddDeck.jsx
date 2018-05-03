@@ -150,7 +150,7 @@ class AddDeck extends Component {
  
   render() {
     return (
-      <div style={styles.formStyle}>
+      <div className="main-bg">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 

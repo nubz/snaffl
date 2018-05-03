@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import CardList from './CardList'
+import CardListQueryContainer from '/imports/containers/CardListQueryContainer'
 import CircularProgress from 'material-ui/CircularProgress'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
@@ -14,6 +14,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar'
 import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import parseIcon from './TypeIcons'
+import Paper from 'material-ui/Paper'
 
 const styles = {
   tabStyle: {textTransform: 'none', fontWeight: 700},
@@ -86,6 +87,8 @@ class MyCards extends Component {
     const iconStyle = {color: "white", padding:10}
     return (
         <div className="main-bg">
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHeadOther">{parseIcon('MultiDeck', {height:50,width:50,color: 'white'})} My Cards</h3>
           <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>
@@ -110,7 +113,7 @@ class MyCards extends Component {
             tabItemContainerStyle={styles.tabItem}
           >
             <Tab label={<span>Public Cards</span>} value="public">
-                { this.state.mode == 'grid' ? 
+                { this.state.mode === 'grid' ?
                     <GridList
                       cellHeight={180}
                       cols={3}
@@ -129,7 +132,7 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-                : <CardList cards={this.state.publicCards} /> 
+                : <CardListQueryContainer headless={true} owner={Meteor.userId()} access={'public'} />
                 }
             </Tab>
             <Tab label={<span>Private Cards</span>} value="private">
@@ -152,11 +155,12 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-             :   <CardList cards={this.state.privateCards} />
+             :   <CardListQueryContainer headless={true} owner={Meteor.userId()} access={'private'} />
              }
             </Tab>
           </Tabs>
         }
+          </Paper>
         </div>
     )
   }

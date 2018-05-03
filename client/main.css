@@ -23,10 +23,14 @@ h3, h4, h5, h6 {
 }
 
 .container header {
+    position: absolute;
     background: rgb(75, 24, 190);
     color: white;
-    padding: 35px 30px 10px 30px;
-    margin: -30px -38px;
+    padding-bottom: 5px;
+    width: 100%;
+    left: 0;
+    top: 60px;
+    z-index: -1;
 }
 
 h3.paperHead {
@@ -92,13 +96,16 @@ header > h1 {
     max-width: 940px;
     margin: 10px auto;
     font-weight: normal;
-    font-size: 1.3em;
-    font-style: italic;
+    font-size: 1.1em;
+}
+
+input {
+    caret-color: #651FFF;
 }
 
 #content-wrapper > div {
     max-width: 960px;
-    margin: 10px auto;
+    margin: 40px auto;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -106,7 +113,7 @@ header > h1 {
 div.main-bg {
     padding: 20px;
     max-width: 960px;
-    margin: 10px auto;
+    margin: 40px auto;
     background: #ffffffe3;
 }
 
