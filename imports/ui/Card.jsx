@@ -31,9 +31,10 @@ const styles = {
     width: '100%'
   },
   meta: {
-    backgroundColor: '#eee', 
+    backgroundColor: '#1e0e40',
+    color: '#ffffff',
     padding: 10, 
-    fontSize: 10
+    fontSize: 16
   },
   formStyle: {
     padding: 20,
@@ -188,7 +189,7 @@ export default class Card extends Component {
     return (
       <div className="main-bg">
       <Paper style={{padding: 20}}>
-        <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} {this.state.card.title}</h3>
+        <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} {this.state.card.title}<span>{this.state.card.cardType} card created {createdAgo}</span></h3>
         { images ?
             <img 
               onLoad={this.onImgLoad.bind(this)} 
@@ -224,13 +225,6 @@ export default class Card extends Component {
           <div style={styles.lightboxContainer} />
         </FullscreenDialog>
 
-        <div className="cardSection">
-          <h3>API</h3>
-          <pre style={styles.meta}>
-            <code><a href={"/api/cards/" + this.state.card._id} target="_blank">{protocol}//{host}{port}/api/cards/{this.state.card._id}</a></code>
-          </pre>
-        </div>
-
         { this.state.card.lat ?
           <div className="cardSection">
             <h3>Posting location</h3>
@@ -248,18 +242,27 @@ export default class Card extends Component {
         />
       </Paper>
 
+      <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+        <h3 className="paperHead cardHead">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} API address</h3>
+        <pre style={styles.meta}>
+          <code><a href={"/api/cards/" + this.state.card._id} target="_blank" style={{color:'white'}}>{protocol}//{host}{port}/api/cards/{this.state.card._id}</a></code>
+        </pre>
+        <RaisedButton
+          label="Manage Access"
+          onClick={this.handleEditRequest}
+          style={{marginRight:10}}/>
+      </Paper>
+
       { owned ?
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHead editHead">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Card actions</h3>
           <RaisedButton
-            label="Manage Access"
-            onClick={this.handleEditRequest} />
+            label="Edit"
+            onClick={this.handleEditRequest} primary={true}
+            style={{marginRight:10}}/>
           <RaisedButton
             label="Delete"
-            onClick={this.handleOpen} />
-          <RaisedButton
-            label="Edit"
-            onClick={this.handleEditRequest} />
+            onClick={this.handleOpen}/>
         </Paper> : ''
       }
 

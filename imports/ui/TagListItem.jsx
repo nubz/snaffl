@@ -4,7 +4,6 @@ import Chip from 'material-ui/Chip'
 
 export default class TagListItem extends Component {
   constructor(props) {
-    console.log('TagListItem with props', props)
     super(props);
   }
 

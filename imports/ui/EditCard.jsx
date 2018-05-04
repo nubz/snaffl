@@ -87,7 +87,7 @@ class EditCard extends Component {
 
     const data = {
       title: inputs.title.trim(),
-      description: inputs.description.trim(),
+      description: inputs.description ? inputs.description.trim() : '',
       access: inputs.access,
       images: this.state.images,
       image: this.state.image,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import CardListQueryContainer from '/imports/containers/CardListQueryContainer'
+import CardList from './CardList'
 import CircularProgress from 'material-ui/CircularProgress'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
@@ -18,7 +18,7 @@ import Paper from 'material-ui/Paper'
 
 const styles = {
   tabStyle: {textTransform: 'none', fontWeight: 700},
-  tabItem: { }
+  tabItem: { backgroundColor: '#F44336' }
 }
 
 class MyCards extends Component {
@@ -50,8 +50,8 @@ class MyCards extends Component {
   handleTypeChange = (e, i, v) => {
     this.setState({
       typeValue: v,
-      publicCards: v === "All" ? this.props.publicCards : this.props.publicCards.filter(card => card.cardType == v),
-      privateCards: v === "All" ? this.props.privateCards : this.props.privateCards.filter(card => card.cardType == v)
+      publicCards: v === "All" ? this.props.publicCards : this.props.publicCards.filter(card => card.cardType === v),
+      privateCards: v === "All" ? this.props.privateCards : this.props.privateCards.filter(card => card.cardType === v)
     })
   }
 
@@ -132,7 +132,7 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-                : <CardListQueryContainer headless={true} owner={Meteor.userId()} access={'public'} />
+                : <CardList data={this.state.publicCards} headless={true} />
                 }
             </Tab>
             <Tab label={<span>Private Cards</span>} value="private">
@@ -155,7 +155,7 @@ class MyCards extends Component {
                         </GridTile>
                       ))}
                     </GridList> 
-             :   <CardListQueryContainer headless={true} owner={Meteor.userId()} access={'private'} />
+             :   <CardList data={this.state.privateCards} headless={true} />
              }
             </Tab>
           </Tabs>
