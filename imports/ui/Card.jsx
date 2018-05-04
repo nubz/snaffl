@@ -6,10 +6,13 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import MapCardContainer from '../containers/MapCardContainer'
+import TagsForCardQueryContainer from '../containers/TagsForCardQueryContainer'
 import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import parseContent from './TypeContent'
 import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
+import TextField from 'material-ui/TextField'
+import TagCards from "../api/tagCards/collection";
 
 const cardStyle = {
   marginBottom: 10,
@@ -37,6 +40,11 @@ const styles = {
     maxWidth: 960,
     margin: '10px auto',
     background: '#ffffffe3'
+  },
+  floatingLabelStyle: {
+    fontSize: '28px',
+    color: 'black',
+    marginTop: '-10px'
   }
 }
 
@@ -118,14 +126,42 @@ export default class Card extends Component {
     })
   }
 
+  handleTagTyping(e) {
+    this.setState({
+      tagValue: e.currentTarget.value
+    })
+  }
+
+  handleTagChange(event, value) {
+    if (this.state.tagValue.length) {
+      Meteor.call('touchTag', this.state.tagValue, (error, result) => {
+        if (!error) {
+          TagCards.insert({
+            cardId: this.state.card._id,
+            tagId: result
+          }, (err, tagCardId) => {
+            const cardLink = TagCards.getLink(tagCardId, 'card');
+            cardLink.set(this.state.card._id);
+            const tagLink = TagCards.getLink(tagCardId, 'tag');
+            tagLink.set(result)
+            this.setState({
+              tagValue: ''
+            })
+          })
+        }
+      })
+    }
+
+  }
+
   render() {
     const owned = this.state.card.owner === Meteor.userId()
     const title = this.state.card.title
     let images = this.state.card.images || false
     const host = window.location.hostname
     const protocol = window.location.protocol
-    const port = window.location.port === "80" ? '' : ':' + window.location.port
-      
+    const port = window.location.port ? ':' + window.location.port : ''
+
     const lightBoxAction = [
         <FlatButton
           label="Cancel"
@@ -213,8 +249,8 @@ export default class Card extends Component {
       </Paper>
 
       { owned ?
-        <Paper style={{padding: 20}}>
-          <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Actions</h3>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead editHead">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Card actions</h3>
           <RaisedButton
             label="Manage Access"
             onClick={this.handleEditRequest} />
@@ -226,6 +262,29 @@ export default class Card extends Component {
             onClick={this.handleEditRequest} />
         </Paper> : ''
       }
+
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead tags">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Tags</h3>
+          <TagsForCardQueryContainer cardId={this.state.card._id} owned={owned} />
+          { owned ?
+            <div style={{marginBottom: 20}}>
+              <TextField
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelText="Add a tag"
+                hintText="Add one tag at a time"
+                floatingLabelFixed={true}
+                id="addTag"
+                data-field="tag"
+                value={this.state.tagValue}
+                onChange={this.handleTagTyping.bind(this)}
+              />
+              <RaisedButton
+                label="Add tag"
+                onClick={this.handleTagChange.bind(this)}
+              />
+            </div> : ''
+          }
+        </Paper>
 
       </div>
     )

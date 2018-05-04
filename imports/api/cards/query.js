@@ -44,6 +44,9 @@ export default createQuery({
     author: {
       username: 1
     },
-    content: 1
+    content: 1,
+    tagIds: {
+      tagId: 1
+    }
   }
 });

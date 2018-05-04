@@ -11,7 +11,7 @@ import { Session } from 'meteor/session'
 import NavContainer from '../containers/NavContainer'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { deepPurpleA400, deepPurpleA600, grey400, green700, green500, deepOrange500 } from 'material-ui/styles/colors'
+import { deepPurpleA400, deepPurpleA600, grey400, grey50, green700, green500, deepOrange500 } from 'material-ui/styles/colors'
 
 const customTheme = {
   palette: {
@@ -19,7 +19,8 @@ const customTheme = {
     primary2Color: deepPurpleA600,
     primary3Color: grey400,
     pickerHeaderColor: deepOrange500
-  }
+  },
+  chip: { deleteIconColor: grey50 }
 };
 
 const theme = getMuiTheme(customTheme);
@@ -50,7 +51,7 @@ function logOut() {
   })
 }
 
-class Login extends Component {
+class LoginButton extends Component {
   static muiName = 'FlatButton';
 
   render() {
@@ -111,7 +112,7 @@ export default class MainLayout extends Component {
           <AppBar
             title={<span style={styles.title}>SNAFFL</span>}
             onTitleClick={this.goHome}
-            iconElementRight={Session.get('logged') ? <Logged /> : <Login />}
+            iconElementRight={Session.get('logged') ? <Logged /> : <LoginButton />}
             onLeftIconButtonClick={this.handleMenuToggle}
             onRightIconButtonClick={Session.get('logged') ? () => false : this.login }
           />

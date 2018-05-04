@@ -44,7 +44,17 @@ h3.paperHead {
     position: relative;
 }
 
-h3.paperHeadOther {
+h3.paperHead.tags {
+    background-color: #1e0e40;;
+    color: white;
+}
+
+h3.paperHead.decks {
+    background-color: #689F38;
+    color: white;
+}
+
+h3.paperHeadOther, h3.paperHead.editor {
     background-color: #F44336;
     color: white;
     margin: -30px -30px 30px -30px;

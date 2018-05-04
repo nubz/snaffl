@@ -6,14 +6,18 @@ import CircularProgress from 'material-ui/CircularProgress'
 class TagList extends Component {
 
   constructor(props) {
+    console.log('TagList props', props)
     super(props)
   }
 
   renderTags() {
-    return this.props.tags.map((tag) => (
+    if (this.props.data.length === 0) {
+      return (<p>There are no tags associated with this card.</p>)
+    }
+    return this.props.data.map((tag) => (
       <TagListItem 
-        key={tag._id} 
-        tag={tag}
+        key={tag.tagId}
+        tag={tag.tag}
         cardId={this.props.cardId}
         deckId={this.props.deckId}
         owned={this.props.owned}
@@ -23,7 +27,7 @@ class TagList extends Component {
  
   render() {
     return (
-      <div>
+      <div style={{marginBottom: 30}}>
       { this.props.loading ? 
         <CircularProgress size={60} thickness={7} />
       :
@@ -36,11 +40,9 @@ class TagList extends Component {
 }
 
 TagList.propTypes = {
-  tags: PropTypes.array.isRequired,
   cardId: PropTypes.string,
   deckId: PropTypes.string,
-  owned: PropTypes.bool,
-  loading: PropTypes.bool
+  owned: PropTypes.bool
 }
  
 export default TagList

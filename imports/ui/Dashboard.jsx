@@ -9,7 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import parseIcon from "./TypeIcons";
 import CardListQueryContainer from '../containers/CardListQueryContainer'
 
-const startTime = moment().subtract(1, 'hours').toDate()
+const startTime = moment().subtract(7, 'days').toDate()
 
 const styles = {
   panel: {
