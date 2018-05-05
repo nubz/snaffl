@@ -19,7 +19,7 @@ export default class TagListItem extends Component {
 
   render() {
     return (
-      <Chip style={{display:'inline-block',marginRight:5, marginBottom: 5, backgroundColor: '#1e0e40'}} labelColor={"white"} onClick={this.viewCards.bind(this)} onRequestDelete={this.props.owned ? this.handleRequestDelete.bind(this) : null}>
+      <Chip style={{display:'inline-block',marginRight:5, marginBottom: 5, backgroundColor: '#1e0e40', textTransform: 'uppercase'}} labelColor={"white"} onClick={this.viewCards.bind(this)} onRequestDelete={this.props.owned ? this.handleRequestDelete.bind(this) : null}>
         {this.props.tag.tag}
       </Chip>
     );

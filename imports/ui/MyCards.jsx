@@ -17,8 +17,8 @@ import parseIcon from './TypeIcons'
 import Paper from 'material-ui/Paper'
 
 const styles = {
-  tabStyle: {textTransform: 'none', fontWeight: 700},
-  tabItem: { backgroundColor: '#F44336' }
+  tabStyle: {textTransform: 'none', color: 'rgb(244, 67, 54)', fontWeight: 700},
+  tabItem: { backgroundColor: 'white', color: 'rgb(244, 67, 54)' }
 }
 
 class MyCards extends Component {
@@ -110,9 +110,10 @@ class MyCards extends Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
+            style={{margin: '8px -18px'}}
             tabItemContainerStyle={styles.tabItem}
           >
-            <Tab label={<span>Public Cards</span>} value="public">
+            <Tab label={<span style={{color: 'rgb(244, 67, 54)'}}>Public Cards</span>} value="public">
                 { this.state.mode === 'grid' ?
                     <GridList
                       cellHeight={180}
@@ -135,7 +136,7 @@ class MyCards extends Component {
                 : <CardList data={this.state.publicCards} headless={true} />
                 }
             </Tab>
-            <Tab label={<span>Private Cards</span>} value="private">
+            <Tab label={<span style={{color: 'rgb(244, 67, 54)'}}>Private Cards</span>} value="private">
             { this.state.mode == 'grid'? 
                     <GridList
                       cellHeight={180}

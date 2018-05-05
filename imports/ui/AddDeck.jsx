@@ -154,7 +154,7 @@ class AddDeck extends Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 
-            <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} {this.props.deckType} info</h3>
+            <h3 className="paperHead deckHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} {this.props.deckType} info</h3>
 
             {this.state.uploading ?
               <div className="imagePreview">
@@ -201,7 +201,7 @@ class AddDeck extends Component {
 
           { this.props.deckType === 'TagDeck' || this.props.deckType === 'TagMap' ?
             <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-              <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Subscribe to tag</h3>
+              <h3 className="paperHead tags">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Subscribe to tag</h3>
                 <div className="form-group">
                   <TextField
                     floatingLabelStyle={styles.floatingLabelStyle}
@@ -217,7 +217,7 @@ class AddDeck extends Component {
             : ''}
             <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 
-              <h3 className="paperHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Publishing detail</h3>
+              <h3 className="paperHead deckHead">{parseIcon(this.props.deckType, {height:50,width:50,color: 'white'})} Publishing detail</h3>
               <Toggle
                 label="Public access"
                 onToggle={this.handleAccessChange}

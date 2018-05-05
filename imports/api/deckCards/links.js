@@ -1,6 +1,6 @@
 import DeckCards from './collection';
-import Cards from '../cards/collection'
-import Decks from '../decks/collection'
+import Cards from '/imports/api/cards/collection'
+import Decks from '/imports/api/decks/collection'
 
 DeckCards.addLinks({
   'card': {

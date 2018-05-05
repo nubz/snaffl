@@ -7,12 +7,18 @@ import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import MapCardContainer from '../containers/MapCardContainer'
 import TagsForCardQueryContainer from '../containers/TagsForCardQueryContainer'
+import DecksForCardQueryContainer from '../containers/DecksForCardQueryContainer'
+import DeckMenuQueryContainer from '../containers/DeckMenuQueryContainer'
 import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import parseContent from './TypeContent'
 import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
 import TextField from 'material-ui/TextField'
-import TagCards from "../api/tagCards/collection";
+import TagCards from "../api/tagCards/collection"
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu'
+import DeckCards from "../api/deckCards/collection"
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 
 const cardStyle = {
   marginBottom: 10,
@@ -221,6 +227,7 @@ export default class Card extends Component {
           onRequestClose={() => this.setState({ lightbox: false })}
           open={this.state.lightbox}
           style={{backgroundColor: 'rgba(0,0,0,.9)'}}
+          appBarStyle={{backgroundColor: '#F44336'}}
         >
           <div style={styles.lightboxContainer} />
         </FullscreenDialog>
@@ -255,7 +262,7 @@ export default class Card extends Component {
 
       { owned ?
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHead editHead">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Card actions</h3>
+          <h3 className="paperHead editHead">{parseIcon('Edit', {height:50,width:50,color: 'white'})} Edit card</h3>
           <RaisedButton
             label="Edit"
             onClick={this.handleEditRequest} primary={true}
@@ -267,7 +274,7 @@ export default class Card extends Component {
       }
 
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHead tags">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} Tags</h3>
+          <h3 className="paperHead tags">{parseIcon('TagDeck', {height:50,width:50,color: 'white'})} Tags</h3>
           <TagsForCardQueryContainer cardId={this.state.card._id} owned={owned} />
           { owned ?
             <div style={{marginBottom: 20}}>
@@ -287,6 +294,15 @@ export default class Card extends Component {
               />
             </div> : ''
           }
+        </Paper>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead deckHead">{parseIcon('TagDeck', {height:50,width:50,color: 'white'})} Decks added to</h3>
+
+          { owned ?
+            <DeckMenuQueryContainer cardId={this.props._id} owner={Meteor.userId()} />
+            : ''
+          }
+          <DecksForCardQueryContainer cardId={this.props._id} headless={true}/>
         </Paper>
 
       </div>

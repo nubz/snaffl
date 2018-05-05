@@ -5,7 +5,6 @@ import DeckDecks from '../api/deckDecks/collection'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
-import parseIcon from './TypeIcons'
 import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
 import TaggedCardsContainer from '../containers/TaggedCardsContainer'
 import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
@@ -14,6 +13,8 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
 import CircularProgress from 'material-ui/CircularProgress'
+import Paper from 'material-ui/Paper';
+import parseIcon from './TypeIcons'
 
 const styles = {
   meta: {
@@ -107,10 +108,14 @@ export default class Deck extends Component {
           onClick={this.deleteThisDeck.bind(this)}
         />,
       ];
+    const createdAgo = moment(deck.createdAt).fromNow()
 
     return (
-      <div className="container">
-            <h2>{deck.deckType}: {deck.title}</h2>
+      <div className="main-bg">
+        <Paper style={{padding: 20}}>
+          <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
+
+          <h2>{deck.deckType}: {deck.title}</h2>
             {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
             <p>{deck.description}</p>
             {owned ?
@@ -143,6 +148,7 @@ export default class Deck extends Component {
             >
               Confirm you want to permanently delete this deck.
             </Dialog>
+        </Paper>
       </div>
     )
   }
