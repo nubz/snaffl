@@ -19,6 +19,10 @@ export default createQuery({
         filters.createdAt = params.createdAt
       }
 
+      if (params.limit) {
+        options.limit = parseInt(params.limit, 10)
+      }
+
       options.sort = {createdAt: -1}
     },
     title: 1,

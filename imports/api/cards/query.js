@@ -22,7 +22,15 @@ export default createQuery({
         filters.access = params.access;
       }
 
-      options.sort = {createdAt: -1}
+      if (params.sort) {
+        options.sort = params.sort;
+      } else {
+        options.sort = {createdAt: -1}
+      }
+
+      if (params.limit) {
+        options.limit = parseInt(params.limit, 10)
+      }
     },
     title: 1,
     description: 1,

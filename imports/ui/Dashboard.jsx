@@ -8,6 +8,7 @@ import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
 import CircularProgress from 'material-ui/CircularProgress'
 import parseIcon from "./TypeIcons";
 import CardListQueryContainer from '../containers/CardListQueryContainer'
+import DeckListQueryContainer from '../containers/DeckListQueryContainer'
 
 const startTime = moment().subtract(7, 'days').toDate()
 
@@ -113,7 +114,8 @@ class Dashboard extends Component {
             </Badge>
           </Paper>
         </Paper>
-        <CardListQueryContainer createdAt={{$gt: startTime}} title="Recent cards" owner={Meteor.userId()}/>
+        <CardListQueryContainer createdAt={{$gt: startTime}} limit="3" title="Recent cards" owner={Meteor.userId()}/>
+        <DeckListQueryContainer createdAt={{$gt: startTime}} limit="3" title="Recent decks" owner={Meteor.userId()}/>
       </div>
     )
   }
