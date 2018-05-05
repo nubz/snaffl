@@ -7,6 +7,7 @@ import parseIcon from './TypeIcons'
 class CardList extends Component {
 
   constructor(props) {
+    console.log('cardlist props', props)
     super(props)
     this.state = {
       open: false,
@@ -15,6 +16,14 @@ class CardList extends Component {
   }
 
   renderCards() {
+    if (this.props.deckId) {
+      return this.props.data.map((link) => (
+        <SnapCardListItem
+          key={link.cardId}
+          card={link.card}
+        />
+      ))
+    }
     return this.props.data.map((card) => (
       <SnapCardListItem 
         key={card._id} 

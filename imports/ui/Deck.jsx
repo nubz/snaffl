@@ -15,12 +15,14 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import CircularProgress from 'material-ui/CircularProgress'
 import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
+import CardsForDeckQueryContainer from '/imports/containers/CardsForDeckQueryContainer'
 
 const styles = {
   meta: {
-    backgroundColor: '#eee',
+    backgroundColor: '#1e0e40',
+    color: '#ffffff',
     padding: 10,
-    fontSize: 10
+    fontSize: 16
   },
 
 }
@@ -112,11 +114,13 @@ export default class Deck extends Component {
 
     return (
       <div className="main-bg">
-        <Paper style={{padding: 20}}>
+        <Paper style={{padding: 20, marginBottom: 30}}>
           <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
-
-          <h2>{deck.deckType}: {deck.title}</h2>
             {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
+          { deck.images ?
+            <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
+            : ''
+          }
             <p>{deck.description}</p>
             {owned ?
               <div>
@@ -124,21 +128,28 @@ export default class Deck extends Component {
                 <RaisedButton label="Edit" onClick={this.handleEditRequest}/>
               </div>
               : ''}
-
-            <div className="cardSection">
-              <h3>API</h3>
+        </Paper>
+        <Paper style={{padding: 20, marginBottom: 30}}>
+          <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Cards</h3>
+          <CardsForDeckQueryContainer deckId={deck._id} headless={true} />
+        </Paper>
+          <Paper style={{padding: 20}}>
+            <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} API address</h3>
               <pre style={styles.meta}>
-                <code><a href={"/api/menu/" + deck._id} target="_blank">{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
+                <code><a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
               </pre>
-            </div>
+          </Paper>
+
+
             {host === 'dev.snaffl.io' ?
-              <div className="cardSection">
+              <Paper style={{padding: 20}}>
+                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} API address</h3>
                 <h3>Snaffl.it!</h3>
                 <pre style={styles.meta}>
                 <code><a href={"http://snaffl.it/?id=" + deck._id}
                          target="_blank">http://snaffl.it/?id={deck._id}</a></code>
               </pre>
-              </div>
+              </Paper>
               : ''}
             <Dialog
               title={'Delete "' + deck.title + '"'}
@@ -148,7 +159,6 @@ export default class Deck extends Component {
             >
               Confirm you want to permanently delete this deck.
             </Dialog>
-        </Paper>
       </div>
     )
   }
