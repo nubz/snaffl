@@ -130,7 +130,7 @@ export default class Deck extends Component {
               : ''}
         </Paper>
         <Paper style={{padding: 20, marginBottom: 30}}>
-          <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Cards</h3>
+          <h3 className="paperHead cardHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Cards</h3>
           <CardsForDeckQueryContainer deckId={deck._id} headless={true} />
         </Paper>
           <Paper style={{padding: 20}}>
@@ -143,12 +143,12 @@ export default class Deck extends Component {
 
             {host === 'dev.snaffl.io' ?
               <Paper style={{padding: 20}}>
-                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} API address</h3>
-                <h3>Snaffl.it!</h3>
+                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Snaffl.it!</h3>
                 <pre style={styles.meta}>
-                <code><a href={"http://snaffl.it/?id=" + deck._id}
-                         target="_blank">http://snaffl.it/?id={deck._id}</a></code>
-              </pre>
+                  <code>
+                    <a href={"http://snaffl.it/?id=" + deck._id} target="_blank">http://snaffl.it/?id={deck._id}</a>
+                  </code>
+                </pre>
               </Paper>
               : ''}
             <Dialog

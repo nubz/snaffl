@@ -41,7 +41,7 @@ class DeckList extends Component {
     if (this.props.cardId || this.props.deckId) {
       return this.state.decks.map((link) => (
         <SnapdeckListItem
-          key={link.deck._id}
+          key={link.deckId}
           deck={link.deck}
           multiSnackBar={this.multiSnackBar.bind(this)}
           cardId={this.props.cardId}

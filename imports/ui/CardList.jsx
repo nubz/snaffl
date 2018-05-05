@@ -21,6 +21,7 @@ class CardList extends Component {
         <SnapCardListItem
           key={link.cardId}
           card={link.card}
+          deckId={this.props.deckId}
         />
       ))
     }
@@ -36,7 +37,7 @@ class CardList extends Component {
     return (
       <div>
       {this.props.headless ?
-        this.renderCards()
+        (this.props.data.length ? this.renderCards() : 'There are no cards here yet.')
         :
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHeadOther">{parseIcon('Recent', {
@@ -44,7 +45,7 @@ class CardList extends Component {
             width: 50,
             color: 'white'
           })} {this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
-          {this.renderCards()}
+          {this.props.data.length ? this.renderCards() : 'There are no cards here yet.'}
         </Paper>
       }
       </div>

@@ -7,6 +7,8 @@ import Decks from '../api/decks/collection'
 import Toggle from 'material-ui/Toggle'
 import CircularProgress from 'material-ui/CircularProgress'
 import imageApi from "../api/imageApi";
+import Paper from 'material-ui/Paper'
+import parseIcon from "./TypeIcons";
 
 const styles = {
   formStyle: {
@@ -97,31 +99,28 @@ class EditDeck extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-bg">
+
         { this.props.loading ? <CircularProgress size={60} thickness={7} /> :
-        <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-          <Toggle
-            label="Public access"
-            onToggle={this.handleAccessChange}
-            labelPosition="right"
-            style={{marginBottom: 20}}
-            toggled={this.state.access === 'public'}
-          />
-          { this.state.uploading ?
-            <CircularProgress size={60} thickness={7} />
-            :
-            <div className="form-group">
-              { this.state.images ?
-                <img style={styles.imagePreview} src={this.state.images.small} />
-                : ''}
-              <RaisedButton
-                secondary={true}
-                containerElement='label' // <-- Just add me!
-                label={ this.state.imagePreview === '' ? 'Upload a cover image' : 'Upload a different image' }>
-                <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)} />
-              </RaisedButton>
-            </div>
-          }
+
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+            <h3 className="paperHead editHead">{parseIcon(this.state.inputs.deckType, {height:50,width:50,color: 'white'})} {this.state.inputs.deckType} info</h3>
+            {this.state.uploading ?
+              <div className="imagePreview">
+                <CircularProgress style={{margin:'auto'}} size={60} thickness={7}/>
+              </div>
+              :
+              <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
+                <RaisedButton
+                  secondary={true}
+                  containerElement='label'
+                  label={this.state.images ? 'Upload a different image' : 'Upload a cover image' }>
+                  <input type="file" style={styles.fileInput} onChange={this.uploadFiles.bind(this)}/>
+                </RaisedButton>
+              </div>
+            }
+
           <div className="form-group">
             <TextField
               floatingLabelStyle={styles.floatingLabelStyle}
@@ -147,10 +146,23 @@ class EditDeck extends Component {
               value={this.state.inputs.description}
             />
           </div>
+          </Paper>
 
-          <div className="form-group">
-            <RaisedButton type="submit" label="Save Edits" primary={true} />
-          </div>
+            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+              <h3 className="paperHead editHead">{parseIcon(this.state.inputs.deckType, {height:50,width:50,color: 'white'})} Publishing detail</h3>
+              <Toggle
+                label="Public access"
+                onToggle={this.handleAccessChange}
+                labelPosition="right"
+                style={{marginBottom: 20}}
+                toggled={this.state.access === 'public'}
+              />
+              <div className="form-group">
+                <RaisedButton type="submit" label="Save Edits" primary={true} />
+              </div>
+            </Paper>
+
+
           <Snackbar
             open={this.state.open}
             message={this.state.message}
