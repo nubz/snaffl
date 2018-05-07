@@ -45,7 +45,8 @@ export default createQuery({
       createdAt: 1,
       owner: 1,
       image: 1,
-      images: 1
+      images: 1,
+      content: 1
     }
   }
 });

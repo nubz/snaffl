@@ -195,23 +195,26 @@ export default class Card extends Component {
 
     return (
       <div className="main-bg">
-      <Paper style={{padding: 20}}>
-        <h3 className="paperHeadOther">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} {card.title}<span>{card.cardType} card created {createdAgo}</span></h3>
-        { images ?
-            <img 
-              onLoad={this.onImgLoad.bind(this)} 
-              src={images.medium} 
-              alt={card.title}
-              style={{width: '100%'}}
-              onClick={this.handleLightboxOpen} 
-            /> : ''
-        }
+        <Paper style={{padding: 20, marginBottom: 30}}>
+          <h3 className="paperHeadOther">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} {card.title}<span>{card.cardType} card created {createdAgo}</span></h3>
+          { images ?
+              <img
+                onLoad={this.onImgLoad.bind(this)}
+                src={images.medium}
+                alt={card.title}
+                style={{width: '100%'}}
+                onClick={this.handleLightboxOpen}
+              /> : ''
+          }
 
-        <div>
           <p>{card.description}</p>
-          { card.content ?
-            parseContent(card.cardType, {content: card.content, card: card}) : '' }
-        </div>
+        </Paper>
+
+
+        <Paper style={{padding: 20, marginBottom: 30}}>
+          <h3 className="paperHead cardHead">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} {card.cardType} content</h3>
+          {parseContent(card.cardType, {content: card.content, card: card})}
+        </Paper>
 
         <Dialog
           title={'Delete "' + title + '"'}
@@ -234,11 +237,12 @@ export default class Card extends Component {
         </FullscreenDialog>
 
         { card.lat ?
-          <div className="cardSection">
+          <Paper style={{padding: 20, marginBottom: 30}}>
+            <h3 className="paperHeadOther">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} Posting location<span>Latitude: {card.lat} Longitude: {card.lng}</span></h3>
             <h3>Posting location</h3>
             <p style={styles.meta}>Latitude: {card.lat}<br />Longitude: {card.lng}</p>
             <MapCardContainer _id={card._id} />
-          </div> : ''
+          </Paper> : ''
         }
 
         <Snackbar
@@ -248,7 +252,6 @@ export default class Card extends Component {
           onRequestClose={this.handleRequestClose}
           style={{'fontWeight': 700}}
         />
-      </Paper>
 
       <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
         <h3 className="paperHead cardHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>
@@ -296,6 +299,7 @@ export default class Card extends Component {
             </div> : ''
           }
         </Paper>
+
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Decks added to</h3>
 
