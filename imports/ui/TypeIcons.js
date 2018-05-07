@@ -18,6 +18,7 @@ import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import ActionBookmarkBorder from 'material-ui/svg-icons/action/bookmark-border'
 import MapsMyLocation from 'material-ui/svg-icons/maps/my-location'
 import ActionHistory from 'material-ui/svg-icons/action/history'
+import FileCloudCircle from 'material-ui/svg-icons/file/cloud-circle'
 
 const TypeIcons = {
   'Article': ActionDescription,
@@ -38,7 +39,8 @@ const TypeIcons = {
   'Grid': ActionViewModule,
   'TagMap': MapsMyLocation,
   'TagDeck': ActionBookmarkBorder,
-  'Recent': ActionHistory
+  'Recent': ActionHistory,
+  'Cloud': FileCloudCircle
 }
 
 export default function parseIcon(typeName, style, props) {

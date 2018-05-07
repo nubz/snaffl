@@ -34,21 +34,24 @@ class CardList extends Component {
   }
  
   render() {
+    if (this.props.headless) {
+
+      return (
+        <div>
+          {this.props.data.length ? this.renderCards() : 'There are no cards here yet.'}
+        </div>
+      )
+    }
+
     return (
-      <div>
-      {this.props.headless ?
-        (this.props.data.length ? this.renderCards() : 'There are no cards here yet.')
-        :
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHeadOther">{parseIcon('Recent', {
+          <h3 className="paperHead cardHead">{parseIcon(this.props.icon, {
             height: 50,
             width: 50,
             color: 'white'
           })} {this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
           {this.props.data.length ? this.renderCards() : 'There are no cards here yet.'}
         </Paper>
-      }
-      </div>
     )
   }
 
@@ -56,12 +59,15 @@ class CardList extends Component {
 
 CardList.propTypes = {
   title: PropTypes.string,
-  headless: PropTypes.bool
+  headless: PropTypes.bool,
+  icon: PropTypes.string
+
 }
 
 CardList.defaultProps = {
   title: 'Cards',
-  headless: false
+  headless: false,
+  icon: 'Cloud'
 }
 
 export default CardList

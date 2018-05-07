@@ -20,7 +20,7 @@ class DeckList extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      data: nextProps.data
+      decks: nextProps.data
     })
   }
 
@@ -61,38 +61,39 @@ class DeckList extends Component {
   }
  
   render() {
+    if (this.props.headless) {
+
+      return (
+        <div>
+          {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
+        </div>
+      )
+    }
     return (
-      <div className="main-bg">
+      <div>
         {this.props.isLoading ?
           <CircularProgress style={{top: '25%', margin: 'auto'}} size={60} thickness={7}/>
           :
-          <div>
-            {this.props.headless ?
-              (this.props.data.length ? this.renderDecks() : 'There are no decks here yet.') :
-
-              <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-                <h3 className="paperHead deckHead">{parseIcon('Recent', {
-                  height: 50,
-                  width: 50,
-                  color: 'white'
-                })} {this.props.data.length ? this.props.title : 'As you add decks they will appear here'}</h3>
-                {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
-              </Paper>
-
-            }
-
-            <Snackbar
-              open={this.state.open}
-              message={this.state.message}
-              autoHideDuration={3000}
-              onRequestClose={this.handleRequestClose}
-              style={{'fontWeight': 700}}
-            />
-          </div>
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+            <h3 className="paperHead deckHead">
+              {parseIcon(this.props.icon, {
+                height: 50,
+                width: 50,
+                color: 'white'
+              })} {this.props.data.length ? this.props.title : 'As you add decks they will appear here'}
+            </h3>
+            {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
+          </Paper>
         }
+        <Snackbar
+          open={this.state.open}
+          message={this.state.message}
+          autoHideDuration={3000}
+          onRequestClose={this.handleRequestClose}
+          style={{'fontWeight': 700}}
+        />
       </div>
     )
-
   }
 
 }
@@ -100,13 +101,15 @@ class DeckList extends Component {
 DeckList.propTypes = {
   cardId: PropTypes.string,
   deckId: PropTypes.string,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  icon: PropTypes.string
 }
 
 DeckList.defaultProps = {
   cardId: "",
   deckId: "",
-  title: 'Decks'
+  title: 'Decks',
+  icon: 'Cloud'
 }
  
 export default DeckList

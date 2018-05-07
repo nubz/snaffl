@@ -124,8 +124,8 @@ export default class Deck extends Component {
             <p>{deck.description}</p>
             {owned ?
               <div>
-                <RaisedButton label="Delete" onClick={this.handleOpen}/>
-                <RaisedButton label="Edit" onClick={this.handleEditRequest}/>
+                <RaisedButton label="Edit" onClick={this.handleEditRequest} style={{marginRight: 10}} primary={true}/>
+                <RaisedButton label="Delete" nClick={this.handleOpen}/>
               </div>
               : ''}
         </Paper>
@@ -134,16 +134,20 @@ export default class Deck extends Component {
           <CardsForDeckQueryContainer deckId={deck._id} headless={true} />
         </Paper>
           <Paper style={{padding: 20}}>
-            <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} API address</h3>
-              <pre style={styles.meta}>
-                <code><a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
-              </pre>
+            <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>
+            <pre style={styles.meta}>
+              <code><a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
+            </pre>
+            <RaisedButton
+              label="Manage Access"
+              onClick={this.handleEditRequest}
+              style={{marginRight:10}}/>
           </Paper>
 
 
             {host === 'dev.snaffl.io' ?
               <Paper style={{padding: 20}}>
-                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Snaffl.it!</h3>
+                <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Snaffl.it!</h3>
                 <pre style={styles.meta}>
                   <code>
                     <a href={"http://snaffl.it/?id=" + deck._id} target="_blank">http://snaffl.it/?id={deck._id}</a>

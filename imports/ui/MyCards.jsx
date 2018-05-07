@@ -88,7 +88,7 @@ class MyCards extends Component {
     return (
         <div className="main-bg">
           <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHeadOther">{parseIcon('MultiDeck', {height:50,width:50,color: 'white'})} My Cards</h3>
+          <h3 className="paperHeadOther">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} My Cards</h3>
           <Toolbar style={{backgroundColor: 'transparent', borderBottom: '1px solid #aaa'}}>
             <ToolbarGroup firstChild={true}>
               <DropDownMenu iconStyle={{textColor:'black'}} iconButton={<NavigationExpandMoreIcon/>} value={this.state.typeValue} onChange={this.handleTypeChange}>

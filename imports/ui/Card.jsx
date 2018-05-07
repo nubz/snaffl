@@ -168,6 +168,7 @@ export default class Card extends Component {
     const host = window.location.hostname
     const protocol = window.location.protocol
     const port = window.location.port ? ':' + window.location.port : ''
+    const card = this.state.card
 
     const lightBoxAction = [
         <FlatButton
@@ -190,26 +191,26 @@ export default class Card extends Component {
         />
       ];
 
-    let createdAgo = moment(this.state.card.createdAt).fromNow()
+    let createdAgo = moment(card.createdAt).fromNow()
 
     return (
       <div className="main-bg">
       <Paper style={{padding: 20}}>
-        <h3 className="paperHeadOther">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} {this.state.card.title}<span>{this.state.card.cardType} card created {createdAgo}</span></h3>
+        <h3 className="paperHeadOther">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} {card.title}<span>{card.cardType} card created {createdAgo}</span></h3>
         { images ?
             <img 
               onLoad={this.onImgLoad.bind(this)} 
               src={images.medium} 
-              alt={this.state.card.title}
+              alt={card.title}
               style={{width: '100%'}}
               onClick={this.handleLightboxOpen} 
             /> : ''
         }
 
         <div>
-          <p>{this.state.card.description}</p>
-          { this.state.card.content ?
-            parseContent(this.state.card.cardType, {content: this.state.card.content, card: this.state.card}) : '' }
+          <p>{card.description}</p>
+          { card.content ?
+            parseContent(card.cardType, {content: card.content, card: card}) : '' }
         </div>
 
         <Dialog
@@ -222,7 +223,7 @@ export default class Card extends Component {
         </Dialog>
 
         <FullscreenDialog
-          title={this.state.card.title}
+          title={card.title}
           actions={lightBoxAction}
           onRequestClose={() => this.setState({ lightbox: false })}
           open={this.state.lightbox}
@@ -232,11 +233,11 @@ export default class Card extends Component {
           <div style={styles.lightboxContainer} />
         </FullscreenDialog>
 
-        { this.state.card.lat ?
+        { card.lat ?
           <div className="cardSection">
             <h3>Posting location</h3>
-            <p style={styles.meta}>Latitude: {this.state.card.lat}<br />Longitude: {this.state.card.lng}</p>
-            <MapCardContainer _id={this.state.card._id} />
+            <p style={styles.meta}>Latitude: {card.lat}<br />Longitude: {card.lng}</p>
+            <MapCardContainer _id={card._id} />
           </div> : ''
         }
 
@@ -250,9 +251,9 @@ export default class Card extends Component {
       </Paper>
 
       <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-        <h3 className="paperHead cardHead">{parseIcon(this.state.card.cardType, {height:50,width:50,color: 'white'})} API address</h3>
+        <h3 className="paperHead cardHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>
         <pre style={styles.meta}>
-          <code><a href={"/api/cards/" + this.state.card._id} target="_blank" style={{color:'white'}}>{protocol}//{host}{port}/api/cards/{this.state.card._id}</a></code>
+          <code><a href={"/api/cards/" + card._id} target="_blank" style={{color:'white'}}>{protocol}//{host}{port}/api/cards/{card._id}</a></code>
         </pre>
         <RaisedButton
           label="Manage Access"
@@ -275,7 +276,7 @@ export default class Card extends Component {
 
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHead tags">{parseIcon('TagDeck', {height:50,width:50,color: 'white'})} Tags</h3>
-          <TagsForCardQueryContainer cardId={this.state.card._id} owned={owned} />
+          <TagsForCardQueryContainer cardId={card._id} owned={owned} />
           { owned ?
             <div style={{marginBottom: 20}}>
               <TextField
@@ -296,7 +297,7 @@ export default class Card extends Component {
           }
         </Paper>
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHead deckHead">{parseIcon('TagDeck', {height:50,width:50,color: 'white'})} Decks added to</h3>
+          <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Decks added to</h3>
 
           { owned ?
             <DeckMenuQueryContainer cardId={this.props._id} owner={Meteor.userId()} />
