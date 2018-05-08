@@ -19,20 +19,16 @@ export default () => {
     addCard: function (data) {
       Cards.insert(data, (err, result) => {
         const authorLink = Cards.getLink(result, 'author');
-        console.log('setting authorLink with ' + data.owner)
         authorLink.set(data.owner)
         const typeLink = Cards.getLink(result, 'type');
-        console.log('setting typeLink with ' + data.cardTypeId)
         typeLink.set(data.cardTypeId)
       })
     },
     addDeck: function (data) {
-      Decks.insert(data, (err, result) => {
+      return Decks.insert(data, (err, result) => {
         const authorLink = Decks.getLink(result, 'author');
-        console.log('setting authorLink with ' + data.owner)
         authorLink.set(data.owner)
         const typeLink = Decks.getLink(result, 'type');
-        console.log('setting typeLink with ' + data.deckTypeId)
         typeLink.set(data.deckTypeId)
       })
     },
@@ -53,8 +49,10 @@ export default () => {
       return future.wait();
     },
     createTagSubscription: function (props) {
-      Meteor.call('touchTag', props.tag, (err, tagId) => {
-        grapherLink.set({deckId: props.deckId, tagId: tagId, types: props.types})
+      console.log('createTagSubscription with props', props)
+      return Meteor.call('touchTag', props.tag, (err, tagId) => {
+        const link = Decks.getLink(props.deckId, 'tagSubscription')
+        link.set({deckId: props.deckId, tagId: tagId, types: props.types})
       });
     },
     touchTag: function (string) {

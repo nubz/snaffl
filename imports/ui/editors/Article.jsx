@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Cards } from '../../api/cards/collection'
 import DraftEditor from '../DraftEditor'
+import parseIcon from "../TypeIcons";
+import Paper from 'material-ui/Paper'
 
 class ArticleEditor extends Component {
 
@@ -68,12 +70,12 @@ class ArticleEditor extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Article Content</h3>
+      <Paper style={{padding: 20, marginTop: 30, marginBottom: 30}}>
+        <h3 className="paperHead">{parseIcon('Entity', {height:50,width:50,color:'white'})}  Article content<span>Rich text content that can be requested as Markdown or HTML</span></h3>
         <div className="editor">
           <DraftEditor onChange={this.onChange} content={this.state.content} _id={this.props.card._id} />
         </div>
-      </div>
+      </Paper>
     )
   }
 

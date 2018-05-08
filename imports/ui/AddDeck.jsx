@@ -121,6 +121,13 @@ class AddDeck extends Component {
       'type': this.props.selectedType._id
     }
     Meteor.call('addDeck', data, (error, result) => {
+      console.log('data.subscriptionTag for ' + result, data.subscriptionTag)
+      if (data.subscriptionTag.length) {
+        Meteor.call('createTagSubscription', {tag: data.subscriptionTag, deckId: result, types: this.props.selectedType.subscribes}, (err, subsResult) => {
+          console.log('tagSubscription created', subsResult)
+          this.successState().bind(this)
+        })
+      }
       this.successState().bind(this)
     })
   }

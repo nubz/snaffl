@@ -5,5 +5,5 @@ export default new SimpleSchema({
   },
   cardId: {
     type: String,
-  },
+  }
 })

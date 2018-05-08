@@ -83,6 +83,12 @@ class AddCard extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      decks: nextProps.data
+    })
+  }
+
   uploadFiles(event) {
     imageApi.uploadFiles(event, this)
   }
@@ -280,6 +286,17 @@ class AddCard extends Component {
     return loc;
   }
 
+  renderEditor(type) {
+    return parseEditor(type, {
+      ref: this.registerContent,
+      card: {},
+      isNew: true,
+      geo: this.state.location
+    })
+  }
+
+
+
   render() {
     return (
       <div className="main-bg">
@@ -290,8 +307,6 @@ class AddCard extends Component {
             : <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
 
               <h3 className="paperHead">{parseIcon(this.state.selectedType.value, {height:50,width:50,color: 'white'})} {this.state.cardType} info</h3>
-
-
 
               {this.state.uploading ?
                 <div className="imagePreview">
@@ -331,12 +346,7 @@ class AddCard extends Component {
 
           <div className="form-group">
             {
-              parseEditor(this.state.cardType, {
-                ref: this.registerContent,
-                card: {},
-                isNew: true,
-                geo: this.state.location
-              })
+            this.renderEditor(this.state.cardType)
             }
           </div>
 

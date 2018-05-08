@@ -7,7 +7,7 @@ import Users from '../users/collection'
 Cards.addLinks({
   author: {
     type: 'one',
-    collection: Users,
+    collection: Meteor.users,
     field: 'owner'
   },
   type: {

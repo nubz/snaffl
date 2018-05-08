@@ -72,7 +72,7 @@ class EntityEditor extends Component {
     return (
       <div>
       <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-        <h3 className="paperHead">{parseIcon('Entity', {height:50,width:50})} Name</h3>
+        <h3 className="paperHead">{parseIcon('Entity', {height:50,width:50,color:'white'})} Details</h3>
         <div className="form-group">
           {this.returnTextField("firstName", "First name")}
         </div>
@@ -91,10 +91,12 @@ class EntityEditor extends Component {
 
       </Paper>
 
-        <h3>{parseIcon('Entity', {height:50,width:50,color: 'white'})} Bio</h3>
+      <Paper style={{padding: 20, marginTop: 30, marginBottom: 30}}>
+        <h3 className="paperHead">{parseIcon('Entity', {height:50,width:50,color:'white'})}  Bio</h3>
         <div className="editor">
           <DraftEditor onChange={this.onChangeBio} content={this.state.content.bio} _id={this.props.card._id} />
         </div>
+      </Paper>
 
       </div>
     )

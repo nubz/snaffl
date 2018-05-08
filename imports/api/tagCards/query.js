@@ -20,6 +20,17 @@ export default createQuery({
     cardId: 1,
     tag: {
       tag: 1
+    },
+    card: {
+      title: 1,
+      description: 1,
+      cardType: 1,
+      cardTypeId: 1,
+      createdAt: 1,
+      owner: 1,
+      image: 1,
+      images: 1,
+      content: 1
     }
   }
 });

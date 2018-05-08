@@ -11,13 +11,14 @@ class CardList extends Component {
     super(props)
     this.state = {
       open: false,
-      message: 'Card added successfully'
+      message: 'Card added successfully',
+      data: props.data
     };
   }
 
   renderCards() {
-    if (this.props.deckId) {
-      return this.props.data.map((link) => (
+    if (this.props.deckId || this.props.tagId) {
+      return this.state.data.map((link) => (
         <SnapCardListItem
           key={link.cardId}
           card={link.card}
@@ -25,12 +26,18 @@ class CardList extends Component {
         />
       ))
     }
-    return this.props.data.map((card) => (
+    return this.state.data.map((card) => (
       <SnapCardListItem 
         key={card._id} 
         card={card} 
       />
     ))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data: nextProps.data
+    })
   }
  
   render() {
@@ -38,7 +45,7 @@ class CardList extends Component {
 
       return (
         <div>
-          {this.props.data.length ? this.renderCards() : 'There are no cards here yet.'}
+          {this.state.data && this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
         </div>
       )
     }
@@ -49,8 +56,8 @@ class CardList extends Component {
             height: 50,
             width: 50,
             color: 'white'
-          })} {this.props.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
-          {this.props.data.length ? this.renderCards() : 'There are no cards here yet.'}
+          })} {this.state.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
+          {this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
         </Paper>
     )
   }

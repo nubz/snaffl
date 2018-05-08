@@ -33,7 +33,7 @@ class DeckMenu extends Component {
       this.setState({
         snackOpen: true,
         message: 'Card added to deck ok',
-        selectedDeck: v
+        selectedDeck: 0
       })
     })
   }
@@ -56,10 +56,11 @@ class DeckMenu extends Component {
         iconButton={<NavigationExpandMoreIcon/>}
         value={this.state.selectedDeck}
         onChange={this.handleDeckSelect}
+        style={{fontSize:20,marginTop:20,fontWeight:700}}
       >
         <MenuItem
           value={0}
-          primaryText="Add card to a deck"
+          primaryText="+ Select a deck to add this card to"
         />
         {this.renderMyDecks()}
       </DropDownMenu>

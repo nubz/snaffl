@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Decks from '../api/decks/collection'
 import DeckDecks from '../api/deckDecks/collection'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
-import CardsFromIdsContainer from '../containers/CardsFromIdsContainer'
-import TaggedCardsContainer from '../containers/TaggedCardsContainer'
-import DecksFromIdsContainer from '../containers/DecksFromIdsContainer'
-import ChildDecksFromIdsContainer from '../containers/ChildDecksFromIdsContainer'
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu'
-import CircularProgress from 'material-ui/CircularProgress'
 import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
 import CardsForDeckQueryContainer from '/imports/containers/CardsForDeckQueryContainer'
+import CardsForTagSubscriptionQueryContainer from '/imports/containers/CardsForTagSubscriptionQueryContainer'
 
 const styles = {
   meta: {
@@ -125,13 +118,15 @@ export default class Deck extends Component {
             {owned ?
               <div>
                 <RaisedButton label="Edit" onClick={this.handleEditRequest} style={{marginRight: 10}} primary={true}/>
-                <RaisedButton label="Delete" nClick={this.handleOpen}/>
+                <RaisedButton label="Delete" onClick={this.handleOpen}/>
               </div>
               : ''}
         </Paper>
         <Paper style={{padding: 20, marginBottom: 30}}>
           <h3 className="paperHead cardHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Cards</h3>
-          <CardsForDeckQueryContainer deckId={deck._id} headless={true} />
+          { deck.tagSubscriptionId ?
+          <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true} />
+            :  <CardsForDeckQueryContainer deckId={deck._id} headless={true} /> }
         </Paper>
           <Paper style={{padding: 20}}>
             <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>

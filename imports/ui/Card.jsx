@@ -302,12 +302,12 @@ export default class Card extends Component {
 
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Decks added to</h3>
+          <DecksForCardQueryContainer cardId={this.props._id} headless={true}/>
 
           { owned ?
             <DeckMenuQueryContainer cardId={this.props._id} owner={Meteor.userId()} />
             : ''
           }
-          <DecksForCardQueryContainer cardId={this.props._id} headless={true}/>
         </Paper>
 
       </div>
