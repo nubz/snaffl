@@ -1,5 +1,5 @@
 import React from 'react'
-import TagList from '../ui/TagList'
+import TagList from '/imports/ui/TagList'
 import query from '/imports/api/tagCards/query.js';
 import {withQuery} from 'meteor/cultofcoders:grapher-react';
 

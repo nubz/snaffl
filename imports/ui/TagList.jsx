@@ -8,18 +8,27 @@ class TagList extends Component {
   constructor(props) {
     console.log('TagList props', props)
     super(props)
+    this.state = {
+      data: props.data
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('TagList nextProps', nextProps)
+    this.setState({
+      data: nextProps.data
+    })
   }
 
   renderTags() {
-    if (this.props.data.length === 0) {
+    if (this.state.data.length === 0) {
       return (<p>There are no tags associated with this card.</p>)
     }
-    return this.props.data.map((tag) => (
+    return this.state.data.map((tag) => (
       <TagListItem 
         key={tag.tagId}
         tag={tag.tag}
         cardId={this.props.cardId}
-        deckId={this.props.deckId}
         owned={this.props.owned}
       />
     ))
@@ -28,7 +37,7 @@ class TagList extends Component {
   render() {
     return (
       <div style={{marginBottom: 30}}>
-      { this.props.loading ? 
+      { this.props.isLoading ?
         <CircularProgress size={60} thickness={7} />
       :
         this.renderTags()
@@ -41,7 +50,6 @@ class TagList extends Component {
 
 TagList.propTypes = {
   cardId: PropTypes.string,
-  deckId: PropTypes.string,
   owned: PropTypes.bool
 }
  

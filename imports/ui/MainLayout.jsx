@@ -84,7 +84,7 @@ export default class MainLayout extends Component {
   constructor(props) {
     super(props);
     if (Meteor.userId()) {
-      Session.set('logged', true);
+      Session.set('logged', Meteor.userId());
     }
     this.state = {
       open: false,

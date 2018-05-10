@@ -115,7 +115,10 @@ class Dashboard extends Component {
           </Paper>
         </Paper>
         <CardListQueryContainer limit="3" title="Recent cards" icon="Recent" owner={Meteor.userId()}/>
-        <DeckListQueryContainer limit="3" title="Recent decks" icon="Recent" owner={Meteor.userId()}/>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead deckHead">{parseIcon('Recent', {height:50,width:50,color: 'white'})} Recent decks</h3>
+          <DeckListQueryContainer limit="3" headless={true} owner={Meteor.userId()}/>
+        </Paper>
       </div>
     )
   }

@@ -1,3 +1,4 @@
+import '/imports/api/tags/expose.js';
 import '/imports/api/deckDecks/expose.js';
 import '/imports/api/tagCards/expose.js';
 import '/imports/api/deckCards/expose.js';
@@ -7,4 +8,3 @@ import '/imports/api/cards/expose.js';
 import '/imports/api/cardTypes/expose.js';
 import '/imports/api/users/expose.js';
 import '/imports/api/tagSubscriptions/expose.js';
-import '/imports/api/tags/expose.js';

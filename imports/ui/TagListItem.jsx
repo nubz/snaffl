@@ -28,8 +28,7 @@ export default class TagListItem extends Component {
 }
  
 TagListItem.propTypes = {
-  tag: PropTypes.object,
+  tag: PropTypes.object.isRequired,
   cardId: PropTypes.string,
-  deckId: PropTypes.string,
   owned: PropTypes.bool
 }
