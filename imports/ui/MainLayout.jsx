@@ -27,7 +27,6 @@ const theme = getMuiTheme(customTheme);
 
 injectTapEventPlugin();
 
-
 const styles = {
   title: {
     cursor: 'pointer',
@@ -67,8 +66,6 @@ function iconButtonElement() {
   return (<IconButton><MoreVertIcon /></IconButton>)
 }
 
-
-
 const Logged = (props) => (
   <IconMenu
     {...props}
@@ -86,6 +83,9 @@ export default class MainLayout extends Component {
 
   constructor(props) {
     super(props);
+    if (Meteor.userId()) {
+      Session.set('logged', true);
+    }
     this.state = {
       open: false,
     };

@@ -70,7 +70,7 @@ class DeckList extends Component {
       )
     }
     return (
-      <div>
+      <div className="main-bg">
         {this.props.isLoading ?
           <CircularProgress style={{top: '25%', margin: 'auto'}} size={60} thickness={7}/>
           :

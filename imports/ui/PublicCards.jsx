@@ -13,7 +13,6 @@ import ActionViewList from 'material-ui/svg-icons/action/view-list'
 import ActionViewModule from 'material-ui/svg-icons/action/view-module'
 import parseIcon from './TypeIcons'
 import Paper from 'material-ui/Paper'
-import CardListQueryContainer from '../containers/CardListQueryContainer'
 
 class PublicCards extends Component {
 
@@ -35,7 +34,7 @@ class PublicCards extends Component {
   handleTypeChange = (e, i, v) => {
     this.setState({
       typeValue: v,
-      publicCards: v == "All" ? this.props.cards : this.props.cards.filter(card => card.cardType == v),
+      publicCards: v === "All" ? this.props.cards : this.props.cards.filter(card => card.cardType === v),
     })
   }
 
@@ -78,17 +77,17 @@ class PublicCards extends Component {
             </ToolbarGroup>
             <ToolbarGroup>
               <ToolbarSeparator />
-              <IconButton touch={true} onClick={this.setList} style={this.state.mode == 'grid' ? {opacity:1} : {opacity:0.5}}>
+              <IconButton touch={true} onClick={this.setList} style={this.state.mode === 'grid' ? {opacity:1} : {opacity:0.5}}>
                 <ActionViewList />
               </IconButton>
-              <IconButton touch={true} onClick={this.setGrid} style={this.state.mode == 'list' ? {opacity:1} : {opacity:0.5}}>
+              <IconButton touch={true} onClick={this.setGrid} style={this.state.mode === 'list' ? {opacity:1} : {opacity:0.5}}>
                 <ActionViewModule />
               </IconButton>
             </ToolbarGroup>
           </Toolbar>
         { this.props.loading ? <CircularProgress size={60} thickness={7} /> :
           <div>
-          { this.state.mode == 'grid' ? 
+          { this.state.mode === 'grid' ?
               <GridList
                 cellHeight={180}
                 cols={3}
@@ -107,7 +106,7 @@ class PublicCards extends Component {
                   </GridTile>
                 ))}
               </GridList> 
-          : <CardListQueryContainer  headless={true} owner={{$ne: Meteor.userId()}} access={'public'} />
+          : <CardList data={this.state.publicCards} headless={true} />
           }
           </div>
         }

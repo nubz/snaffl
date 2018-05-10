@@ -148,9 +148,9 @@ export default class Card extends Component {
             tagId: result
           }, (err, tagCardId) => {
             const cardLink = TagCards.getLink(tagCardId, 'card');
-            cardLink.set(this.state.card._id);
             const tagLink = TagCards.getLink(tagCardId, 'tag');
-            tagLink.set(result)
+            tagLink.set(result);
+            cardLink.set(this.state.card._id);
             this.setState({
               tagValue: ''
             })

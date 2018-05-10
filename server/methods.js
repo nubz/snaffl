@@ -55,7 +55,8 @@ export default () => {
         link.set({deckId: props.deckId, tagId: tagId, types: props.types})
       });
     },
-    touchTag: function (string) {
+    touchTag: function (string, cardId) {
+      const tagCardsLink = TagCards.getLink(cardId, 'card')
       const exists = Tags.findOne({tag: string.trim()});
 
       if (exists) {
