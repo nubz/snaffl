@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import GoogleMapContainer from '../containers/GoogleMapContainer';
+import GoogleMapContainer from '../containers/GoogleMapContainer'
 import Decks from '../api/decks/collection'
 import DeckDecks from '../api/deckDecks/collection'
 import parseIcon from './TypeIcons'
@@ -44,8 +44,8 @@ class MapDeck extends Component {
   markerForCard(card) {
     let infowindow, marker;
 
-    lat = card.content && card.content.Location ? card.content.Location.latitude : card.lat
-    lng = card.content && card.content.Location ? card.content.Location.longitude : card.lng
+    const lat = card.content && card.content.Location ? card.content.Location.latitude : card.lat
+    const lng = card.content && card.content.Location ? card.content.Location.longitude : card.lng
 
     infowindow = new google.maps.InfoWindow({
       content: '<div><h3>' + card.title + '</h3><a href="/card/' + card._id + '"><img src="' + card.images.small + '"></a></div>'

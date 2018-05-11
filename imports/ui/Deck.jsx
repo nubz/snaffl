@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
 import CardsForDeckQueryContainer from '/imports/containers/CardsForDeckQueryContainer'
 import CardsForTagSubscriptionQueryContainer from '/imports/containers/CardsForTagSubscriptionQueryContainer'
+import CardsForMapContainer from '/imports/containers/CardsForMapContainer'
 
 const styles = {
   meta: {
@@ -84,7 +85,6 @@ export default class Deck extends Component {
     ))
   }
 
-
   render() {
     const host = window.location.hostname
     const protocol = window.location.protocol
@@ -109,7 +109,7 @@ export default class Deck extends Component {
       <div className="main-bg">
         <Paper style={{padding: 20, marginBottom: 30}}>
           <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
-            {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
+          {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
           { deck.images ?
             <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
             : ''
@@ -122,22 +122,28 @@ export default class Deck extends Component {
               </div>
               : ''}
         </Paper>
+        { deck.deckType === 'Map' ?
+          <Paper style={{padding: 20, marginBottom: 30}}>
+            <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Map</h3>
+            <CardsForMapContainer deckId={deck._id} />
+          </Paper>
+          : ''}
         <Paper style={{padding: 20, marginBottom: 30}}>
           <h3 className="paperHead cardHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Cards</h3>
           { deck.tagSubscriptionId ?
           <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true} />
             :  <CardsForDeckQueryContainer deckId={deck._id} headless={true} /> }
         </Paper>
-          <Paper style={{padding: 20}}>
-            <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>
-            <pre style={styles.meta}>
-              <code><a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
-            </pre>
-            <RaisedButton
-              label="Manage Access"
-              onClick={this.handleEditRequest}
-              style={{marginRight:10}}/>
-          </Paper>
+        <Paper style={{padding: 20}}>
+          <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>
+          <pre style={styles.meta}>
+            <code><a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
+          </pre>
+          <RaisedButton
+            label="Manage Access"
+            onClick={this.handleEditRequest}
+            style={{marginRight:10}}/>
+        </Paper>
 
 
             {host === 'dev.snaffl.io' ?
