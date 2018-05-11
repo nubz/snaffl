@@ -60,7 +60,7 @@ class Dashboard extends Component {
     return (
       <div className="main-bg">
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Content totals</h3>
+          <h3 className="paperHead siteHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Content totals</h3>
           <Paper className="dash-panel" style={styles.panel} zDepth={2} onClick={this.handlePublicCardsClick}>
             <Badge
               badgeContent={<IconButton tooltip="Public Cards"><ActionLockOpen /></IconButton>}

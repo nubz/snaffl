@@ -49,7 +49,7 @@ h3 > span {
     font-size: 41%;
 }
 
-h3.paperHead.tags {
+h3.paperHead.tags, h3.paperHead.siteHead {
     background-color: #1e0e40;
     color: white;
 }
