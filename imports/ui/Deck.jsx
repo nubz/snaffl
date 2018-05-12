@@ -10,6 +10,7 @@ import parseIcon from './TypeIcons'
 import CardsForDeckQueryContainer from '/imports/containers/CardsForDeckQueryContainer'
 import CardsForTagSubscriptionQueryContainer from '/imports/containers/CardsForTagSubscriptionQueryContainer'
 import CardsForMapContainer from '/imports/containers/CardsForMapContainer'
+import CardsForTagMap from '/imports/containers/CardsForTagMap'
 
 const styles = {
   meta: {
@@ -50,10 +51,6 @@ export default class Deck extends Component {
 
   handleOpen = () => {
     this.setState({open: true});
-  }
-
-  viewMap = () => {
-    FlowRouter.go('View.Map', {_id: this.state.deck._id})
   }
 
   handleEditRequest = () => {
@@ -109,7 +106,6 @@ export default class Deck extends Component {
       <div className="main-bg">
         <Paper style={{padding: 20, marginBottom: 30}}>
           <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
-          {deck.deckType === 'TagMap' ? <RaisedButton label="View map" onClick={this.viewMap}/> : ''}
           { deck.images ?
             <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
             : ''
@@ -122,10 +118,10 @@ export default class Deck extends Component {
               </div>
               : ''}
         </Paper>
-        { deck.deckType === 'Map' ?
+        { deck.deckType === 'Map' || deck.deckType === 'TagMap' ?
           <Paper style={{padding: 20, marginBottom: 30}}>
             <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {height:50,width:50,color: 'white'})} Map</h3>
-            <CardsForMapContainer deckId={deck._id} />
+            { deck.deckType === 'Map' ? <CardsForMapContainer deckId={deck._id} /> : <CardsForTagMap tagId={deck.tagSubscription.tagId} /> }
           </Paper>
           : ''}
         <Paper style={{padding: 20, marginBottom: 30}}>
