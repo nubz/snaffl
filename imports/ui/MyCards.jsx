@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import CardList from './CardList'
+import CardGrid from './CardGrid'
 import CircularProgress from 'material-ui/CircularProgress'
-import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
-import imageApi from '../api/imageApi'
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
@@ -110,54 +108,14 @@ class MyCards extends Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            style={{margin: '8px -18px'}}
+            style={{margin: '8px 0'}}
             tabItemContainerStyle={styles.tabItem}
           >
             <Tab label={<span style={{color: 'rgb(244, 67, 54)'}}>Public Cards</span>} value="public">
-                { this.state.mode === 'grid' ?
-                    <GridList
-                      cellHeight={180}
-                      cols={3}
-                      style={{marginTop:5}}
-                    >
-                      {this.state.publicCards.map((tile) => (
-                        <GridTile
-                          key={tile._id}
-                          title={tile.title}
-                          style={{cursor:'pointer'}}
-                          subtitle={<span>by <b>{tile.owner}</b></span>}
-                          onClick={this.viewFull.bind(tile)}
-                          actionIcon={parseIcon(tile.cardType, iconStyle)}
-                        >
-                          <img src={tile.images ? tile.images.medium : imageApi.medium(tile.image)} />
-                        </GridTile>
-                      ))}
-                    </GridList> 
-                : <CardList data={this.state.publicCards} headless={true} />
-                }
+              { this.state.mode === 'grid' ? <CardGrid cards={this.state.publicCards} viewFull={this.viewFull} /> :   <CardList data={this.state.publicCards} headless={true} /> }
             </Tab>
             <Tab label={<span style={{color: 'rgb(244, 67, 54)'}}>Private Cards</span>} value="private">
-            { this.state.mode == 'grid'? 
-                    <GridList
-                      cellHeight={180}
-                      cols={3}
-                      style={{marginTop:5}}
-                    >
-                      {this.state.privateCards.map((tile) => (
-                        <GridTile
-                          key={tile._id}
-                          title={tile.title}
-                          subtitle={<span>by <b>{tile.owner}</b></span>}
-                          style={{cursor:'pointer'}}
-                          onClick={this.viewFull.bind(tile)}
-                          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-                        >
-                          {tile.image ? <img src={tile.image} /> : ''}
-                        </GridTile>
-                      ))}
-                    </GridList> 
-             :   <CardList data={this.state.privateCards} headless={true} />
-             }
+            { this.state.mode === 'grid' ? <CardGrid cards={this.state.privateCards} viewFull={this.viewFull} /> :   <CardList data={this.state.privateCards} headless={true} /> }
             </Tab>
           </Tabs>
         }
