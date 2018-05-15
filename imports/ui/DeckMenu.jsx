@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Snackbar from 'material-ui/Snackbar'
 import parseIcon from "./TypeIcons"
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
@@ -17,6 +16,14 @@ class DeckMenu extends Component {
       message: 'Deck added successfully',
       decks: props.data || props.decks
     };
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    console.log('DeckMenu nextProps', nextProps)
+    this.setState({
+      decks: nextProps.data || nextProps.decks
+    })
   }
 
   handleDeckSelect = (e, i, v) => {
@@ -71,7 +78,9 @@ class DeckMenu extends Component {
 
 DeckMenu.propTypes = {
   cardId: PropTypes.string,
-  deckId: PropTypes.string
+  deckId: PropTypes.string,
+  cardType: PropTypes.string,
+  deckType: PropTypes.string
 }
 
 DeckMenu.defaultProps = {

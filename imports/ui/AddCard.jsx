@@ -12,6 +12,7 @@ import parseEditor from './TypeEditors'
 import {stateToHTML} from 'draft-js-export-html'
 import {editorStateFromRaw} from "megadraft"
 import Paper from 'material-ui/Paper'
+import Cards from '../api/cards/collection'
 
 const startTime = moment().subtract(1, 'hours').toDate()
 console.log('startTime', startTime);
@@ -228,7 +229,11 @@ class AddCard extends Component {
       data.lng = this.state.location.lng
     }
 
-    Meteor.call('addCard', data, () => {
+    Cards.insert(data, (err, result) => {
+      const authorLink = Cards.getLink(result, 'author');
+      authorLink.set(data.owner)
+      const typeLink = Cards.getLink(result, 'type');
+      typeLink.set(data.cardTypeId)
       this.setState({
         open: true,
         message: 'Card added ok',

@@ -305,7 +305,7 @@ export default class Card extends Component {
           <DecksForCardQueryContainer cardId={this.props._id} headless={true}/>
 
           { owned ?
-            <DeckMenuQueryContainer cardId={this.props._id} owner={Meteor.userId()} />
+            <DeckMenuQueryContainer cardId={this.props._id} accepts={card.cardType} owner={Meteor.userId()} />
             : ''
           }
         </Paper>

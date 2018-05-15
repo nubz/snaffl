@@ -19,6 +19,7 @@ class DeckList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('deck list called with nextProps', nextProps);
     this.setState({
       decks: nextProps.data
     })
@@ -39,9 +40,9 @@ class DeckList extends Component {
 
   renderDecks() {
     if (this.props.cardId || this.props.deckId) {
-      return this.state.decks.map((link) => (
+      return this.state.decks.map((link, i) => (
         <SnapdeckListItem
-          key={link.deckId}
+          key={link.deckId + i}
           deck={link.deck}
           multiSnackBar={this.multiSnackBar.bind(this)}
           cardId={this.props.cardId}
@@ -49,9 +50,9 @@ class DeckList extends Component {
         />
       ))
     }
-    return this.state.decks.map((deck) => (
+    return this.state.decks.map((deck, i) => (
       <SnapdeckListItem 
-        key={deck._id} 
+        key={deck._id + i}
         deck={deck} 
         multiSnackBar={this.multiSnackBar.bind(this)}
         cardId=''

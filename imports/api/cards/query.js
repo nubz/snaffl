@@ -55,6 +55,9 @@ export default createQuery({
     content: 1,
     tagIds: {
       tagId: 1
+    },
+    deckIds: {
+      deckId: 1
     }
   }
 });

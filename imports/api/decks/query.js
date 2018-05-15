@@ -1,4 +1,4 @@
-import { createQuery } from 'meteor/cultofcoders:grapher';
+import { createQuery } from 'meteor/cultofcoders:grapher'
 
 export default createQuery({
   'decks': {
@@ -15,6 +15,7 @@ export default createQuery({
       if (params.access) {
         filters.access = params.access;
       }
+
       if(params.createdAt) {
         filters.createdAt = params.createdAt
       }
@@ -36,6 +37,11 @@ export default createQuery({
     subscriptionTag: 1,
     tagSubscriptionId: 1,
     type: {
+      $filter({filters, options, params}) {
+        if (params.accepts) {
+          filters.accepts = {$all: [params.accepts]}
+        }
+      },
       title: 1,
       icon: 1,
       accepts: 1,
