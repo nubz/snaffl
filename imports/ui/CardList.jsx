@@ -20,7 +20,7 @@ class CardList extends Component {
     if (this.props.deckId || this.props.tagId) {
       return this.state.data.map((link) => (
         <SnapCardListItem
-          key={link.cardId}
+          key={'Card_' + link.card._id}
           card={link.card}
           deckId={this.props.deckId}
         />

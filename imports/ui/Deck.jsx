@@ -11,6 +11,7 @@ import CardsForDeckQueryContainer from '/imports/containers/CardsForDeckQueryCon
 import CardsForTagSubscriptionQueryContainer from '/imports/containers/CardsForTagSubscriptionQueryContainer'
 import CardsForMapContainer from '/imports/containers/CardsForMapContainer'
 import CardsForTagMap from '/imports/containers/CardsForTagMap'
+import DecksForDeckQueryContainer from '../containers/DecksForDeckQueryContainer'
 
 const styles = {
   meta: {
@@ -31,6 +32,12 @@ export default class Deck extends Component {
       selectedDeck: 0,
       deck: props.data
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      deck: nextProps.data
+    })
   }
 
   deleteThisDeck() {
@@ -129,6 +136,14 @@ export default class Deck extends Component {
           { deck.tagSubscriptionId ?
           <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true} />
             :  <CardsForDeckQueryContainer deckId={deck._id} headless={true} /> }
+        </Paper>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Child decks</h3>
+          <DecksForDeckQueryContainer deckId={deck._id} headless={true} />
+        </Paper>
+        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+          <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Parent decks</h3>
+          <DecksForDeckQueryContainer childId={deck._id} deckMenu={owned} accepts={deck.deckType} headless={true} />
         </Paper>
         <Paper style={{padding: 20}}>
           <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} API address</h3>

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import parseIcon from "./TypeIcons"
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
-import DeckCards from "../api/deckCards/collection"
+import DeckCards from '/imports/api/deckCards/collection'
+import DeckDecks from '/imports/api/deckDecks/collection'
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CircularProgress from 'material-ui/CircularProgress'
 
@@ -29,21 +30,41 @@ class DeckMenu extends Component {
 
   handleDeckSelect = (e, i, v) => {
     const cardId = this.props.cardId
-    DeckCards.insert({
-      deckId: v,
-      cardId: cardId
-    }, (err, id) => {
-      const cardLink = DeckCards.getLink(id, 'card')
-      cardLink.set(cardId)
-      const deckLink = DeckCards.getLink(id, 'deck')
-      deckLink.set(v)
+    if (cardId) {
+      DeckCards.insert({
+        deckId: v,
+        cardId: cardId
+      }, (err, id) => {
+        const cardLink = DeckCards.getLink(id, 'card')
+        cardLink.set(cardId)
+        const deckLink = DeckCards.getLink(id, 'deck')
+        deckLink.set(v)
 
-      this.setState({
-        snackOpen: true,
-        message: 'Card added to deck ok',
-        selectedDeck: 0
+        this.setState({
+          snackOpen: true,
+          message: 'Card added to deck ok',
+          selectedDeck: 0
+        })
       })
-    })
+    }
+    const childId = this.props.childId
+    if (childId) {
+      DeckDecks.insert({
+        deckId: v,
+        childId: childId
+      }, (err, id) => {
+        const childLink = DeckDecks.getLink(id, 'childDeck')
+        childLink.set(childId)
+        const parentLink = DeckDecks.getLink(id, 'parentDeck')
+        parentLink.set(v)
+
+        this.setState({
+          snackOpen: true,
+          message: 'Deck added to parent deck ok',
+          selectedDeck: 0
+        })
+      })
+    }
   }
 
   renderMyDecks() {
@@ -52,7 +73,7 @@ class DeckMenu extends Component {
         rightIcon={parseIcon(deck.deckType)}
         value={deck._id}
         primaryText={deck.title}
-        key={deck._id}
+        key={'Menu-' + deck._id}
       />
     ))
   }
@@ -85,14 +106,14 @@ class DeckMenu extends Component {
 
 DeckMenu.propTypes = {
   cardId: PropTypes.string,
-  deckId: PropTypes.string,
+  childId: PropTypes.string,
   cardType: PropTypes.string,
   deckType: PropTypes.string
 }
 
 DeckMenu.defaultProps = {
   cardId: "",
-  deckId: "",
+  childId: "",
   title: 'Decks'
 }
  
