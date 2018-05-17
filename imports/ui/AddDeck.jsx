@@ -139,16 +139,6 @@ class AddDeck extends Component {
   };
 
   handleInputChange = (event, index, value) => this.setState({'inputs': { ...this.state.inputs, [event.target.dataset.field] : event.target.value } })
- 
-  renderdecks() {
-    return this.props.decks.map((deck) => (
-      <SnapdeckListItem 
-        key={deck._id} 
-        deck={deck} 
-        multiSnackBar={this.multiSnackBar.bind(this)} 
-      />
-    ))
-  }
 
   handleAccessChange = (event, access) => {
     const selectedAccess = access ? 'public' : 'private'
@@ -239,7 +229,6 @@ class AddDeck extends Component {
 
         <Divider />
 
-        {this.renderdecks()}
         <DeckListQueryContainer createdAt={{$gt: startTime}} title="Recent decks" owner={Meteor.userId()}/>
 
         <Snackbar

@@ -18,15 +18,15 @@ setDefaults({
 // It is a good idea to import these collections to have them registered
 // Because when we use createQuery({collection: 'xxx'}), it will try to search to see
 // if any collection with that name has been loaded, and it could throw an exception
-import Decks from '/imports/api/decks/collection';
-import Cards from '/imports/api/cards/collection';
-import CardTypes from '/imports/api/cardTypes/collection';
-import DeckTypes from '/imports/api/deckTypes/collection';
-import TagSubscriptions from '/imports/api/tagSubscriptions/collection';
-import TagCards from '/imports/api/tagCards/collection';
-import Tags from '/imports/api/tags/collection';
-import DeckDecks from '/imports/api/deckDecks/collection';
-import DeckCards from '/imports/api/deckCards/collection';
+import '/imports/api/decks/collection';
+import '/imports/api/cards/collection';
+import '/imports/api/cardTypes/collection';
+import '/imports/api/deckTypes/collection';
+import '/imports/api/tagSubscriptions/collection';
+import '/imports/api/tagCards/collection';
+import '/imports/api/tags/collection';
+import '/imports/api/deckDecks/collection';
+import '/imports/api/deckCards/collection';
 
 // Links are imported outside collection level
 // The reason is that we may have two collections referencing each other, and this results

@@ -6,6 +6,10 @@ export default Decks.createQuery('deckMenu', {
     if (params.owner) {
       filters.owner = params.owner;
     }
+
+    if (params.exclusions) {
+      filters._id = {$nin: params.exclusions}
+    }
   },
   $postFilters: {
     'type': {$ne: undefined},

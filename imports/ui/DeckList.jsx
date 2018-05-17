@@ -5,23 +5,28 @@ import Snackbar from 'material-ui/Snackbar'
 import parseIcon from "./TypeIcons"
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
+import DeckMenuQueryContainer from '/imports/containers/DeckMenuQueryContainer'
 
 class DeckList extends Component {
 
   constructor(props) {
     super(props)
-    console.log('deck list called with props', props);
+    console.log('deck list called with props', props)
     this.state = {
       open: false,
       message: 'Deck added successfully',
-      decks: props.data
+      decks: props.data,
+      deckIds: _.pluck(props.data, 'deckId'),
+      deckMenu: props.deckMenu
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('deck list called with nextProps', nextProps);
+    const deckIds = _.pluck(nextProps.data, 'deckId')
     this.setState({
-      decks: nextProps.data
+      decks: nextProps.data,
+      deckMenu: nextProps.deckMenu,
+      deckIds: deckIds
     })
   }
 
@@ -42,7 +47,7 @@ class DeckList extends Component {
     if (this.props.cardId || this.props.deckId) {
       return this.state.decks.map((link, i) => (
         <SnapdeckListItem
-          key={link.deckId + i}
+          key={'deck-' + i}
           deck={link.deck}
           multiSnackBar={this.multiSnackBar.bind(this)}
           cardId={this.props.cardId}
@@ -67,6 +72,10 @@ class DeckList extends Component {
       return (
         <div>
           {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
+          {this.state.deckMenu ?
+            <DeckMenuQueryContainer cardId={this.props.cardId} accepts={this.props.accepts} exclusions={this.state.deckIds} owner={Meteor.userId()} />
+            : ''
+          }
         </div>
       )
     }
@@ -84,6 +93,10 @@ class DeckList extends Component {
               })} {this.props.data.length ? this.props.title : 'As you add decks they will appear here'}
             </h3>
             {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
+            {this.state.deckMenu ?
+              <DeckMenuQueryContainer cardId={this.props.cardId} accepts={this.props.accepts} exclusions={this.state.deckIds} owner={Meteor.userId()} />
+              : ''
+            }
           </Paper>
         }
         <Snackbar
@@ -103,14 +116,16 @@ DeckList.propTypes = {
   cardId: PropTypes.string,
   deckId: PropTypes.string,
   data: PropTypes.array.isRequired,
-  icon: PropTypes.string
+  icon: PropTypes.string,
+  deckMenu: PropTypes.bool
 }
 
 DeckList.defaultProps = {
   cardId: "",
   deckId: "",
   title: 'Decks',
-  icon: 'Cloud'
+  icon: 'Cloud',
+  deckMenu: false
 }
  
 export default DeckList

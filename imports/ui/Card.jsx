@@ -8,17 +8,12 @@ import Snackbar from 'material-ui/Snackbar'
 import MapCardContainer from '../containers/MapCardContainer'
 import TagsForCardQueryContainer from '../containers/TagsForCardQueryContainer'
 import DecksForCardQueryContainer from '../containers/DecksForCardQueryContainer'
-import DeckMenuQueryContainer from '../containers/DeckMenuQueryContainer'
 import FullscreenDialog from 'material-ui-fullscreen-dialog'
 import parseContent from './TypeContent'
 import Paper from 'material-ui/Paper';
 import parseIcon from './TypeIcons'
 import TextField from 'material-ui/TextField'
 import TagCards from "../api/tagCards/collection"
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu'
-import DeckCards from "../api/deckCards/collection"
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 
 const cardStyle = {
   marginBottom: 10,
@@ -302,12 +297,7 @@ export default class Card extends Component {
 
         <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
           <h3 className="paperHead deckHead">{parseIcon('Cloud', {height:50,width:50,color: 'white'})} Decks added to</h3>
-          <DecksForCardQueryContainer cardId={this.props._id} headless={true}/>
-
-          { owned ?
-            <DeckMenuQueryContainer cardId={this.props._id} accepts={card.cardType} owner={Meteor.userId()} />
-            : ''
-          }
+          <DecksForCardQueryContainer cardId={card._id} headless={true} deckMenu={owned} accepts={card.cardType} />
         </Paper>
 
       </div>

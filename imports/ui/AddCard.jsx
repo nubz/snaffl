@@ -185,8 +185,7 @@ class AddCard extends Component {
 
     if (this.state.cardType === 'Article' || this.state.cardType === 'Entity') {
       const contentToParse = this.state.cardType === 'Entity' ? content.Entity.bio : content[this.state.cardType];
-      console.log('contentToParse', contentToParse);
-      let options = {
+      const options = {
         blockRenderers: {
           atomic: (block) => {
             let data = block.getData();

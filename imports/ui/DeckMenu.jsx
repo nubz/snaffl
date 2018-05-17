@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu'
 import DeckCards from "../api/deckCards/collection"
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
+import CircularProgress from 'material-ui/CircularProgress'
 
 class DeckMenu extends Component {
 
@@ -14,7 +15,7 @@ class DeckMenu extends Component {
     this.state = {
       selectedDeck: 0,
       message: 'Deck added successfully',
-      decks: props.data || props.decks
+      decks: props.data
     };
   }
 
@@ -22,7 +23,7 @@ class DeckMenu extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('DeckMenu nextProps', nextProps)
     this.setState({
-      decks: nextProps.data || nextProps.decks
+      decks: nextProps.data
     })
   }
 
@@ -46,7 +47,7 @@ class DeckMenu extends Component {
   }
 
   renderMyDecks() {
-    return this.props.data.map((deck) => (
+    return this.state.decks.map((deck) => (
       <MenuItem
         rightIcon={parseIcon(deck.deckType)}
         value={deck._id}
@@ -58,19 +59,25 @@ class DeckMenu extends Component {
  
   render() {
     return (
-      <DropDownMenu
-        iconStyle={{textColor:'black'}}
-        iconButton={<NavigationExpandMoreIcon/>}
-        value={this.state.selectedDeck}
-        onChange={this.handleDeckSelect}
-        style={{fontSize:20,marginTop:20,fontWeight:700}}
-      >
-        <MenuItem
-          value={0}
-          primaryText="+ Select a deck to add this card to"
-        />
-        {this.renderMyDecks()}
-      </DropDownMenu>
+      <div>
+      {this.state.decks.length ?
+        <DropDownMenu
+          iconStyle={{textColor: 'black'}}
+          iconButton={<NavigationExpandMoreIcon/>}
+          value={this.state.selectedDeck}
+          onChange={this.handleDeckSelect}
+          style={{fontSize: 20, marginTop: 20, fontWeight: 700}}
+        >
+          <MenuItem
+            value={0}
+            primaryText="+ Add to deck"
+          />
+          {this.renderMyDecks()}
+        </DropDownMenu>
+        :
+        ''
+      }
+      </div>
     )
   }
 
