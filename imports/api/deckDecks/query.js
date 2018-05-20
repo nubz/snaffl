@@ -7,13 +7,13 @@ export default createQuery({
   'deckDecks': {
     $filter({filters, options, params}) {
       if (params._id) {
-        filters._id = params._id;
+        filters._id = params._id
       }
       if (params.childId) {
-        filters.childId = params.childId;
+        filters.childId = params.childId
       }
       if (params.deckId) {
-        filters.deckId = params.deckId;
+        filters.deckId = params.deckId
       }
     },
     deckId: 1,

@@ -34,6 +34,15 @@ export default createQuery({
     createdAt: 1,
     owner: 1,
     deckType: 1,
+    parentDecks: {
+      deckId: 1
+    },
+    childDecks: {
+      childId: 1
+    },
+    childCards: {
+      cardId: 1
+    },
     subscriptionTag: 1,
     tagSubscriptionId: 1,
     type: {
@@ -54,31 +63,7 @@ export default createQuery({
       tagId: 1,
       tag: {
         tag: 1
-      },
-      cards: [
-        {
-          card: {
-            title: 1,
-            description: 1,
-            cardType: 1,
-            cardTypeId: 1,
-            createdAt: 1,
-            owner: 1,
-            image: 1,
-            images: 1,
-            content: 1
-          }
-        }
-      ]
-    },
-    parentDecks: {
-      deckId: 1
-    },
-    childDecks: {
-      childId: 1
-    },
-    cards: {
-      cardId: 1
+      }
     }
   }
 });

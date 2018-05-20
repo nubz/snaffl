@@ -51,8 +51,6 @@ function logOut() {
 }
 
 class LoginButton extends Component {
-  static muiName = 'FlatButton';
-
   render() {
     return (
       <FlatButton {...this.props} label="Login" />

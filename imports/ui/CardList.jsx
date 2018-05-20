@@ -42,7 +42,6 @@ class CardList extends Component {
  
   render() {
     if (this.props.headless) {
-
       return (
         <div>
           {this.state.data && this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}

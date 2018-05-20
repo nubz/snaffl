@@ -1,7 +1,7 @@
 import React from 'react'
 import DeckList from '../ui/DeckList'
-import query from '/imports/api/decks/query.js';
-import {withQuery} from 'meteor/cultofcoders:grapher-react';
+import query from '/imports/api/decks/deckListQuery'
+import {withQuery} from 'meteor/cultofcoders:grapher-react'
 
 export default withQuery((props) => {
   console.log('decklist props', props)

@@ -1,12 +1,12 @@
 import TagSubscriptions from "./collection";
 import Decks from '../decks/collection'
 import Tags from '../tags/collection'
-import TagCards from '../tagCards/collection'
 
 TagSubscriptions.addLinks({
   'deck': {
+    type: 'one',
     collection: Decks,
-    inversedBy: 'tagSubscription'
+    field: 'deckId'
   },
   'tag': {
     type: 'one',

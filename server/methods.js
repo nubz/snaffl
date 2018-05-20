@@ -6,11 +6,11 @@ import DeckDecks from '../imports/api/deckDecks/collection'
 import Tags from '../imports/api/tags/collection'
 import TagCards from '../imports/api/tagCards/collection'
 import { stateToHTML } from 'draft-js-export-html'
-import { editorStateFromRaw } from "megadraft";
-import Secrets from "../secrets";
-import { Cloudinary } from 'meteor/lepozepo:cloudinary';
+import { editorStateFromRaw } from "megadraft"
+import Secrets from "../secrets"
+import { Cloudinary } from 'meteor/lepozepo:cloudinary'
 import Future from 'fibers/future'
-import TagSubscriptions from "../imports/api/tagSubscriptions/collection";
+import TagSubscriptions from "../imports/api/tagSubscriptions/collection"
 
 const HOST = Meteor.absoluteUrl()
 
@@ -24,39 +24,49 @@ export default () => {
         typeLink.set(data.cardTypeId)
       })
     },
+    addChildDeckLink: function (childId, parentId) {
+      const parentLink = Decks.getLink(childId, 'parentDecks')
+      parentLink.add({
+        deckId: parentId,
+        childId: childId
+      })
+    },
     addDeck: function (data) {
       return Decks.insert(data, (err, result) => {
-        const authorLink = Decks.getLink(result, 'author');
+        const authorLink = Decks.getLink(result, 'author')
         authorLink.set(data.owner)
-        const typeLink = Decks.getLink(result, 'type');
+        const typeLink = Decks.getLink(result, 'type')
         typeLink.set(data.deckTypeId)
       })
     },
     uploadRemote: function (remoteUrl) {
-      const future = new Future();
+      const future = new Future()
       const uploaded = function(data) {
         future.return(data);
       };
-      Cloudinary.uploader.upload(remoteUrl, uploaded, {folder: Secrets.cloudinary.folder});
-      return future.wait();
+      Cloudinary.uploader.upload(remoteUrl, uploaded, {folder: Secrets.cloudinary.folder})
+      return future.wait()
     },
     callOEmbed: function (url) {
-      const future = new Future();
+      const future = new Future()
       const dataReceived = function(err, data) {
-        future.return(data);
+        future.return(data)
       }
-      HTTP.get(url, dataReceived);
-      return future.wait();
+      HTTP.get(url, dataReceived)
+      return future.wait()
     },
     createTagSubscription: function (props) {
-      console.log('createTagSubscription with props', props)
       return Meteor.call('touchTag', props.tag, (err, tagId) => {
-        const link = Decks.getLink(props.deckId, 'tagSubscription')
-        link.set({deckId: props.deckId, tagId: tagId, types: props.types})
+        TagSubscriptions.insert({deckId: props.deckId, tagId: tagId, types: props.types}, (err, tsResult) => {
+          return Decks.update({_id: props.deckId}, {$set: {tagSubscriptionId: tsResult}}, () => {
+            const link = Decks.getLink(props.deckId, 'tagSubscription')
+            link.set(tsResult)
+            return tsResult
+          })
+        })
       });
     },
-    touchTag: function (string, cardId) {
-      const tagCardsLink = TagCards.getLink(cardId, 'card')
+    touchTag: function (string) {
       const exists = Tags.findOne({tag: string.trim()});
 
       if (exists) {
@@ -70,11 +80,11 @@ export default () => {
       TagCards.remove({cardId: cardId, tagId: tagId})
     },
     removeFromAllDecks: function (cardId) {
-      DeckCards.remove({cardId: cardId});
-      TagCards.remove({cardId: cardId});
+      DeckCards.remove({cardId: cardId})
+      TagCards.remove({cardId: cardId})
     },
     removeAllCardsFromDeck: function (deckId) {
-      DeckCards.remove({deckId: deckId});
+      DeckCards.remove({deckId: deckId})
     },
     removeCardFromDeck: function (cardId, deckId) {
       DeckCards.remove({deckId: deckId, cardId: cardId})
@@ -83,7 +93,7 @@ export default () => {
       DeckDecks.remove({deckId: deckId, childId: childId})
     },
     tagged: function (tagName) {
-      const tag = Tags.findOne({tag: tagName.trim()});
+      const tag = Tags.findOne({tag: tagName.trim()})
 
       if(!tag) {
         return []
@@ -92,19 +102,19 @@ export default () => {
       return Meteor.call('taggedById', tag._id);
     },
     taggedById: function (tagId, types) {
-      const tagCards = TagCards.find({tagId: tagId}).fetch();
-      const cardIds = _.pluck(tagCards, 'cardId');
+      const tagCards = TagCards.find({tagId: tagId}).fetch()
+      const cardIds = _.pluck(tagCards, 'cardId')
       if (types && types.length > 0) {
         return Cards.find({$and: [{ _id : { $in : cardIds }}, {cardType: { $in: types} }]}).fetch()
       }
       return Cards.find({ _id : { $in : cardIds }}).fetch()
     },
     subscribedToTag: function (deckId) {
-      const sub = TagSubscriptions.findOne({deckId: deckId});
+      const sub = TagSubscriptions.findOne({deckId: deckId})
       if (!sub) {
         return null
       }
-      return Meteor.call('taggedById', sub.tagId, sub.types);
+      return Meteor.call('taggedById', sub.tagId, sub.types)
     },
     linkedCards: function (links) {
       const cardIds = _.pluck(links, 'cardId');
@@ -119,17 +129,17 @@ export default () => {
       return Decks.find({ _id : { $in : childIds } }).fetch()
     },
     deckMenu: function (deckId, top) {
-      const isTagDeck = Meteor.call('subscribedToTag', deckId);
-      const deckCards = DeckCards.find({deckId: deckId}).fetch();
-      const deckDecks = DeckDecks.find({deckId: deckId}).fetch();
+      const isTagDeck = Meteor.call('subscribedToTag', deckId)
+      const deckCards = DeckCards.find({deckId: deckId}).fetch()
+      const deckDecks = DeckDecks.find({deckId: deckId}).fetch()
 
-      const cards = isTagDeck || Meteor.call('linkedCards', deckCards);
-      const decks = Meteor.call('linkedChildDecks', deckDecks);
+      const cards = isTagDeck || Meteor.call('linkedCards', deckCards)
+      const decks = Meteor.call('linkedChildDecks', deckDecks)
       // the menu for each deck
       let menu = [];
       // build card menu
       cards.map(function (card) {
-        let apiPath = 'api/cards/';
+        let apiPath = 'api/cards/'
         menu.push({
           id: card._id,
           title: card.title,

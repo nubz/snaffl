@@ -5,11 +5,13 @@ DeckDecks.addLinks({
   'childDeck': {
     type: 'one',
     collection: Decks,
-    field: 'childId'
+    field: 'childId',
+    index: true
   },
   'parentDeck': {
     type: 'one',
     collection: Decks,
-    field: 'deckId'
+    field: 'deckId',
+    index: true
   }
 })

@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
-import { lightGreen500 } from 'material-ui/styles/colors'
 import { Session } from 'meteor/session'
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -146,7 +145,6 @@ export default class Nav extends Component {
   render() {
     return (
       <Drawer
-        docked={true}
         width={280}
         open={this.props.open}
         logged={Session.get('logged')}

@@ -7,6 +7,7 @@ import DeckCards from '/imports/api/deckCards/collection'
 import DeckDecks from '/imports/api/deckDecks/collection'
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CircularProgress from 'material-ui/CircularProgress'
+import Decks from '../api/decks/collection'
 
 class DeckMenu extends Component {
 
@@ -49,15 +50,7 @@ class DeckMenu extends Component {
     }
     const childId = this.props.childId
     if (childId) {
-      DeckDecks.insert({
-        deckId: v,
-        childId: childId
-      }, (err, id) => {
-        const childLink = DeckDecks.getLink(id, 'childDeck')
-        childLink.set(childId)
-        const parentLink = DeckDecks.getLink(id, 'parentDeck')
-        parentLink.set(v)
-
+      Meteor.call('addChildDeckLink', childId, v, (err, result) => {
         this.setState({
           snackOpen: true,
           message: 'Deck added to parent deck ok',
@@ -67,7 +60,7 @@ class DeckMenu extends Component {
     }
   }
 
-  renderMyDecks() {
+  renderAvailableDecks() {
     return this.state.decks.map((deck) => (
       <MenuItem
         rightIcon={parseIcon(deck.deckType)}
@@ -93,7 +86,7 @@ class DeckMenu extends Component {
             value={0}
             primaryText="+ Add to deck"
           />
-          {this.renderMyDecks()}
+          {this.renderAvailableDecks()}
         </DropDownMenu>
         :
         ''

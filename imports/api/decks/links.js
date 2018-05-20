@@ -20,16 +20,19 @@ Decks.addLinks({
     collection: TagSubscriptions,
     field: 'tagSubscriptionId'
   },
-  'parentDecks': {
+  parentDecks: {
     collection: DeckDecks,
-    inversedBy: 'childDeck'
+    inversedBy: 'childDeck',
+    autoremove: true
   },
-  'childDecks': {
+  childDecks: {
     collection: DeckDecks,
-    inversedBy: 'parentDeck'
+    inversedBy: 'parentDeck',
+    autoremove: true
   },
   'childCards': {
     collection: DeckCards,
-    inversedBy: 'deck'
+    inversedBy: 'deck',
+    autoremove: true
   }
 });

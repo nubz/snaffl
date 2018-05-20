@@ -11,28 +11,40 @@ class DeckList extends Component {
 
   constructor(props) {
     super(props)
-    const deckIds = _.pluck(props.data, 'deckId')
-    if (props.childId) {
-      deckIds.push(props.childId)
+    console.log('deckList props', props)
+    if (props.deckMenu) {
+      this.buildExclusions(props.data, props.childId)
     }
+
     this.state = {
       open: false,
       message: 'Deck added successfully',
       decks: props.data,
-      deckIds: deckIds,
       deckMenu: props.deckMenu
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const deckIds = _.pluck(nextProps.data, 'deckId')
-    if (this.props.childId) {
-      deckIds.push(this.props.childId)
+  buildExclusions(data, childId) {
+    const deckIds = _.pluck(data, 'deckId')
+    const childIds = _.pluck(data, 'childId')
+    const exclusions = [...deckIds, ...childIds]
+    if (childId) {
+      exclusions.push(childId)
     }
     this.setState({
+      exclusions: exclusions
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('deckList nextProps', nextProps)
+    if (nextProps.deckMenu) {
+      this.buildExclusions(nextProps.data, nextProps.childId)
+    }
+
+    this.setState({
       decks: nextProps.data,
-      deckMenu: nextProps.deckMenu,
-      deckIds: deckIds
+      deckMenu: nextProps.deckMenu
     })
   }
 
@@ -60,8 +72,7 @@ class DeckList extends Component {
           deckId={this.props.deckId}
         />
       ))
-    }
-    if (this.props.childId) {
+    } else if (this.props.childId) {
       return this.state.decks.map((link) => (
         <SnapdeckListItem
           key={link.parentDeck._id}
@@ -71,8 +82,7 @@ class DeckList extends Component {
           deckId={this.props.childId}
         />
       ))
-    }
-    if (this.props.deckId) {
+    } else if (this.props.deckId) {
       return this.state.decks.map((link) => (
         <SnapdeckListItem
           key={link.childDeck._id}
@@ -102,7 +112,7 @@ class DeckList extends Component {
         <div>
           {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
           {this.state.deckMenu ?
-            <DeckMenuQueryContainer cardId={this.props.cardId} childId={this.props.childId} accepts={this.props.accepts} exclusions={this.state.deckIds} owner={Meteor.userId()} />
+            <DeckMenuQueryContainer cardId={this.props.cardId} childId={this.props.childId} accepts={this.props.accepts} exclusions={this.state.exclusions} owner={Meteor.userId()} />
             : ''
           }
         </div>

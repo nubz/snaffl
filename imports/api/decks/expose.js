@@ -1,5 +1,7 @@
 import Decks from './collection.js';
+import deckList from './deckListQuery'
 import deckMenu from './deckMenuQuery'
 
-Decks.expose();
+Decks.expose()
+deckList.expose()
 deckMenu.expose()

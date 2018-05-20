@@ -104,6 +104,7 @@ class AddDeck extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const inputs = this.state.inputs;
+    const successFn = this.successState.bind(this)
     const data = {
       title: inputs.title.trim(),
       description: inputs.description.trim(),
@@ -116,19 +117,15 @@ class AddDeck extends Component {
       subscriptionTag: inputs.subscriptionTag.trim()
     };
     data.images = Object.assign({}, {...this.uploadedImages});
-    const linkData = {
-      'author': Meteor.userId(),
-      'type': this.props.selectedType._id
-    }
     Meteor.call('addDeck', data, (error, result) => {
       console.log('data.subscriptionTag for ' + result, data.subscriptionTag)
       if (data.subscriptionTag.length) {
         Meteor.call('createTagSubscription', {tag: data.subscriptionTag, deckId: result, types: this.props.selectedType.subscribes}, (err, subsResult) => {
           console.log('tagSubscription created', subsResult)
-          this.successState().bind(this)
+          successFn()
         })
       }
-      this.successState().bind(this)
+      successFn()
     })
   }
 
