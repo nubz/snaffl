@@ -79,7 +79,7 @@ class DeckList extends Component {
           deck={link.parentDeck}
           multiSnackBar={this.multiSnackBar.bind(this)}
           cardId={this.props.cardId}
-          deckId={this.props.childId}
+          childId={this.props.childId}
         />
       ))
     } else if (this.props.deckId) {
