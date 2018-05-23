@@ -219,7 +219,7 @@ class AddCard extends Component {
       cardType: this.state.cardType,
       cardTypeId: this.state.selectedType._id,
       image: this.state.image,
-      images: this.uploadedImages,
+      images: this.uploadedImages || this.state.images,
       content: content
     };
 

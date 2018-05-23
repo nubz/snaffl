@@ -25,15 +25,11 @@ export default class SnapdeckListItem extends Component {
   }
 
   removeFromDeck = () => {
-    console.log('removing from deck')
     if (this.props.cardId !== "") {
-      console.log('cardId: ' + this.props.cardId + ' from deckId: ' + this.state.deck._id)
       Meteor.call('removeCardFromDeck', this.props.cardId, this.state.deck._id)
     } else if (this.props.childId !== "") {
-      console.log('deckId:' + this.props.childId + ' from childDeckId: ' + this.state.deck._id)
       Meteor.call('removeDeckFromDeck', this.props.childId, this.state.deck._id)
     } else {
-      console.log('deckId:' + this.props.deckId + ' from childDeckId: ' + this.state.deck._id)
       Meteor.call('removeDeckFromDeck', this.state.deck._id, this.props.deckId)
     }
 
@@ -47,7 +43,7 @@ export default class SnapdeckListItem extends Component {
       <Avatar src={deck.images.thumb} />
     ) : undefined
 
-    const canRemove = this.props.cardId !== '' || this.props.deckId || this.props.childId ? (
+    const canRemove = this.props.cardId || this.props.deckId || this.props.childId ? (
       <IconButton
         touch={true}
         tooltip="remove from deck"
