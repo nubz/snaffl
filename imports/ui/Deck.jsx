@@ -96,8 +96,7 @@ export default class Deck extends Component {
                 color: 'white'
               })} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
               {deck.images ?
-                <div className="imagePillarBox"
-                     style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
+                <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
                 : ''
               }
               <p>{deck.description}</p>
@@ -129,11 +128,13 @@ export default class Deck extends Component {
                 <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true}/>
                 : <CardsForDeckQueryContainer deckId={deck._id} headless={true}/>}
             </Paper>
+            { deck.deckType !== 'TagMap' && deck.deckType !== 'TagDeck' ?
             <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
               <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} Child
                 decks</h3>
               <DecksForDeckQueryContainer deckId={deck._id} headless={true}/>
             </Paper>
+              : ''}
             <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
               <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} Parent
                 decks</h3>
@@ -143,9 +144,12 @@ export default class Deck extends Component {
               <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} API
                 address</h3>
               <pre style={styles.meta}>
-            <code><a href={"/api/menu/" + deck._id} target="_blank"
-                     style={{color: '#ffffff'}}>{protocol}//{host}{port}/api/menu/{deck._id}</a></code>
-          </pre>
+                <code>
+                  <a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>
+                  {protocol}//{host}{port}/api/menu/{deck._id}
+                  </a>
+                </code>
+              </pre>
               <RaisedButton
                 label="Manage Access"
                 onClick={this.handleEditRequest}

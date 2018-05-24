@@ -76,8 +76,8 @@ export default () => {
 
      return Tags.insert({tag: string.trim()})
     },
-    removeTagFromCard: function (tagId, cardId) {
-      TagCards.remove({cardId: cardId, tagId: tagId})
+    removeTagFromCard: function (id) {
+      TagCards.remove(id)
     },
     removeFromAllDecks: function (cardId) {
       DeckCards.remove({cardId: cardId})

@@ -16,10 +16,12 @@ Cards.addLinks({
   },
   'tagIds': {
     collection: TagCards,
-    inversedBy: 'card'
+    inversedBy: 'card',
+    autoremove: true
   },
   'deckIds': {
     collection: DeckCards,
-    inversedBy: 'card'
+    inversedBy: 'card',
+    autoremove: true
   }
 });

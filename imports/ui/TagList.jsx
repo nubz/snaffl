@@ -26,7 +26,8 @@ class TagList extends Component {
     }
     return this.state.data.map((tag) => (
       <TagListItem 
-        key={tag.tagId}
+        key={tag._id}
+        tagCardId={tag._id}
         tag={tag.tag}
         cardId={this.props.cardId}
         owned={this.props.owned}
