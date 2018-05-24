@@ -10,6 +10,7 @@ import CardsForTagSubscriptionQueryContainer from '/imports/containers/CardsForT
 import CardsForMapContainer from '/imports/containers/CardsForMapContainer'
 import CardsForTagMap from '/imports/containers/CardsForTagMap'
 import DecksForDeckQueryContainer from '../containers/DecksForDeckQueryContainer'
+import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
   meta: {
@@ -87,7 +88,7 @@ export default class Deck extends Component {
 
     return (
       <div>
-        {this.props.isLoading ? <h1>loading</h1> :
+        {this.props.isLoading ? <CircularProgress size={60} thickness={7} /> :
           <div className="main-bg">
             <Paper style={{padding: 20, marginBottom: 30}}>
               <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {
