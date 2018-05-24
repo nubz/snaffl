@@ -152,7 +152,7 @@ class AddDeck extends Component {
 
             {this.state.uploading ?
               <div className="imagePreview">
-                <CircularProgress style=style={{margin:'auto', marginTop: -200}} size={60} thickness={7}/>
+                <CircularProgress style={{margin:'auto', marginTop: '-200px'}} size={60} thickness={7} />
               </div>
               :
               <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>

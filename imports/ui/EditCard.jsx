@@ -145,7 +145,7 @@ class EditCard extends Component {
               <h3 className="paperHead">{parseIcon(this.state.inputs.cardType, {height:50,width:50,color: 'white'})} {this.state.inputs.cardType} info</h3>
               {this.state.uploading ?
                 <div className="imagePreview">
-                  <CircularProgress style=style={{margin:'auto', marginTop: -200}} size={60} thickness={7}/>
+                  <CircularProgress style={{margin:'auto', marginTop: '-200px'}} size={60} thickness={7}/>
                 </div>
                 :
                 <div className="imagePreview" style={{backgroundImage: 'url(' + (this.state.images ? this.state.images.small : '') + ')'}}>
