@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import SnapCardListItem from './SnapCardListItem.jsx'
 import Paper from 'material-ui/Paper'
 import parseIcon from './TypeIcons'
+import CircularProgress from 'material-ui/CircularProgress'
 
 class CardList extends Component {
 
@@ -18,9 +19,9 @@ class CardList extends Component {
 
   renderCards() {
     if (this.props.deckId || this.props.tagId) {
-      return this.state.data.map((link) => (
+      return this.state.data.map((link, i) => (
         <SnapCardListItem
-          key={'Card_' + link.card._id}
+          key={link._id}
           card={link.card}
           deckId={this.props.deckId}
         />
@@ -44,20 +45,28 @@ class CardList extends Component {
     if (this.props.headless) {
       return (
         <div>
-          {this.state.data && this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
+        {this.props.isLoading ? <CircularProgress size={60} thickness={7} /> :
+          <div>
+            {this.state.data && this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
+          </div>
+        }
         </div>
       )
     }
 
     return (
-        <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-          <h3 className="paperHead cardHead">{parseIcon(this.props.icon, {
-            height: 50,
-            width: 50,
-            color: 'white'
-          })} {this.state.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
-          {this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
-        </Paper>
+      <div>
+        {this.props.isLoading ? <CircularProgress size={60} thickness={7} /> :
+          <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
+            <h3 className="paperHead cardHead">{parseIcon(this.props.icon, {
+              height: 50,
+              width: 50,
+              color: 'white'
+            })} {this.state.data.length ? this.props.title : 'As you add cards they will appear here'}</h3>
+            {this.state.data.length ? this.renderCards() : 'There are no cards here yet.'}
+          </Paper>
+        }
+      </div>
     )
   }
 

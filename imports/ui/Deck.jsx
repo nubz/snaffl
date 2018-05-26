@@ -129,7 +129,7 @@ export default class Deck extends Component {
                 <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true}/>
                 : <CardsForDeckQueryContainer deckId={deck._id} headless={true}/>}
             </Paper>
-            { deck.deckType !== 'TagMap' && deck.deckType !== 'TagDeck' ?
+            { deck.deckType === 'MultiDeck' ?
             <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
               <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} Child
                 decks</h3>

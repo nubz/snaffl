@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapContainer from '../containers/GoogleMapContainer'
+import CircularProgress from 'material-ui/CircularProgress'
 
 class DeckMap extends Component {
   constructor(props) {
@@ -70,13 +71,15 @@ class DeckMap extends Component {
   render() {
     return (
     <div>
-      <GoogleMapContainer
-        onReady={this.handleOnReady}
-        mapOptions={this.handleMapOptions}
-        height={"500px"}
-      >
-        Loading!
-      </GoogleMapContainer>
+      {this.props.isLoading ? <CircularProgress size={60} thickness={7}/> :
+        <GoogleMapContainer
+          onReady={this.handleOnReady}
+          mapOptions={this.handleMapOptions}
+          height={"500px"}
+        >
+          Loading!
+        </GoogleMapContainer>
+      }
     </div>
     );
   }
