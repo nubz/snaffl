@@ -14,6 +14,15 @@ import TagSubscriptions from "../imports/api/tagSubscriptions/collection"
 
 const HOST = Meteor.absoluteUrl()
 
+const slugify(title) => {
+  return title.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
 export default () => {
   Meteor.methods({
     addCard: function (data) {
@@ -143,6 +152,7 @@ export default () => {
         menu.push({
           id: card._id,
           title: card.title,
+          slug: slugify(card.title),
           description: card.description,
           type: 'card',
           images: card.images,
@@ -158,6 +168,7 @@ export default () => {
         menu.push({
           id: childDeck._id,
           title: childDeck.title,
+          slug: slugify(childDeck.title),
           description: childDeck.description,
           type: 'deck', 
           images: childDeck.images, 
@@ -171,6 +182,7 @@ export default () => {
       // the actual deck with menu
       if (top) {
         const deck = Decks.findOne(deckId)
+        deck.slug = slugify(deck.title)
         deck.menu = menu
         return deck
       }
