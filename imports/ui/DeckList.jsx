@@ -110,10 +110,16 @@ class DeckList extends Component {
 
       return (
         <div>
-          {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
-          {this.state.deckMenu ?
-            <DeckMenuQueryContainer cardId={this.props.cardId} childId={this.props.childId} accepts={this.props.accepts} exclusions={this.state.exclusions} owner={Meteor.userId()} />
-            : ''
+          {this.props.isLoading ? <CircularProgress size={60} thickness={7}/> :
+            <div>
+              {this.props.data.length ? this.renderDecks() : 'There are no decks here yet.'}
+              {this.state.deckMenu ?
+                <DeckMenuQueryContainer cardId={this.props.cardId} childId={this.props.childId}
+                                        accepts={this.props.accepts} exclusions={this.state.exclusions}
+                                        owner={Meteor.userId()}/>
+                : ''
+              }
+            </div>
           }
         </div>
       )
