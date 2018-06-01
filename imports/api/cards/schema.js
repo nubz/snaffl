@@ -1,20 +1,5 @@
 import SimpleSchema from 'simpl-schema'
 
-/*
-{
-      title: inputs.title.trim(),
-      description: inputs.description.trim(),
-      owner: Meteor.userId(),
-      createdAt: new Date(),
-      access: this.state.access,
-      cardType: this.props.cardType,
-      cardTypeId: this.props.selectedType._id,
-      image: this.state.image,
-      images: this.state.images,
-      content: content
-    }
- */
-
 export default new SimpleSchema({
   title: String,
   description: {type: String, optional: true},

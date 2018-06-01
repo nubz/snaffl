@@ -51,6 +51,11 @@ class DeckMenu extends Component {
     const childId = this.props.childId
     if (childId) {
       Meteor.call('addChildDeckLink', childId, v, (err, result) => {
+        if (err) {
+          console.error('Error: ', err)
+          alert(err.reason + ' - This is a temporary error until the ability to try doing this has been removed.')
+          return;
+        }
         this.setState({
           snackOpen: true,
           message: 'Deck added to parent deck ok',

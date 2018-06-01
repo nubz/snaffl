@@ -21,7 +21,7 @@ const TypeContent = {
   'Directory': {}
 }
 
-export default function parseContent(typeName, props) {
+export default (typeName, props) => {
 	const MappedContent = TypeContent[typeName]
 	return <MappedContent {...props} />
 }

@@ -14,13 +14,8 @@ import TagSubscriptions from "../imports/api/tagSubscriptions/collection"
 
 const HOST = Meteor.absoluteUrl()
 
-const slugify(title) => {
-  return title.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
+const slugify = (title) => {
+  return title.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
 }
 
 export default () => {
@@ -34,6 +29,12 @@ export default () => {
       })
     },
     addChildDeckLink: function (childId, parentId) {
+      const parentIsChild = DeckDecks.findOne({deckId: childId, childId: parentId})
+      if (parentIsChild) {
+        console.log('invalid request as ' + parentId + ' is a child of ' + childId)
+        throw new Meteor.Error("invalid",
+          "Not possible to add an existing child as a parent");
+      }
       const parentLink = Decks.getLink(childId, 'parentDecks')
       parentLink.add({
         deckId: parentId,
