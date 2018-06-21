@@ -21,7 +21,7 @@ export default class About extends Component {
 
   render() {
     return (
-      <div className="home">
+      <div className="main-bg">
 
         <p><span className="branding">SNAFFL</span> is Content as a Service</p>
           <p>This prototype has been built using Meteor, React and Material UI.</p>
