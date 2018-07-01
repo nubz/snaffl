@@ -153,7 +153,6 @@ div.main-bg {
 
 .container {
 	margin: 0 auto;
-	max-width: 95%;
 }
 
 .toolbar-title {
@@ -321,5 +320,20 @@ footer:before {
         max-width: 100%;
         width: 100%;
         margin: 10px 0;
+    }
+
+    #content-wrapper > div.main-bg {
+        padding: 2px;
+    }
+
+    h3.paperHeadOther, h3.paperHead.cardHead {
+        background-color: #F44336;
+        color: white;
+        margin: -15px;
+        padding: 15px;
+        padding-left: 90px;
+        border-bottom: 1px solid black;
+        font-size: 1.5em;
+        position: relative;
     }
 }
