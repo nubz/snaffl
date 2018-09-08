@@ -21,13 +21,26 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   },
-
+  whiteIcon: {
+    height: 50,
+    width: 50,
+    color: 'white'
+  },
+  paperHead: {
+    padding: 20,
+    marginTop: 30,
+    marginBottom: 30,
+    overflow: 'hidden'
+  },
+  paperHeadLight: {
+    padding: 20,
+    marginBottom: 30
+  }
 }
 
 export default class Deck extends Component {
   constructor(props) {
     super(props);
-    console.log('deck constructor props', props)
     this.state = {
       open: false,
       selectedDeck: 0,
@@ -36,7 +49,6 @@ export default class Deck extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('deck next props', nextProps)
     this.setState({
       deck: nextProps.data
     })
@@ -47,9 +59,9 @@ export default class Deck extends Component {
     if (this.state.deck.owner === Meteor.userId()) {
       Decks.remove(deckId, () => {
         this.handleClose()
-        Meteor.call('removeAllCardsFromDeck', deckId)
-        //this.props.multiSnackBar('Deck deleted ok', true);
-        FlowRouter.go('My.Decks')
+        Meteor.call('removeAllCardsFromDeck', deckId, () => {
+          FlowRouter.go('My.Decks')
+        })
       })
     }
   }
@@ -71,7 +83,7 @@ export default class Deck extends Component {
     const protocol = window.location.protocol
     const port = window.location.port === "80" ? '' : ':' + window.location.port
     const deck = this.state.deck
-    const owned = deck.owner === Meteor.userId()
+    const canEdit = deck.owner === Meteor.userId()
     const actions = [
         <FlatButton
           label="Cancel"
@@ -90,18 +102,14 @@ export default class Deck extends Component {
       <div>
         {this.props.isLoading ? <CircularProgress size={60} thickness={7} /> :
           <div className="main-bg">
-            <Paper style={{padding: 20, marginBottom: 30}}>
-              <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {
-                height: 50,
-                width: 50,
-                color: 'white'
-              })} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
+            <Paper style={styles.paperHeadLight}>
+              <h3 className="paperHead deckHead">{parseIcon(deck.deckType, styles.whiteIcon)} {deck.title}<span>{deck.deckType} deck created {createdAgo}</span></h3>
               {deck.images ?
-                <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}}></div>
+                <div className="imagePillarBox" style={{backgroundImage: 'url(' + (deck.images ? deck.images.medium : '') + ')'}} />
                 : ''
               }
               <p>{deck.description}</p>
-              {owned ?
+              {canEdit ?
                 <div>
                   <RaisedButton label="Edit" onClick={this.handleEditRequest} style={{marginRight: 10}} primary={true}/>
                   <RaisedButton label="Delete" onClick={this.handleOpen}/>
@@ -109,65 +117,57 @@ export default class Deck extends Component {
                 : ''}
             </Paper>
             {deck.deckType === 'Map' || deck.deckType === 'TagMap' ?
-              <Paper style={{padding: 20, marginBottom: 30}}>
-                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, {
-                  height: 50,
-                  width: 50,
-                  color: 'white'
-                })} Map</h3>
-                {deck.deckType === 'Map' ? <CardsForMapContainer deckId={deck._id}/> : <CardsForTagMap
-                  tagId={this.state.deck.tagSubscription.tagId}/>}
+              <Paper style={styles.paperHeadLight}>
+                <h3 className="paperHead deckHead">{parseIcon(deck.deckType, styles.whiteIcon)} Map</h3>
+                {deck.deckType === 'Map' ?
+                  <CardsForMapContainer deckId={deck._id}/> :
+                  <CardsForTagMap tagId={this.state.deck.tagSubscription.tagId}/>
+                }
               </Paper>
               : ''}
-            <Paper style={{padding: 20, marginBottom: 30}}>
-              <h3 className="paperHead cardHead">{parseIcon(deck.deckType, {
-                height: 50,
-                width: 50,
-                color: 'white'
-              })} Cards</h3>
+            <Paper style={styles.paperHeadLight}>
+              <h3 className="paperHead cardHead">{parseIcon(deck.deckType, styles.whiteIcon)} Cards</h3>
               {deck.tagSubscriptionId ?
                 <CardsForTagSubscriptionQueryContainer tagId={deck.tagSubscription.tagId} headless={true}/>
                 : <CardsForDeckQueryContainer deckId={deck._id} headless={true}/>}
             </Paper>
             { deck.deckType === 'MultiDeck' ?
-            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-              <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} Child
+            <Paper style={styles.paperHead}>
+              <h3 className="paperHead deckHead">{parseIcon('Cloud', styles.whiteIcon)} Child
                 decks</h3>
               <DecksForDeckQueryContainer deckId={deck._id} headless={true}/>
             </Paper>
               : ''}
-            <Paper style={{padding: 20, marginTop: 30, marginBottom: 30, overflow: 'hidden'}}>
-              <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} Parent
+            <Paper style={styles.paperHead}>
+              <h3 className="paperHead deckHead">{parseIcon('Cloud', styles.whiteIcon)} Parent
                 decks</h3>
-              <DecksForDeckQueryContainer childId={deck._id} deckMenu={owned} accepts={deck.deckType} headless={true}/>
+              <DecksForDeckQueryContainer childId={deck._id} deckMenu={canEdit} accepts={deck.deckType} headless={true}/>
             </Paper>
-            <Paper style={{padding: 20}}>
-              <h3 className="paperHead deckHead">{parseIcon('Cloud', {height: 50, width: 50, color: 'white'})} API
+            <Paper style={styles.paperHeadLight}>
+              <h3 className="paperHead deckHead">{parseIcon('Cloud', styles.whiteIcon)} API
                 address</h3>
               <pre style={styles.meta}>
                 <code>
                   <a href={"/api/menu/" + deck._id} target="_blank" style={{color: '#ffffff'}}>
-                  {protocol}//{host}{port}/api/menu/{deck._id}
+                    {protocol}//{host}{port}/api/menu/{deck._id}
                   </a>
                 </code>
               </pre>
+              {canEdit ?
               <RaisedButton
                 label="Manage Access"
                 onClick={this.handleEditRequest}
                 style={{marginRight: 10}}/>
+                : '' }
             </Paper>
-            {host === 'dev.snaffl.io' ?
-              <Paper style={{padding: 20}}>
-                <h3 className="paperHead deckHead">{parseIcon('Cloud', {
-                  height: 50,
-                  width: 50,
-                  color: 'white'
-                })} Snaffl.it!</h3>
+            {host === 'prototype.snaffl.io' ?
+              <Paper style={styles.paperHeadLight}>
+                <h3 className="paperHead deckHead">{parseIcon('Cloud', styles.whiteIcon)} Snaffl.it!</h3>
                 <pre style={styles.meta}>
-              <code>
-                <a href={"http://snaffl.it/?id=" + deck._id} target="_blank">http://snaffl.it/?id={deck._id}</a>
-              </code>
-            </pre>
+                  <code>
+                    <a href={"http://snaffl.it/?id=" + deck._id} style={{color: '#ffffff'}} target="_blank">http://snaffl.it/?id={deck._id}</a>
+                  </code>
+                </pre>
               </Paper>
               : ''}
             <Dialog

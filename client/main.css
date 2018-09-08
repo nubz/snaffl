@@ -301,6 +301,9 @@ footer:before {
 }
 
 @media (max-width: 655px) {
+    img.card-preview {
+        margin-top: 15px;
+    }
     h2.toolbar-title {
         font-size: 0.8em;
     }
@@ -322,18 +325,28 @@ footer:before {
         margin: 10px 0;
     }
 
-    #content-wrapper > div.main-bg {
+    #content-wrapper > div,
+    #content-wrapper div.main-bg {
         padding: 2px;
     }
 
-    h3.paperHeadOther, h3.paperHead.cardHead {
-        background-color: #F44336;
+    h3.paperHead, h3.paperHead.editHead, h3.paperHeadOther, h3.paperHead.cardHead {
         color: white;
-        margin: -15px;
+        margin: 0 -15px 15px -15px;
         padding: 15px;
         padding-left: 90px;
         border-bottom: 1px solid black;
         font-size: 1.5em;
         position: relative;
     }
+
+    h3 > span {
+        display: block;
+        font-size: 41%;
+    }
+
+    h3.paperHead svg, h3.paperHeadOther svg {
+        left: 15px;
+    }
+
 }

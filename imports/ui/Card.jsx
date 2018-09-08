@@ -194,6 +194,7 @@ export default class Card extends Component {
           <h3 className="paperHeadOther">{parseIcon(card.cardType, {height:50,width:50,color: 'white'})} {card.title}<span>{card.cardType} card created {createdAgo}</span></h3>
           { images ?
               <img
+                className={"card-preview"}
                 onLoad={this.onImgLoad.bind(this)}
                 src={images.medium}
                 alt={card.title}
